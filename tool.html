@@ -22,8 +22,8 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 <META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE,NO-STORE,MUST-REVALIDATE" />
 <META HTTP-EQUIV="imagetoolbar" CONTENT="no" />
 <link rel="shortcut icon" href="Icons/favicon16.ico" />
-<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.0/themes/base/jquery-ui.css" type="text/css"/> 
-
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.10.0/themes/base/jquery-ui.css" type="text/css"/> 
+<!--<link rel="import" href="annotationTools/html/mTurkUI.html" async>-->
 <script type="text/javascript">
 // <![CDATA[
 <!--#include virtual="./annotationTools/js/jquery-1.9.1.js" -->
@@ -49,6 +49,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 <!--#include virtual="./annotationTools/js/scribble.js" -->
 <!--#include virtual="./annotationTools/js/video.js" -->
 <!--#include virtual="./annotationTools/js/player.js" -->
+<!--#include virtual="handlebars.js" -->
 // ]]>
 </script>
 <style>
@@ -58,6 +59,34 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 @import url("annotationTools/css/object_list.css?version=4");
 @import url("annotationTools/css/scribblemenu.css?version=4");
 </style>
+
+<!--<script type="text/javascript" src="handlebars.js"></script> -->
+
+<!-- mTurk user interface code -->
+<script id="template" type="text/x-handlebars-template">
+<table>
+  <tr>
+    <td>
+      <font size="4">
+        <b> {{mt_instr}} 
+          <br />Scroll down to see the entire image. &#160;&#160;&#160; 
+        </b>
+      </font>
+    </td>
+
+    <td>
+      <form action="{{extURL}}">
+        <input type="hidden" id="assignmentId" name="assignmentId" value="{{aId}}"/>
+        <input type="hidden" id="number_objects" name="number_objects" value="" />
+        <input type="hidden" id="object_name" name="object_name" value="" />
+        <input type="hidden" id="LMurl" name="LMurl" value="" />
+        <input type="hidden" id="mt_comments" name="mt_comments" value="" />
+        <input disabled="true" type="submit" id="mt_submit" name="Submit" value="Submit HIT" onmousedown="javascript:document.getElementById(\'mt_comments\').value=document.getElementById(\'mt_comments_textbox\').value;" />
+      </form>
+    </td>
+  </tr>
+</table>
+</script> 
 
 </head>
 

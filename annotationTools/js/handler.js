@@ -75,10 +75,10 @@ function handler() {
       else curr_obj.append("<occluded>" + new_occluded + "</occluded>");
         
       if(editedControlPoints) {
-	for(var jj=0; jj < AllAnnotations[obj_ndx].GetPtsX().length; jj++) {
-	  curr_obj.children("polygon").children("pt").eq(jj).children("x").text(AllAnnotations[obj_ndx].GetPtsX()[jj]);
-	  curr_obj.children("polygon").children("pt").eq(jj).children("y").text(AllAnnotations[obj_ndx].GetPtsY()[jj]);
-	}
+	       for(var jj=0; jj < AllAnnotations[obj_ndx].GetPtsX().length; jj++) {
+	         curr_obj.children("polygon").children("pt").eq(jj).children("x").text(AllAnnotations[obj_ndx].GetPtsX()[jj]);
+	         curr_obj.children("polygon").children("pt").eq(jj).children("y").text(AllAnnotations[obj_ndx].GetPtsY()[jj]);
+	       }
       }
       
       // Write XML to server:
@@ -86,8 +86,8 @@ function handler() {
       
       // Refresh object list:
       if(view_ObjList) {
-	RenderObjectList();
-	ChangeLinkColorFG(anno.GetAnnoID());
+	       RenderObjectList();
+	       ChangeLinkColorFG(anno.GetAnnoID());
       }
     };
     
@@ -165,40 +165,44 @@ function handler() {
       
       // If the attributes are active, read the fields.
       if (use_attributes) {
-	// get attributes (is the field exists)
-	if(document.getElementById('attributes')) new_attributes = RemoveSpecialChars(document.getElementById('attributes').value);
-	else new_attributes = "";
+
+	   // get attributes (is the field exists)
+	   if(document.getElementById('attributes')) new_attributes = RemoveSpecialChars(document.getElementById('attributes').value);
+	     else new_attributes = "";
 	
-	// get occlusion field (is the field exists)
-	if (document.getElementById('occluded')) new_occluded = RemoveSpecialChars(document.getElementById('occluded').value);
-	else new_occluded = "";
+	   // get occlusion field (is the field exists)
+	   if (document.getElementById('occluded')) new_occluded = RemoveSpecialChars(document.getElementById('occluded').value);
+	     else new_occluded = "";
       }
       
       if((object_choices!='...') && (object_choices.length==1)) {
-	nn = RemoveSpecialChars(object_choices[0]);
-	active_canvas = REST_CANVAS;
+	       nn = RemoveSpecialChars(object_choices[0]);
+	       active_canvas = REST_CANVAS;
 	
-	// Move draw canvas to the back:
-	document.getElementById('draw_canvas').style.zIndex = -2;
-	document.getElementById('draw_canvas_div').style.zIndex = -2;
+	       // Move draw canvas to the back:
+	       document.getElementById('draw_canvas').style.zIndex = -2;
+	       document.getElementById('draw_canvas_div').style.zIndex = -2;
 	
-	// Remove polygon from the draw canvas:
-	var anno = null;
-	if(draw_anno) {
-	  draw_anno.DeletePolygon();
-	  anno = draw_anno;
-	  draw_anno = null;
-	}
+	       // Remove polygon from the draw canvas:
+	       var anno = null;
+	       if(draw_anno) {
+	         draw_anno.DeletePolygon();
+	         anno = draw_anno;
+	         draw_anno = null;
+	       }
       }
+
+
       else {
-	nn = RemoveSpecialChars(document.getElementById('objEnter').value);
-	anno = this.QueryToRest();
+	         nn = RemoveSpecialChars(document.getElementById('objEnter').value);
+	         anno = this.QueryToRest();
       }
       
       var re = /[a-zA-Z0-9]/;
+
       if(!re.test(nn)) {
-	alert('Please enter an object name');
-	return;
+	       alert('Please enter an object name');
+	       return;
       }
       
       // Update old and new object names for logfile:
@@ -215,17 +219,20 @@ function handler() {
       var html_str = '<object>';
       html_str += '<name>' + new_name + '</name>';
       html_str += '<deleted>0</deleted>';
-      html_str += '<verified>0</verified>';
+      html_str += '<verified>0</verified>'
+      ;
       if(use_attributes) {
-	html_str += '<occluded>' + new_occluded + '</occluded>';
-	html_str += '<attributes>' + new_attributes + '</attributes>';
+	       html_str += '<occluded>' + new_occluded + '</occluded>';
+	       html_str += '<attributes>' + new_attributes + '</attributes>';
       }
+
       html_str += '<parts><hasparts></hasparts><ispartof></ispartof></parts>';
       var ts = GetTimeStamp();
       if(ts.length==20) html_str += '<date>' + ts + '</date>';
       html_str += '<id>' + anno.anno_id + '</id>';
       
       if(anno.GetType() == 1) {
+        
 	/*************************************************************/
 	/*************************************************************/
 	// Scribble: Add annotation to LM_xml:

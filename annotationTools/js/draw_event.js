@@ -3,7 +3,7 @@
 var draw_anno = null;
 var query_anno = null;
 
-// This function is called with the draw event is started.  It can be 
+// This function is called when the draw event is started.  It can be 
 // triggered when the user (1) clicks on the base canvas.
 function StartDrawEvent(event) {
   if(!action_CreatePolygon) return;

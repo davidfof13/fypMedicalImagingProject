@@ -73,10 +73,16 @@ function InitializeScribbleMode(tag_button, tag_canvas){
 
   $('#tool_buttons').append(html_str3);
   $('#help').before(html_str2); 
-  document.getElementById("segmDiv").setAttribute('style', 'opacity: 1');
-  document.getElementById("polygonDiv").setAttribute('style', 'opacity: 1');
-  document.getElementById("segmDiv").setAttribute('style', 'border-color: #000');
-  document.getElementById("polygonDiv").setAttribute('style', 'border-color: #f00');
+
+  var segmDiv = document.getElementById("segmDiv");
+
+  if(segmDiv){
+  //document.getElementById("segmDiv").setAttribute('style', 'opacity: 1');
+    segmDiv.setAttribute('style', 'opacity: 1');
+    document.getElementById("polygonDiv").setAttribute('style', 'opacity: 1');
+    document.getElementById("segmDiv").setAttribute('style', 'border-color: #000');
+    document.getElementById("polygonDiv").setAttribute('style', 'border-color: #f00');
+  }
 }
 
 

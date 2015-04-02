@@ -59,6 +59,7 @@ function file_info() {
                         this.im_name = this.im_name + '.jpg';
                     }
                 }
+
                 if(par_field=='hitId') {
                     this.hitId = par_value;
                     isMT = true;
@@ -143,14 +144,19 @@ function file_info() {
                     object_choices = par_value.replace('_',' ');
                     object_choices = object_choices.split(/,/);
                 }
+
                 if((par_field=='scribble')&&(par_value=='true')) {
-		  scribble_mode = true;
-		}
+		                  scribble_mode = true;
+		        }
+
                 if((par_field=='video')&&(par_value=='true')) {
-		  video_mode = true;
-		}
+		                  video_mode = true;
+		        }
+
                 par_str = par_str.substring(idx+1,par_str.length);
+
             } while(idx != -1);
+
             if((!this.dir_name) || (!this.im_name)) return this.SetURL(labelme_url);
             
             if(isMT) {
@@ -178,24 +184,40 @@ function file_info() {
                 p.parentNode.removeChild(p);
             }
             
+            // display the general instructions page
             if(this.assignmentId=='ASSIGNMENT_ID_NOT_AVAILABLE') {
                 window.location = MThelpPage;
                 return false;
             }
             if(this.mode=='mt') {
                 if(!this.mt_instructions) {
-                    if(mt_N=='inf') this.mt_instructions = 'Please label as many objects as you want in this image.';
-                    else if(mt_N==1) this.mt_instructions = 'Please label at least ' + mt_N + ' object in this image.';
-                    else this.mt_instructions = 'Please label at least ' + mt_N + ' objects in this image.';
+                    //if(mt_N=='inf') this.mt_instructions = 'Please label as many objects as you want in this image.';
+                    if(mt_N != 'inf' ) 
+                        this.mt_instructions = 'Please label at least ' + mt_N + ' object in this image.';
+
+                    else 
+                        this.mt_instructions = 'Please draw a rectangle where the tumour is located';
                 }
                 if(mt_N=='inf') mt_N = 1;
                 
-                var html_str = '<table><tr><td><font size="4"><b>' + this.mt_instructions + '  Scroll down to see the entire image. &#160;&#160;&#160; </b></font></td><td><form action="' + externalSubmitURL + '"><input type="hidden" id="assignmentId" name="assignmentId" value="'+ this.assignmentId +'" /><input type="hidden" id="number_objects" name="number_objects" value="" /><input type="hidden" id="object_name" name="object_name" value="" /><input type="hidden" id="LMurl" name="LMurl" value="" /><input type="hidden" id="mt_comments" name="mt_comments" value="" /><input disabled="true" type="submit" id="mt_submit" name="Submit" value="Submit HIT" onmousedown="javascript:document.getElementById(\'mt_comments\').value=document.getElementById(\'mt_comments_textbox\').value;" /></form></td></tr></table>';
+               // var html_str = '<table><tr><td><font size="4"><b>' + this.mt_instructions + '<br />Scroll down to see the entire image. &#160;&#160;&#160; </b></font></td><td><form action="' + externalSubmitURL + '"><input type="hidden" id="assignmentId" name="assignmentId" value="'+ this.assignmentId +'" /><input type="hidden" id="number_objects" name="number_objects" value="" /><input type="hidden" id="object_name" name="object_name" value="" /><input type="hidden" id="LMurl" name="LMurl" value="" /><input type="hidden" id="mt_comments" name="mt_comments" value="" /><input disabled="true" type="submit" id="mt_submit" name="Submit" value="Submit HIT" onmousedown="javascript:document.getElementById(\'mt_comments\').value=document.getElementById(\'mt_comments_textbox\').value;" /></form></td></tr></table>';
+            
+                var context = {
+                    mt_instr: this.mt_instructions,
+                    extURL: externalSubmitURL,
+                    aId: this.assignmentId
+                };
+
+                var template = Handlebars.compile($('#template').html());
+                var html_str = template(context);
+
+                //console.log(template);
                 
-		$('#mt_submit_form').append(html_str);
+
+		        $('#mt_submit_form').append(html_str);
                 
-                var html_str2 = '<font size="4"><b>Scroll up to see the entire image</b></font>&#160;&#160;&#160;<font size="3">(Optional) Do you wish to provide any feedback on this HIT?</font><br /><textarea id="mt_comments_textbox" name="mt_comments_texbox" cols="94" nrows="5" />';
-		$('#mt_feedback').append(html_str2);
+                //var html_str2 = '<font size="4"><b>Scroll up to see the entire image</b></font>&#160;&#160;&#160;<font size="3">(Optional) Do you wish to provide any feedback on this HIT?</font><br /><textarea id="mt_comments_textbox" name="mt_comments_texbox" cols="94" nrows="5" />';
+		        //$('#mt_feedback').append(html_str2);
                 
                 if(global_count >= mt_N) document.getElementById('mt_submit').disabled=false;
             }
@@ -267,7 +289,7 @@ function file_info() {
     this.SetURL = function (url) {
         this.FetchImage();
 
-	// Get base LabelMe URL:
+	   // Get base LabelMe URL:
         var idx = url.indexOf('?');
         if(idx != -1) {
             url = url.substring(0,idx);
