@@ -201,6 +201,29 @@ function file_info() {
                 }
                 if(mt_N=='inf') mt_N = 1;
                 
+                // import external file first
+                var getImport = document.querySelector('link[rel=import]');
+
+                // select the content that will be appended to tool.html
+                var content = getImport.import.querySelector('#template');
+
+               // document.getElementById('#template').appendChild(content);
+
+                //var tempDiv = document.createElement('div');
+                //tempDiv.innerHTML = document.importNode(content, true).outerHTML;
+
+                var source = document.importNode(content, true).innerText;
+               
+                //document.getElementsByTagName('head')[0].appendChild(tempDiv.firstChild);
+
+                //$('#template').append(document.importNode(content, true).innerHTML);
+
+                // append the content within the body
+                //document.body.appendChild(document.importNode(getContent, true));
+
+               //$('head').append(document.importNode(getContent, true));
+
+                //var source = "<div>{{mt_instr}}</div>";
                 // display worker page
                 var context = {
                     mt_instr: this.mt_instructions,
@@ -208,7 +231,9 @@ function file_info() {
                     aId: this.assignmentId
                 };
 
-                var template = Handlebars.compile($('#template').html());
+                //var template = Handlebars.compile($('#template').html());
+
+                var template = Handlebars.compile(source);
                 var html_str = template(context);
 
                 //console.log(template);
