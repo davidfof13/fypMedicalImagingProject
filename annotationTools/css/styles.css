@@ -98,3 +98,11 @@ position:relative;
 height:100%; z-index:0;}
 #examples {width:100%; font-size:small;}
 #anno_list {font-size:small;}
+
+#w-container {
+  padding-right: 0px;
+  padding-left: 0px;
+  margin-left: auto;
+  margin-right: auto;
+  
+}

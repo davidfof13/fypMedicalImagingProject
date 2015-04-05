@@ -623,3 +623,47 @@
 02-Apr-2015 15:48:50 127.0.0.1 *Browser_Information Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.104 Safari/537.36
 02-Apr-2015 15:48:50 127.0.0.1 *start_loading
 02-Apr-2015 15:48:50 127.0.0.1 *done_loading_Images/ex2/img1.jpg
+02-Apr-2015 18:52:59 127.0.0.1 *start_loading
+02-Apr-2015 18:52:59 127.0.0.1 *Browser_Information Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.104 Safari/537.36
+02-Apr-2015 18:52:59 127.0.0.1 *done_loading_Images/ex2/img1.jpg
+02-Apr-2015 18:55:15 127.0.0.1 *Browser_Information Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.104 Safari/537.36
+02-Apr-2015 18:55:15 127.0.0.1 *start_loading
+02-Apr-2015 18:55:15 127.0.0.1 *done_loading_Images/ex2/img1.jpg
+02-Apr-2015 19:46:10 127.0.0.1 *done_loading_Images/ex2/img1.jpg
+02-Apr-2015 19:46:10 127.0.0.1 *start_loading
+02-Apr-2015 19:46:10 127.0.0.1 *Browser_Information Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.104 Safari/537.36
+02-Apr-2015 19:46:34 127.0.0.1 *Browser_Information Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.104 Safari/537.36
+02-Apr-2015 19:46:34 127.0.0.1 *start_loading
+02-Apr-2015 19:46:34 127.0.0.1 *done_loading_Images/ex2/img1.jpg
+02-Apr-2015 19:46:55 127.0.0.1 *start_loading
+02-Apr-2015 19:46:55 127.0.0.1 *Browser_Information Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.104 Safari/537.36
+02-Apr-2015 19:46:55 127.0.0.1 *done_loading_Images/ex2/img1.jpg
+02-Apr-2015 20:24:06 127.0.0.1 *start_loading
+02-Apr-2015 20:24:06 127.0.0.1 *Browser_Information Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.104 Safari/537.36
+02-Apr-2015 20:24:06 127.0.0.1 *done_loading_Images/ex2/img1.jpg
+02-Apr-2015 20:25:50 127.0.0.1 *start_loading
+02-Apr-2015 20:25:50 127.0.0.1 *Browser_Information Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.104 Safari/537.36
+02-Apr-2015 20:25:50 127.0.0.1 *done_loading_Images/ex2/img1.jpg
+02-Apr-2015 20:26:25 127.0.0.1 *Browser_Information Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.104 Safari/537.36
+02-Apr-2015 20:26:25 127.0.0.1 *start_loading
+02-Apr-2015 20:26:25 127.0.0.1 *done_loading_Images/ex2/img1.jpg
+02-Apr-2015 20:26:40 127.0.0.1 *start_loading
+02-Apr-2015 20:26:40 127.0.0.1 *Browser_Information Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.104 Safari/537.36
+02-Apr-2015 20:26:40 127.0.0.1 *done_loading_Images/ex2/img1.jpg
+02-Apr-2015 20:28:37 127.0.0.1 *Browser_Information Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.104 Safari/537.36
+02-Apr-2015 20:28:37 127.0.0.1 *start_loading
+02-Apr-2015 20:28:37 127.0.0.1 *done_loading_Images/ex2/img1.jpg
+02-Apr-2015 20:28:45 127.0.0.1 *Browser_Information Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.104 Safari/537.36
+02-Apr-2015 20:28:45 127.0.0.1 *start_loading
+02-Apr-2015 20:28:45 127.0.0.1 *done_loading_Images/ex2/img1.jpg
+02-Apr-2015 20:29:01 127.0.0.1 *start_loading
+02-Apr-2015 20:29:01 127.0.0.1 *Browser_Information Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.104 Safari/537.36
+02-Apr-2015 20:29:01 127.0.0.1 *done_loading_Images/ex2/img1.jpg
+02-Apr-2015 20:29:12 127.0.0.1 *Browser_Information Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.104 Safari/537.36
+02-Apr-2015 20:29:12 127.0.0.1 *start_loading
+02-Apr-2015 20:29:12 127.0.0.1 *done_loading_Images/ex2/img1.jpg
+02-Apr-2015 20:29:23 127.0.0.1 *start_loading
+02-Apr-2015 20:29:23 127.0.0.1 *Browser_Information Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.104 Safari/537.36
+02-Apr-2015 20:29:23 127.0.0.1 *done_loading_Images/ex2/img1.jpg
+02-Apr-2015 20:30:09 127.0.0.1 *start_loading
+02-Apr-2015 20:30:09 127.0.0.1 *Browser_Information Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.104 Safari/537.36

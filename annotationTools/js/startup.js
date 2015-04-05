@@ -149,7 +149,7 @@ function LoadAnnotation404(jqXHR,textStatus,errorThrown) {
 function LoadTemplate404(jqXHR,textStatus,errorThrown) {
   if(jqXHR.status==404)
     ReadXML('annotationCache/XMLTemplates/labelme.xml',LoadTemplateSuccess,function(jqXHR) {
-  alert(jqXHR.status);
+	alert(jqXHR.status);
       });
   else
     alert(jqXHR.status);
