@@ -243,3 +243,11 @@ function FinishStartup() {
 
   console.timeEnd('startup');
 }
+
+// re-positions the image canvas for the MTurk
+// worker page
+function repositionImageCanvas(ele){
+
+  var target = document.getElementById("image_canvas");
+  e.parentNode.replaceChild(target, e);
+}

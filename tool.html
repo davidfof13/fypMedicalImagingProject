@@ -64,17 +64,15 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 <!-- mTurk user interface code -->
 <script id="template" type="text/x-handlebars-template">
-<table>
-  <tr>
-    <td>
-      <font size="4">
-        <b> {{mt_instr}} 
-          <br />Scroll down to see the entire image. &#160;&#160;&#160; 
-        </b>
-      </font>
-    </td>
 
-    <td>
+    <div id="w-container" style="display:block;">
+      <h1> Where is the tumour? </h1>
+      <p> The purpose of this task is to find and annotate the region where the tumour
+       lies in the following MRI brain scan 
+      </p>
+  
+      <div onload="javascript:repositionImageCanvas(this);" ></div>
+
       <form action="{{extURL}}">
         <input type="hidden" id="assignmentId" name="assignmentId" value="{{aId}}"/>
         <input type="hidden" id="number_objects" name="number_objects" value="" />
@@ -83,9 +81,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
         <input type="hidden" id="mt_comments" name="mt_comments" value="" />
         <input disabled="true" type="submit" id="mt_submit" name="Submit" value="Submit HIT" onmousedown="javascript:document.getElementById(\'mt_comments\').value=document.getElementById(\'mt_comments_textbox\').value;" />
       </form>
-    </td>
-  </tr>
-</table>
+    </div>
 </script> 
 
 </head>
