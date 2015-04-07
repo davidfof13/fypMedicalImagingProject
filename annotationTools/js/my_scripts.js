@@ -1,6 +1,48 @@
 // This file should be minimized and abstracted whenever possible.  
 // It is best to refrain from adding new variables/functions to this file.
 
+var wait_for_input;
+var edit_popup_open = 0;
+var num_orig_anno;
+var global_count = 0;
+var req_submit;
+var submission_edited = 0; // If polygon has been edited.
+
+// Allowable user actions:
+var action_CreatePolygon = 1;
+var action_RenameExistingObjects = 0;
+var action_ModifyControlExistingObjects = 0;
+var action_DeleteExistingObjects = 0;
+
+// Which polygons are visible:
+var view_Existing = 1;
+var view_Deleted = 0;
+
+// Flag for right-hand object list:
+var view_ObjList = true;
+
+// MT variables:
+var LMbaseurl = 'https://' + window.location.host + window.location.pathname;
+var MThelpPage = 'annotationTools/html/mt_instructions.html';
+var externalSubmitURL = 'https://mturk.com/mturk/externalSubmit';
+var externalSubmitURLsandbox = 'http://workersandbox.mturk.com/mturk/externalSubmit';
+var mt_N = 'inf';
+
+var object_choices = '...';
+
+// Access LabelMe object field.
+// i - object index
+// fieldname - object field name, e.g. "name", "deleted"
+function LMgetObjectField(xml,i,fieldname) {
+  if(!xml.getElementsByTagName('object')[i] || !xml.getElementsByTagName('object')[i].getElementsByTagName(fieldname)[0]) return "";
+  return xml.getElementsByTagName('object')[i].getElementsByTagName(fieldname)[0].innerHTML;
+}
+
+// Returns number of LabelMe objects.
+function LMnumberOfObjects(xml) {
+  return xml.getElementsByTagName('object').length;
+}
+
 // Get the x position of the mouse event.
 function GetEventPosX(event) {
   if(IsNetscape()) return event.layerX;
