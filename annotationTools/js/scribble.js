@@ -72,11 +72,14 @@ function InitializeScribbleMode(tag_button, tag_canvas){
        </form>';
 
   $('#tool_buttons').append(html_str3);
-  $('#help').before(html_str2); 
-  document.getElementById("segmDiv").setAttribute('style', 'opacity: 1');
-  document.getElementById("polygonDiv").setAttribute('style', 'opacity: 1');
-  document.getElementById("segmDiv").setAttribute('style', 'border-color: #000');
-  document.getElementById("polygonDiv").setAttribute('style', 'border-color: #f00');
+  $('#help').before(html_str2);
+
+ 	if ($("#label_buttons_drawing").length > 0) { 
+  		document.getElementById("segmDiv").setAttribute('style', 'opacity: 1');
+  		document.getElementById("polygonDiv").setAttribute('style', 'opacity: 1');
+  		document.getElementById("segmDiv").setAttribute('style', 'border-color: #000');
+  		document.getElementById("polygonDiv").setAttribute('style', 'border-color: #f00');
+	}
 }
 
 

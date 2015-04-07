@@ -4,6 +4,7 @@
 # Change this if the Apache server is not located in "/var/www":
 BASE_DIR = /var/www/
 
+
 # Get LabelMe path settings:
 LM_URL_HOME = http://$(shell hostname --long)/$(shell pwd | sed -e s@$(BASE_DIR)@@)/
 LM_TOOL_HOME = $(shell pwd)/
@@ -32,4 +33,5 @@ write_permissions:
 	$(shell chmod -R 777 ./annotationTools/php)
 
 scribble:
-	$(shell rm ./annotationTools/scribble/segment.cgi; cd ./annotationTools/scribble; make; cd ../../)
+	rm ./annotationTools/scribble/segment.cgi; cd ./annotationTools/scribble; make; cd ../../
+#	$(shell rm ./annotationTools/scribble/segment.cgi; cd ./annotationTools/scribble; make; cd ../../)

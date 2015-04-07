@@ -24,9 +24,9 @@ var view_Deleted = 0;
 var view_ObjList = true;
 
 // MT variables:
-var LMbaseurl = 'http://' + window.location.host + window.location.pathname;
+var LMbaseurl = 'https://' + window.location.host + window.location.pathname;
 var MThelpPage = 'annotationTools/html/mt_instructions.html';
-var externalSubmitURL = 'http://mturk.com/mturk/externalSubmit';
+var externalSubmitURL = 'https://mturk.com/mturk/externalSubmit';
 var externalSubmitURLsandbox = 'http://workersandbox.mturk.com/mturk/externalSubmit';
 var mt_N = 'inf';
 
