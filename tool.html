@@ -21,9 +21,51 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 <title>LabelMe: The open annotation tool</title>
 <META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE,NO-STORE,MUST-REVALIDATE" />
 <META HTTP-EQUIV="imagetoolbar" CONTENT="no" />
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
 <link rel="shortcut icon" href="Icons/favicon16.ico" />
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.10.0/themes/base/jquery-ui.css" type="text/css"/> 
 <link rel="import" href="annotationTools/html/mTurkUI.html"/>
+
+<!--Courtesy of http://www.hongkiat.com/blog/html-import/-->
+  <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css"/>
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css"/>
+    
+<style type="text/css">
+    
+      #hit-menu {
+        width: 15%;
+        height: 200px; 
+      //  background-color: #000000;
+        float: left;
+        margin-right: 35px;
+        
+      }
+  
+      #hit-image {
+      
+        width: 60%; 
+        height: 500px; 
+        background-color: #000000;
+        float: left;
+        margin-right: 20px;
+        max-width: 60%;
+        max-height: 500px;
+      
+      }
+
+      #hit-container {
+        margin-left:20px; 
+        //background-color: red; 
+        margin-right: 20px; 
+        width: 96%;
+      }
+    
+</style>
 <script type="text/javascript">
 // <![CDATA[
 <!--#include virtual="./annotationTools/js/jquery-1.9.1.js" -->
@@ -51,6 +93,11 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 <!--#include virtual="./annotationTools/js/player.js" -->
 <!--#include virtual="handlebars.js" -->
 // ]]>
+
+/*  $(document).ready(function(){
+    $(".image_canvas").css({position: 'relative'});
+  }); */
+
 </script>
 
 
@@ -66,69 +113,13 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 <!-- mTurk user interface code -->
 
-<!--
-<script id="template" type="text/x-handlebars-template">
-
-    <div id="w-container" style="display:block;">
-      <h1> Where is the tumour? </h1>
-      <p> The purpose of this task is to find and annotate the region where the tumour
-       lies in the following MRI brain scan 
-      </p>
-  
-      <div onload="javascript:repositionImageCanvas(this);" ></div>
-
-      <form action="{{extURL}}">
-        <input type="hidden" id="assignmentId" name="assignmentId" value="{{aId}}"/>
-        <input type="hidden" id="number_objects" name="number_objects" value="" />
-        <input type="hidden" id="object_name" name="object_name" value="" />
-        <input type="hidden" id="LMurl" name="LMurl" value="" />
-        <input type="hidden" id="mt_comments" name="mt_comments" value="" />
-        <input disabled="true" type="submit" id="mt_submit" name="Submit" value="Submit HIT" onmousedown="javascript:document.getElementById(\'mt_comments\').value=document.getElementById(\'mt_comments_textbox\').value;" />
-      </form>
-    </div>
-</script>  -->
-
-<!--
-<script id="template" type="text/x-handlebars-template">
-
-
-</script>-->
-
-
-
-<script id="template" type="text/x-handlebars-template">
-
-<table>
-  <tr>
-    <td>
-      <font size="4">
-        <b> {{mt_instr}} 
-          <br />Scroll down to see the entire image. &#160;&#160;&#160; 
-        </b>
-      </font>
-    </td>
-
-    <td>
-      <form action="{{extURL}}">
-        <input type="hidden" id="assignmentId" name="assignmentId" value="{{aId}}"/>
-        <input type="hidden" id="number_objects" name="number_objects" value="" />
-        <input type="hidden" id="object_name" name="object_name" value="" />
-        <input type="hidden" id="LMurl" name="LMurl" value="" />
-        <input type="hidden" id="mt_comments" name="mt_comments" value="" />
-        <input disabled="true" type="submit" id="mt_submit" name="Submit" value="Submit HIT" onmousedown="javascript:document.getElementById(\'mt_comments\').value=document.getElementById(\'mt_comments_textbox\').value;" />
-      </form>
-    </td>
-  </tr>
-</table>
-</script>  
-
 
 </head>
 
 <!-- Start up LabelMe after HTML elements load -->
 <body id="body" style="visibility:hidden;" onload="javascript:StartupLabelMe();">
 
-  <!-- Mechanical Turk instructions and submit button -->
+  <!-- Mechanical Turk hit  -->
   <div id="mt_submit_form"></div>
   
   <!-- HEADER AND LOGO -->  
@@ -238,10 +229,9 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
   </div>
   
   <!-- DIV that will contain the object list -->
-  <div id="anno_anchor"></div>
+  <div id="anno_anchor" onload="javascript:ImageCanvasPos();"></div>
   
-  <!-- DIV for Mechanical Turk feedback form -->
-  <div id="mt_feedback" style="position:absolute;bottom:4px;" />
-
+  <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 </body>
 </html>

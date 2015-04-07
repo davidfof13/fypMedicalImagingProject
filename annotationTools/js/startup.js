@@ -33,17 +33,30 @@ function StartupLabelMe() {
     else {
       // This function gets run after image is loaded:
       function main_media_onload_helper() {
-	// Set the image dimensions:
-	main_media.SetImageDimensions();
+	       // Set the image dimensions:
+	       main_media.SetImageDimensions();
+
+          // Resize image
+        main_media.ResizeImage();
+
       
-	// Read the XML annotation file:
-	var anno_file = main_media.GetFileInfo().GetFullName();
-	anno_file = 'Annotations/' + anno_file.substr(0,anno_file.length-4) + '.xml' + '?' + Math.random();
-	ReadXML(anno_file,LoadAnnotationSuccess,LoadAnnotation404);
+	       // Read the XML annotation file:
+	       var anno_file = main_media.GetFileInfo().GetFullName();
+	       anno_file = 'Annotations/' + anno_file.substr(0,anno_file.length-4) + '.xml' + '?' + Math.random();
+	       ReadXML(anno_file,LoadAnnotationSuccess,LoadAnnotation404);
       };
 
-      // Get the image:
-      main_media.GetNewImage(main_media_onload_helper);
+        // Get the image:
+        main_media.GetNewImage(main_media_onload_helper);
+
+       
+
+        $(".image_canvas").appendTo("#hit-image");
+
+
+
+
+        //document.getElementById('img').style.display = 'none';
     }
   }
   else {
@@ -242,6 +255,8 @@ function FinishStartup() {
   console.log('LabelMe: finished loading');
 
   console.timeEnd('startup');
+    $(".image_canvas").css({position: 'relative'});  
+
 }
 
 // re-positions the image canvas for the MTurk
@@ -250,4 +265,10 @@ function repositionImageCanvas(ele){
 
   var target = document.getElementById("image_canvas");
   e.parentNode.replaceChild(target, e);
+}
+
+function ImageCanvasPos(){
+  
+  $(".image_canvas").css({position: 'relative'});  
+
 }
