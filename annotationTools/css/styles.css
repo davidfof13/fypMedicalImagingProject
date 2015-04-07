@@ -1,4 +1,4 @@
-body {font-family:Arial;  color:black; overflow:hidden; 
+body {font-family:Arial;  color:black; overflow:scroll; 
 margin-top:0px; margin-left:0px; margin-right:0px; margin-bottom: 0px;}
 a:link {color: #0000FF; text-decoration: underline;}
 a:visited {color: #0000FF; text-decoration: underline;}
@@ -91,10 +91,18 @@ position:relative;
 .content {
   border: 1px solid #ffffff;
   padding: 0.2em;
-  overflow: auto;
+  overflow: scroll;
 }
 
 #right_side {position:absolute; top:0px; right:0px; width:20em;
 height:100%; z-index:0;}
 #examples {width:100%; font-size:small;}
 #anno_list {font-size:small;}
+
+#w-container {
+  padding-right: 0px;
+  padding-left: 0px;
+  margin-left: auto;
+  margin-right: auto;
+  
+}

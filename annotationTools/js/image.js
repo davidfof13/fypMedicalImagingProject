@@ -70,6 +70,7 @@ function image(id) {
         this.width_curr = Math.round(this.im_ratio*this.width_orig);
         this.height_curr = Math.round(this.im_ratio*this.height_orig);
         
+        /*
         this.im.width = this.width_curr;
         this.im.height = this.height_curr;
         
@@ -80,7 +81,8 @@ function image(id) {
         
         
         this.curr_frame_width = this.width_curr;
-        this.curr_frame_height = this.height_curr;
+        this.curr_frame_height = this.height_curr;*/
+        this.SetDimensions();
         
         document.getElementById('loading').style.visibility = 'hidden';
         document.getElementById('main_media').style.visibility = 'visible';
@@ -93,6 +95,64 @@ function image(id) {
         else this.im.style.display = '';
     };
     
+
+    this.SetDimensions = function() {
+
+        // set the dimensions of the image object
+        this.im.width = this.width_curr;
+        this.im.height = this.height_curr;
+        
+        // Also set the dimensions of the canvas
+        $("#myCanvas_bg").width(this.width_curr).height(this.height_curr);
+        $("#select_canvas").width(this.width_curr).height(this.height_curr);
+        $("#draw_canvas").width(this.width_curr).height(this.height_curr);
+        $("#query_canvas").width(this.width_curr).height(this.height_curr);
+
+        // And finally set the dimensions of the frame
+        this.curr_frame_width = this.width_curr;
+        this.curr_frame_height = this.height_curr;
+
+    };
+
+    // Resizes the image so that it fits inside the mTurk
+    // hit display based its dimensions. Whether only the width 
+    // or the height exceeds the bound, we always multiply 
+    // both dimension  by the same factor to maintain the image ratio.
+    // We also make the ratio slightly smaller to fit the image in the bound
+    this.ResizeImage = function(){
+        
+        var maxWidth = $('#hit-image').width(); // Max width for the image
+        var maxHeight = $('#hit-image').height();   // Max height for the image
+        var ratio = 0;  // Used for aspect ratio
+        var width = this.width_curr;    // Current image width
+        var height = this.height_curr;  // Current image height
+
+        
+        // Check if the current width is larger than the max
+        if(width > maxWidth){
+            ratio = (maxWidth / width);   // get ratio for scaling image
+          //  $(this).css("width", maxWidth); // Set new width
+            this.width_curr = maxWidth;
+            this.height_curr = Math.round(height * ratio);
+
+            this.SetDimensions();
+          //  $(this).css("height", height * ratio);  // Scale height based on ratio
+            height = height * ratio;    // Reset height to match scaled image
+            width = maxWidth;    // Reset width to match scaled image
+        }
+
+        // Check if current height is larger than max
+        if(height > maxHeight){
+            ratio = (maxHeight / height); // get ratio for scaling image
+            this.height_curr = maxHeight;   // Set new height
+            this.width_curr = Math.round(width * ratio);   // Scale width based on ratio
+            this.SetDimensions();
+           // width = width * ratio;    // Reset width to match scaled image
+           // height = height * ratio;    // Reset height to match scaled image
+        }
+
+
+    }
     
     // If (x,y) is not in view, then scroll it into view.  Return adjusted
     // (x,y) point that takes into account the slide offset.
@@ -255,6 +315,7 @@ function image(id) {
             return false;  //the 160 is about the width of the right-side div
         return true;
     };
+    
     
 }
 

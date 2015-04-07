@@ -21,9 +21,50 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 <title>LabelMe: The open annotation tool</title>
 <META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE,NO-STORE,MUST-REVALIDATE" />
 <META HTTP-EQUIV="imagetoolbar" CONTENT="no" />
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
 <link rel="shortcut icon" href="Icons/favicon16.ico" />
 <link rel="stylesheet" href="//code.jquery.com/ui/1.10.0/themes/base/jquery-ui.css" type="text/css"/> 
+<link rel="import" href="annotationTools/html/mTurkUI.html"/>
 
+<!--Courtesy of http://www.hongkiat.com/blog/html-import/-->
+  <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css"/>
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css"/>
+    
+<style type="text/css">
+    
+      #hit-menu {
+        width: 15%;
+        height: 200px; 
+      //  background-color: #000000;
+        float: left;
+        margin-right: 35px;
+        
+      }
+  
+      #hit-image {
+      
+        width: 60%; 
+        height: 500px; 
+        float: left;
+        margin-right: 20px;
+        max-width: 60%;
+        max-height: 500px;
+      
+      }
+
+      #hit-container {
+        margin-left:20px; 
+        //background-color: red; 
+        margin-right: 20px; 
+        width: 96%;
+      }
+    
+</style>
 <script type="text/javascript">
 // <![CDATA[
 <!--#include virtual="./annotationTools/js/jquery-1.9.1.js" -->
@@ -49,8 +90,11 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 <!--#include virtual="./annotationTools/js/scribble.js" -->
 <!--#include virtual="./annotationTools/js/video.js" -->
 <!--#include virtual="./annotationTools/js/player.js" -->
+<!--#include virtual="handlebars.js" -->
 // ]]>
 </script>
+
+
 <style>
 @import url("annotationTools/css/styles.css?version=4");
 @import url("annotationTools/css/header.css?version=4");
@@ -59,12 +103,17 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 @import url("annotationTools/css/scribblemenu.css?version=4");
 </style>
 
+<!--<script type="text/javascript" src="handlebars.js"></script> -->
+
+<!-- mTurk user interface code -->
+
+
 </head>
 
 <!-- Start up LabelMe after HTML elements load -->
 <body id="body" style="visibility:hidden;" onload="javascript:StartupLabelMe();">
 
-  <!-- Mechanical Turk instructions and submit button -->
+  <!-- Mechanical Turk hit  -->
   <div id="mt_submit_form"></div>
   
   <!-- HEADER AND LOGO -->  
@@ -176,8 +225,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
   <!-- DIV that will contain the object list -->
   <div id="anno_anchor"></div>
   
-  <!-- DIV for Mechanical Turk feedback form -->
-  <div id="mt_feedback" style="position:absolute;bottom:4px;" />
-
+  <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 </body>
 </html>
