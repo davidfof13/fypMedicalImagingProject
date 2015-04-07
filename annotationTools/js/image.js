@@ -70,18 +70,7 @@ function image(id) {
         this.width_curr = Math.round(this.im_ratio*this.width_orig);
         this.height_curr = Math.round(this.im_ratio*this.height_orig);
         
-        /*
-        this.im.width = this.width_curr;
-        this.im.height = this.height_curr;
-        
-        $("#myCanvas_bg").width(this.width_curr).height(this.height_curr);
-        $("#select_canvas").width(this.width_curr).height(this.height_curr);
-        $("#draw_canvas").width(this.width_curr).height(this.height_curr);
-        $("#query_canvas").width(this.width_curr).height(this.height_curr);
-        
-        
-        this.curr_frame_width = this.width_curr;
-        this.curr_frame_height = this.height_curr;*/
+    
         this.SetDimensions();
         
         document.getElementById('loading').style.visibility = 'hidden';
@@ -127,28 +116,23 @@ function image(id) {
         var width = this.width_curr;    // Current image width
         var height = this.height_curr;  // Current image height
 
-        
         // Check if the current width is larger than the max
         if(width > maxWidth){
-            ratio = (maxWidth / width) * 0.96;   // get ratio for scaling image
-          //  $(this).css("width", maxWidth); // Set new width
+            ratio = (maxWidth / width);   // get ratio for scaling image
             this.width_curr = maxWidth;
             this.height_curr = Math.round(height * ratio);
 
             this.SetDimensions();
-          //  $(this).css("height", height * ratio);  // Scale height based on ratio
             height = height * ratio;    // Reset height to match scaled image
             width = maxWidth;    // Reset width to match scaled image
         }
 
         // Check if current height is larger than max
         if(height > maxHeight){
-            ratio = (maxHeight / height) * 0.96; // get ratio for scaling image
+            ratio = (maxHeight / height); // get ratio for scaling image
             this.height_curr = maxHeight;   // Set new height
             this.width_curr = Math.round(width * ratio);   // Scale width based on ratio
             this.SetDimensions();
-           // width = width * ratio;    // Reset width to match scaled image
-           // height = height * ratio;    // Reset height to match scaled image
         }
 
 
