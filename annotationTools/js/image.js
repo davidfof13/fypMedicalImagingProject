@@ -70,7 +70,7 @@ function image(id) {
         this.width_curr = Math.round(this.im_ratio*this.width_orig);
         this.height_curr = Math.round(this.im_ratio*this.height_orig);
         
-    
+        // set dimensions
         this.SetDimensions();
         
         document.getElementById('loading').style.visibility = 'hidden';
@@ -91,7 +91,7 @@ function image(id) {
         this.im.width = this.width_curr;
         this.im.height = this.height_curr;
         
-        // Also set the dimensions of the canvas
+        // Also sets the dimensions of the canvas
         $("#myCanvas_bg").width(this.width_curr).height(this.height_curr);
         $("#select_canvas").width(this.width_curr).height(this.height_curr);
         $("#draw_canvas").width(this.width_curr).height(this.height_curr);
@@ -108,6 +108,7 @@ function image(id) {
     // or the height exceeds the bound, we always multiply 
     // both dimension  by the same factor to maintain the image ratio.
     // We also make the ratio slightly smaller to fit the image in the bound
+    // Courtesy of http://stackoverflow.com/questions/3971841/how-to-resize-images-proportionally-keeping-the-aspect-ratio
     this.ResizeImage = function(){
         
         var maxWidth = $('#hit-image').width(); // Max width for the image
@@ -137,6 +138,32 @@ function image(id) {
 
 
     }
+
+
+/*
+    this.ResizeImage = function() {
+
+       // var maxWidth = $('#hit-image').width(); // Max width for the image
+       // var maxHeight = $('#hit-image').height();   // Max height for the image
+
+        maxWidth = $('#hit-image').css('width');
+        maxHeight = $('#hit-image').css('height');
+
+        var srcWidth = this.width_curr;    // Current image width
+        var srcHeight = this.height_curr;  // Current image height
+
+        //var ratio = Math.min(maxWidth / srcWidth, maxHeight / srcHeight);
+        var ratioW = Math.min(maxWidth / srcWidth);
+        var ratioH = Math.min(maxHeight / srcHeight);
+
+        this.width_curr = srcWidth*ratioW;
+        this.height_curr = srcHeight*ratioH;
+
+        this.SetDimensions();
+    }*/
+
+
+
     
     // If (x,y) is not in view, then scroll it into view.  Return adjusted
     // (x,y) point that takes into account the slide offset.

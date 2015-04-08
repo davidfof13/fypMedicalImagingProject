@@ -39,8 +39,10 @@
 
 .image_canvas {
     position:absolute;
-    top:0px;
-    left:0px;
+   /* top:0px;
+    left:0px;*/
+    top:70px;
+    left:55px;
     height:1em;
 	/*width:250px;*/
     z-index:1;

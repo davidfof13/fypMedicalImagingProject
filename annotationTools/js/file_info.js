@@ -160,6 +160,13 @@ function file_info() {
             if((!this.dir_name) || (!this.im_name)) return this.SetURL(labelme_url);
             
             if(isMT) {
+
+                // activate mTurk display
+                document.getElementById('mt_submit_form').style.visibility = 'visible';
+
+                // reposition image canvas
+                $(".image_canvas").css({top: '0px', left: '0px'});  
+
                 this.mode='mt'; // Ensure that we are in MT mode
                 view_ObjList = default_view_ObjList;
             }
@@ -168,6 +175,7 @@ function file_info() {
                 document.getElementById('body').style.visibility = 'visible';
             }
             else if((this.mode=='im') || (this.mode=='mt')) {
+
                 var p = document.getElementById('header');
                 p.parentNode.removeChild(p);
 

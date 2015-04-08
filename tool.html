@@ -53,6 +53,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
         float: left;
         margin-right: 20px;
         max-width: 60%;
+        min-width: 469px;
         max-height: 500px;
       
       }
@@ -93,6 +94,11 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 <!--#include virtual="handlebars.js" -->
 // ]]>
 
+ 
+ // Run Jquery function on window resize
+ $(window).resize(function() {
+    main_media.ResizeImage();
+  });
 </script>
 
 
@@ -115,7 +121,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 <body id="body" style="visibility:hidden;" onload="javascript:StartupLabelMe();">
 
   <!-- Mechanical Turk hit  -->
-  <div id="mt_submit_form"></div>
+  <div id="mt_submit_form" style="visibility: hidden;"></div>
   
   <!-- HEADER AND LOGO -->  
   <div class="header" id="header">
