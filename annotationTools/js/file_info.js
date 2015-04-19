@@ -345,8 +345,8 @@ function file_info() {
         }
         
         if(im_req.status==200) {
-            this.dir_name = im_req.responseXML.getElementsByTagName("dir")[0].firstChild.nodeValue;
-            this.im_name = im_req.responseXML.getElementsByTagName("file")[0].firstChild.nodeValue;
+           this.dir_name = im_req.responseXML.getElementsByTagName("dir")[0].firstChild.nodeValue;
+           this.im_name = im_req.responseXML.getElementsByTagName("file")[0].firstChild.nodeValue;
         }
         else {
             alert('Fatal: there are problems with fetch_image.cgi');

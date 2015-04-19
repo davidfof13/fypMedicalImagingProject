@@ -8,10 +8,10 @@ var select_anno = null;
 function StartEditEvent(anno_id,event) {
   console.log('LabelMe: Starting edit event...');
   if(event) event.stopPropagation();
-  if((IsUserAnonymous() || (!IsCreator(AllAnnotations[anno_id].GetUsername()))) && (!IsUserAdmin()) && (anno_id<num_orig_anno) && !action_RenameExistingObjects && !action_ModifyControlExistingObjects && !action_DeleteExistingObjects) {
+/*  if((IsUserAnonymous() || (!IsCreator(AllAnnotations[anno_id].GetUsername()))) && (!IsUserAdmin()) && (anno_id<num_orig_anno) && !action_RenameExistingObjects && !action_ModifyControlExistingObjects && !action_DeleteExistingObjects) {
     PermissionError();
     return;
-  }
+  }*/
   active_canvas = SELECTED_CANVAS;
   edit_popup_open = 1;
   
