@@ -37,18 +37,18 @@ function handler() {
       
       var re = /[a-zA-Z0-9]/;
       if(!re.test(new_name)) {
-	alert('Please enter an object name');
-	return;
+	       alert('Please enter an object name');
+	       return;
       }
       
       if (use_attributes) {
-	// occlusion field
-	if (document.getElementById('occluded')) new_occluded = RemoveSpecialChars(document.getElementById('occluded').value);
-	else new_occluded = RemoveSpecialChars(adjust_occluded);
+	       // occlusion field
+	       if (document.getElementById('occluded')) new_occluded = RemoveSpecialChars(document.getElementById('occluded').value);
+	       else new_occluded = RemoveSpecialChars(adjust_occluded);
 	
-	// attributes field
-	if(document.getElementById('attributes')) new_attributes = RemoveSpecialChars(document.getElementById('attributes').value);
-	else new_attributes = RemoveSpecialChars(adjust_attributes);
+	       // attributes field
+	       if(document.getElementById('attributes')) new_attributes = RemoveSpecialChars(document.getElementById('attributes').value);
+	       else new_attributes = RemoveSpecialChars(adjust_attributes);
       }
       
       StopEditEvent();
@@ -133,8 +133,8 @@ function handler() {
     this.AnnotationLinkClick = function (idx) {
       if(active_canvas==REST_CANVAS) StartEditEvent(idx,null);
       else if(active_canvas==SELECTED_CANVAS) {
-	var anno_id = select_anno.GetAnnoID();
-	if(edit_popup_open && (idx==anno_id)) StopEditEvent();
+	    var anno_id = select_anno.GetAnnoID();
+	       if(edit_popup_open && (idx==anno_id)) StopEditEvent();
       }
     };
     
@@ -349,6 +349,63 @@ function handler() {
         return draw_anno;
     };
     
+    // handles when the user clicks on a dropdown menu of the 
+    // hit menu of the MTurk user interface
+    this.setHITMenu = function () {  
+
+        // set current list element to active
+        $('#menu-ul>li>a').click(function(){
+          $('.active').removeClass('active');
+         // this.classList.add("active"); 
+         this.className += ' active';
+
+
+         /*
+          // for dropdown list elements, prevent submenus
+          // to also inherit the properties of active
+          if(this.classList.contains('dropdown')){
+
+
+              var p = $('.hit-submenu');
+
+              //p.removeClass('hit-submenu');
+              //p.addClass('hit-submenu');
+
+             // p.classList.remove('#hit-submenu');
+              //var items = p.children();
+
+              
+            //  for(var i=0; i < items.length; i++){
+      //
+                  items[i].firstChild.style.backgroundColor = $('#hit-submenu').css('background-color');
+             // }
+          } */
+        });
+
+
+
+        // configure dropdown menu
+        $('.dropdown').click(function(){
+          $('.hit-submenu').slideToggle();
+
+          // we're pointing downwards
+          if($('.caret').length){
+
+              $('.caret').attr('class', 'caret-right')
+          }
+
+          else{
+            // caret right
+            $('.caret-right').attr('class', 'caret');
+          }
+
+
+        });
+    };
+
+
+
+
     // *******************************************
     // Private methods:
     // *******************************************

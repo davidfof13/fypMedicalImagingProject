@@ -49,6 +49,7 @@ function StartDrawEvent(event) {
   draw_anno.DrawPolyLine();
 
   // Set mousedown action to handle when user clicks on the drawing canvas:
+  // Now the next time the user clicks we want to call DrawCanvasMouseDown instead
   $('#draw_canvas_div').unbind();
   $('#draw_canvas_div').mousedown({obj: this},function(e) {
       return DrawCanvasMouseDown(e.originalEvent);

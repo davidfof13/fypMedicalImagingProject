@@ -195,7 +195,7 @@ function file_info() {
                 p.parentNode.removeChild(p);
             }
             
-            // display the general instructions page
+            // MTurk Preview Mode: display the general instructions page
             if(this.assignmentId=='ASSIGNMENT_ID_NOT_AVAILABLE') {
                 window.location = MThelpPage;
                 return false;
@@ -239,6 +239,9 @@ function file_info() {
 		        $('#mt_submit_form').append(html_str);
 
                 if(global_count >= mt_N) document.getElementById('mt_submit').disabled=false;
+
+                 // configure hit menu
+                main_handler.setHITMenu();
             }
         }
         else {

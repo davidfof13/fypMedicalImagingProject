@@ -12,19 +12,42 @@
           <p></p>
           
           
-          <div  id="hit-menu" style="min-width:124px; min-height: 200px;"> 
+          <div  class="hit-menu" style="min-width:124px; min-height: 200px;"> 
+
             <div class="panel panel-primary">
-              <div class="panel-heading">Menu</div>
-              <div class="panel-body nav-collapse navbar-responsive container navbar-inverse">
-                <ul class= "nav nav-pills nav-stacked">
-                  <li role="presentation"><a href="#"> Draw box</a></li>
-                  <li role="presentation"><a href="#"> Scribble</a></li>
-                  <li role="presentation"><a href="#">delete</a></li>
+              <div class="panel-heading">Draw</div>
+              <div id="menu-content" class="nav-collapse navbar-responsive container navbar-inverse">
+                <ul id="menu-ul" class= "nav nav-pills nav-stacked">
+                  <!--<li role="presentation" class="active"><a class="li-base" href="#/"> Original Image </a></li> -->
+                  <li role="presentation"><a class="li-base" href="#/"> Contour </a></li>
+                  <li role="presentation" class="dropdown">
+                    <a class="li-base" href="#/">Scribble <span class="caret-right"></span></a>
+                    <ul  class="nav nav-pills nav-stacked hit-submenu" role="menu">
+                      <li><a href='#/'>Foreground</a></li>
+
+
+                      <li><a href='#/'>Background</a></li>
+                    </ul>
+                  </li>
+                  <li role="presentation"><a class="li-base" href="#/"> Merge</a></li>  
                 </ul>
               </div>
             </div>
-          
+
+
+                  <!-- delete menu -->
+                  <div class="panel" style="background-color: #943F3F; color: #FFF;">
+                    <div class="panel-heading">Delete</div>
+                    <div id="menu-content" class="nav-collapse navbar-responsive container navbar-inverse">
+                      <ul id="menu-ul" class= "nav nav-pills nav-stacked">
+                          <li role="presentation"><a href="#/"> anything</a></li>
+                      </ul>
+                    </div>
+                  </div>
           </div>
+
+            
+
           <div  id="hit-image"></div>
 
 
@@ -33,18 +56,19 @@
      
             <strong> Do you wish to provide any feedback on this task? (Optional) </strong>
             <p></p>
-            <form action="{{extURL}}">
+
+            <form action="{{extURL}}" method="post">
               <div class="form-group">
                 <textarea id="hit-feedback" class="form-control" rows="5" cols="35" name="textform">Please enter your message here
                 </textarea>
               </div>
               <div>
-                  <input type="hidden" id="assignmentId" name="assignmentId" value="{{aId}}"/>
+
+		              <input type="hidden" id="assignmentId" name="assignmentId" value="{{aId}}"/>
                   <input type="hidden" id="number_objects" name="number_objects" value="" />
                   <input type="hidden" id="object_name" name="object_name" value="" />
                   <input type="hidden" id="LMurl" name="LMurl" value="" />
                   <input type="hidden" id="mt_comments" name="mt_comments" value="" />
-
                   <button type="submit" name="Submit" id="mt_submit" class="btn btn-primary" disabled="true" onmousedown="javascript:document.getElementById(\'mt_comments\').value=document.getElementById(\'hit-feedback\').textContent;">Submit hit</button>
               </div>
             </form>
