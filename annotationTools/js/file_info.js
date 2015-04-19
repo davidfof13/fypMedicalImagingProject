@@ -160,6 +160,13 @@ function file_info() {
             if((!this.dir_name) || (!this.im_name)) return this.SetURL(labelme_url);
             
             if(isMT) {
+
+                // activate mTurk display
+                document.getElementById('mt_submit_form').style.visibility = 'visible';
+
+                // reposition image canvas
+                $(".image_canvas").css({top: '0px', left: '0px'});  
+
                 this.mode='mt'; // Ensure that we are in MT mode
                 view_ObjList = default_view_ObjList;
             }
@@ -168,6 +175,7 @@ function file_info() {
                 document.getElementById('body').style.visibility = 'visible';
             }
             else if((this.mode=='im') || (this.mode=='mt')) {
+
                 var p = document.getElementById('header');
                 p.parentNode.removeChild(p);
 
@@ -196,11 +204,6 @@ function file_info() {
             // display the actual hit page
             if(this.mode=='mt') {
 
-
-                //var p = document.getElementById('img');
-                //p.parentNode.removeChild(p);
-
-
                 if(!this.mt_instructions) {
                     //if(mt_N=='inf') this.mt_instructions = 'Please label as many objects as you want in this image.';
                     if(mt_N != 'inf' ) 
@@ -228,17 +231,13 @@ function file_info() {
                     aId: this.assignmentId
                 };
 
-                //var template = Handlebars.compile($('#template').html());
-
                 // compile code
                 var template = Handlebars.compile(source);
                 var html_str = template(context);
-
-                //console.log(template);
             
                 // add code to div element
 		        $('#mt_submit_form').append(html_str);
-                //$("image_canvas").appendTo("#hit-image");
+
                 if(global_count >= mt_N) document.getElementById('mt_submit').disabled=false;
             }
         }
@@ -346,8 +345,8 @@ function file_info() {
         }
         
         if(im_req.status==200) {
-            this.dir_name = im_req.responseXML.getElementsByTagName("dir")[0].firstChild.nodeValue;
-            this.im_name = im_req.responseXML.getElementsByTagName("file")[0].firstChild.nodeValue;
+           this.dir_name = im_req.responseXML.getElementsByTagName("dir")[0].firstChild.nodeValue;
+           this.im_name = im_req.responseXML.getElementsByTagName("file")[0].firstChild.nodeValue;
         }
         else {
             alert('Fatal: there are problems with fetch_image.cgi');

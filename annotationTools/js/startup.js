@@ -15,15 +15,19 @@ function StartupLabelMe() {
     main_handler = new handler();
     main_canvas = new canvas('myCanvas_bg');
     main_media = new image('im');
+
+    // main media file Info
+    var mmInfo = main_media.GetFileInfo();
+    var mode = mmInfo.GetMode();
     // Parse the input URL.  Returns false if the URL does not set the 
     // annotation folder or image filename.  If false is returned, the 
     // function fetches a new image and sets the URL to reflect the 
     // fetched image.
-    if(!main_media.GetFileInfo().ParseURL()) return;
+    if(!mmInfo.ParseURL()) return;
 
     if(video_mode) {
       main_media = new video('videoplayer');
-      main_media.GetFileInfo().ParseURL();
+      mmInfo.ParseURL();
       console.log("Video mode...");
       var anno_file = main_media.GetFileInfo().GetFullName();
       main_media.GetNewVideo();
@@ -36,8 +40,9 @@ function StartupLabelMe() {
 	       // Set the image dimensions:
 	       main_media.SetImageDimensions();
 
-          // Resize image
-        main_media.ResizeImage();
+         // Resize image for mTurk 
+         if(mmInfo.GetMode() == "mt")
+          main_media.ResizeImage();
 
       
 	       // Read the XML annotation file:
@@ -50,13 +55,9 @@ function StartupLabelMe() {
         main_media.GetNewImage(main_media_onload_helper);
 
        
+        if(mmInfo.GetMode() == "mt")
+          $(".image_canvas").appendTo("#hit-image");
 
-        $(".image_canvas").appendTo("#hit-image");
-
-
-
-
-        //document.getElementById('img').style.display = 'none';
     }
   }
   else {
@@ -255,7 +256,10 @@ function FinishStartup() {
   console.log('LabelMe: finished loading');
 
   console.timeEnd('startup');
-    $(".image_canvas").css({position: 'relative'});  
+
+  // if the mTurk div element has been activited then move the image
+  if (document.getElementById('mt_submit_form').style.visibility == 'visible')
+        $(".image_canvas").css({position: 'relative'});  
 
 }
 

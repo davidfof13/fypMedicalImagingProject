@@ -122,7 +122,7 @@ function handler() {
         // Write XML to server:
         WriteXML(SubmitXmlUrl,LM_xml,function(){return;});
 
-	// Refresh object list:
+	       // Refresh object list:
         if(view_ObjList) RenderObjectList();
         
         unselectObjects(); // Perhaps this should go elsewhere...
@@ -301,10 +301,10 @@ function handler() {
       
       var m = main_media.GetFileInfo().GetMode();
       if(m=='mt') {
-	document.getElementById('object_name').value=new_name;
-	document.getElementById('number_objects').value=global_count;
-	document.getElementById('LMurl').value = LMbaseurl + '?collection=LabelMe&mode=i&folder=' + main_media.GetFileInfo().GetDirName() + '&image=' + main_media.GetFileInfo().GetImName();
-	if(global_count >= mt_N) document.getElementById('mt_submit').disabled=false;
+	     document.getElementById('object_name').value=new_name;
+	     document.getElementById('number_objects').value=global_count;
+	     document.getElementById('LMurl').value = LMbaseurl + '?collection=LabelMe&mode=i&folder=' + main_media.GetFileInfo().GetDirName() + '&image=' + main_media.GetFileInfo().GetImName();
+	     if(global_count >= mt_N) document.getElementById('mt_submit').disabled=false;
       }
     };
     
