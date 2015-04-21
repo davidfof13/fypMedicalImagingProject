@@ -355,48 +355,62 @@ function handler() {
 
         // set current list element to active
         $('#menu-ul>li>a').click(function(){
-          $('.active').removeClass('active');
-         // this.classList.add("active"); 
+          $('#menu-ul').find('.active').removeClass('active');
+            this.className += ' active';
+        });
+
+         // set current sublist element to active
+        $('.hit-submenu>li>a').click(function(){
+         
+
+         $('.hit-submenu').find(".active").removeClass('active');
+
+
          this.className += ' active';
 
+         // get the new color of this element
+         //var cl = this.css('background-color');
 
-         /*
-          // for dropdown list elements, prevent submenus
-          // to also inherit the properties of active
-          if(this.classList.contains('dropdown')){
+         //var cl = window.getComputedStyle(this).getPropertyValue('background-color');
 
+         // also set it to the li encompassing it
+         //this.parentNode.style.backgroundColor = cl;
+         this.parentNode.className += ' active';
 
-              var p = $('.hit-submenu');
-
-              //p.removeClass('hit-submenu');
-              //p.addClass('hit-submenu');
-
-             // p.classList.remove('#hit-submenu');
-              //var items = p.children();
-
-              
-            //  for(var i=0; i < items.length; i++){
-      //
-                  items[i].firstChild.style.backgroundColor = $('#hit-submenu').css('background-color');
-             // }
-          } */
         });
 
 
-
         // configure dropdown menu
-        $('.dropdown').click(function(){
+        $('#dropdownMenu').click(function(){
           $('.hit-submenu').slideToggle();
 
-          // we're pointing downwards
+          // slide up
           if($('.caret').length){
 
               $('.caret').attr('class', 'caret-right')
           }
 
+          // slide down
           else{
+
+            $('#foreground').addClass('active');
+
+            // get colour of <a> link
+           // var cl = $('#foreground').css('background-color');
+
+            // add it to li element
+           // $('#foreground').parent().css('background-color', cl);
+
+           $('#foreground').parent().addClass('active');
+
             // caret right
             $('.caret-right').attr('class', 'caret');
+
+           /* var tmp = $('.hit-submenu').children()[0];
+
+            
+            // set foreground to active by default
+            tmp.className += ' active';*/
           }
 
 

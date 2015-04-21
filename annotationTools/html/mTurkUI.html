@@ -19,14 +19,14 @@
               <div id="menu-content" class="nav-collapse navbar-responsive container navbar-inverse">
                 <ul id="menu-ul" class= "nav nav-pills nav-stacked">
                   <!--<li role="presentation" class="active"><a class="li-base" href="#/"> Original Image </a></li> -->
-                  <li role="presentation"><a class="li-base" href="#/"> Contour </a></li>
+                  <li role="presentation"><a onclick="SetDrawingMode(0)" class="li-base" href="#/" > Contour </a></li>
                   <li role="presentation" class="dropdown">
-                    <a class="li-base" href="#/">Scribble <span class="caret-right"></span></a>
-                    <ul  class="nav nav-pills nav-stacked hit-submenu" role="menu">
-                      <li><a href='#/'>Foreground</a></li>
+                    <a id="dropdownMenu" onclick="scribble_canvas.setCurrentDraw(OBJECT_DRAWING)" class="li-base" href="#/">Scribble <span class="caret-right"></span></a>
+                    <ul  class="nav  nav-stacked hit-submenu" role="menu">
+                      <li><a id="foreground" onclick="scribble_canvas.setCurrentDraw(OBJECT_DRAWING)" href='#/'>Foreground</a></li>
 
 
-                      <li><a href='#/'>Background</a></li>
+                      <li><a onclick="scribble_canvas.setCurrentDraw(BG_DRAWING)" href='#/'>Background</a></li>
                     </ul>
                   </li>
                   <li role="presentation"><a class="li-base" href="#/"> Merge</a></li>  

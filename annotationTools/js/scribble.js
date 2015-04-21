@@ -11,14 +11,22 @@ drawing_mode = 0;
 // is in the middle of the segmentation an alert appears to indicate so.
 function SetDrawingMode(mode){
   if (drawing_mode == mode || active_canvas == QUERY_CANVAS) return;
+
+  // Get LabelMe Mode
+  var lmode = main_media.GetFileInfo().GetMode();
+  
   if (mode == 0){
     if (scribble_canvas.annotationid != -1){
       alert("You can't change drawing mode while editting scribbles.");
       return;
     }
 
-    document.getElementById("segmDiv").setAttribute('style', 'border-color: #000');
-    document.getElementById("polygonDiv").setAttribute('style', 'border-color: #f00');
+
+    if(lmode != "mt"){
+      document.getElementById("segmDiv").setAttribute('style', 'border-color: #000');
+      document.getElementById("polygonDiv").setAttribute('style', 'border-color: #f00');
+
+    }
     scribble_canvas.scribble_image = "";
     scribble_canvas.cleanscribbles();
     scribble_canvas.CloseCanvas();
@@ -28,9 +36,14 @@ function SetDrawingMode(mode){
       alert("Need to close current polygon first.");
       return;
     }
+
+   
+    if(lmode != "mt"){
     
-    document.getElementById("segmDiv").setAttribute('style', 'border-color: #f00');
-    document.getElementById("polygonDiv").setAttribute('style', 'border-color: #000');
+      document.getElementById("segmDiv").setAttribute('style', 'border-color: #f00');
+      document.getElementById("polygonDiv").setAttribute('style', 'border-color: #000');
+    }
+
     scribble_canvas.startSegmentationMode();
   }
   drawing_mode = mode;
@@ -86,6 +99,7 @@ function InitializeScribbleMode(tag_button, tag_canvas){
 }
 
 
+// Scribble_canvas class
 function scribble_canvas(tag) {
   this.tagcanvasDiv = tag; 
   this.colorseg = Math.floor(Math.random()*14);
