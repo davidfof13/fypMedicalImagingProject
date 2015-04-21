@@ -367,6 +367,8 @@ function handler() {
         return draw_anno;
     };
     
+<<<<<<< HEAD
+=======
     // handles when the user clicks on a dropdown menu of the 
     // hit menu of the MTurk user interface
     this.setHITMenu = function () {  
@@ -438,6 +440,7 @@ function handler() {
 
 
 
+>>>>>>> actived the mask tool: configured buttons for
     // *******************************************
     // Private methods:
     // *******************************************
