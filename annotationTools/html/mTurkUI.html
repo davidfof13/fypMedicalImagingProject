@@ -16,16 +16,14 @@
 
             <div class="panel panel-primary">
               <div class="panel-heading">Draw</div>
-              <div id="menu-content" class="nav-collapse navbar-responsive container navbar-inverse">
-                <ul id="menu-ul" class= "nav nav-pills nav-stacked">
+              <div class="menu-content nav-collapse navbar-responsive container navbar-inverse">
+                <ul class= "menu-ul nav nav-pills nav-stacked">
                   <!--<li role="presentation" class="active"><a class="li-base" href="#/"> Original Image </a></li> -->
                   <li role="presentation"><a onclick="SetDrawingMode(0)" class="li-base" href="#/" > Contour </a></li>
                   <li role="presentation" class="dropdown">
                     <a id="dropdownMenu" onclick="scribble_canvas.setCurrentDraw(OBJECT_DRAWING)" class="li-base" href="#/">Scribble <span class="caret-right"></span></a>
-                    <ul  class="nav  nav-stacked hit-submenu" role="menu">
+                    <ul class="nav  nav-stacked hit-submenu" role="menu">
                       <li><a id="foreground" onclick="scribble_canvas.setCurrentDraw(OBJECT_DRAWING)" href='#/'>Foreground</a></li>
-
-
                       <li><a onclick="scribble_canvas.setCurrentDraw(BG_DRAWING)" href='#/'>Background</a></li>
                     </ul>
                   </li>
@@ -38,9 +36,12 @@
                   <!-- delete menu -->
                   <div class="panel" style="background-color: #943F3F; color: #FFF;">
                     <div class="panel-heading">Delete</div>
-                    <div id="menu-content" class="nav-collapse navbar-responsive container navbar-inverse">
-                      <ul id="menu-ul" class= "nav nav-pills nav-stacked">
-                          <li role="presentation"><a href="#/"> anything</a></li>
+                    <div  class="menu-content nav-collapse navbar-responsive container navbar-inverse">
+                      <ul class= "menu-ul nav nav-pills nav-stacked">
+                          <li role="presentation"><a class="li-base" href="#/"> Contours </a></li>
+                          <li role="presentation"><a class="li-base" onclick="scribble_canvas.setCurrentDraw(RUBBER_DRAWING)" href="#/"> Scribbles</a></li>
+                          <li role="presentation"><a class="li-base" onclick="scribble_canvas.DeleteAllScribbles()" href="#/"> All scribbles</a></li>
+
                       </ul>
                     </div>
                   </div>

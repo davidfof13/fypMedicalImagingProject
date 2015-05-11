@@ -253,11 +253,11 @@ function annotation(anno_id) {
       var im_ratio = main_media.GetImRatio();
       this.line_ids = Array();
       for(var i = 0; i < this.pts_x.length-1; i++) {
-	// Draw line segment:
-	this.line_ids.push(DrawLineSegment(this.div_attach,this.pts_x[i],this.pts_y[i],this.pts_x[i+1],this.pts_y[i+1],'stroke="#0000ff" stroke-width="4"',im_ratio));
+	     // Draw line segment:
+	     this.line_ids.push(DrawLineSegment(this.div_attach,this.pts_x[i],this.pts_y[i],this.pts_x[i+1],this.pts_y[i+1],'stroke="#0000ff" stroke-width="4"',im_ratio));
 
-	// Set cursor to be crosshair on line segment:
-	$('#'+this.line_ids[i]).css('cursor','crosshair');
+	     // Set cursor to be crosshair on line segment:
+	     $('#'+this.line_ids[i]).css('cursor','crosshair');
       }
 
       // Draw first point:
@@ -277,15 +277,15 @@ function annotation(anno_id) {
     this.DeletePolygon = function () {
       // Remove drawn polygon:
       if(this.polygon_id) {
-	console.log('deleting polygon: ',this.polygon_id);
-	$('#'+this.polygon_id).remove();
-	this.polygon_id = null;
+	       console.log('deleting polygon: ',this.polygon_id);
+	       $('#'+this.polygon_id).remove();
+	       this.polygon_id = null;
       }
 
       // Remove all line segments for partially-drawn polygon:
       if(this.line_ids) {
-	for(var i = 0; i < this.line_ids.length; i++) $('#'+this.line_ids[i]).remove();
-	this.line_ids = null;
+	       for(var i = 0; i < this.line_ids.length; i++) $('#'+this.line_ids[i]).remove();
+	       this.line_ids = null;
       }
 
       /*************************************************************/

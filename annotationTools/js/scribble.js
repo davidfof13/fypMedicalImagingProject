@@ -27,11 +27,15 @@ function SetDrawingMode(mode){
       document.getElementById("polygonDiv").setAttribute('style', 'border-color: #f00');
 
     }
+
+    // removes scribbles when we move to polygon drawing
     scribble_canvas.scribble_image = "";
     scribble_canvas.cleanscribbles();
     scribble_canvas.CloseCanvas();
   }
   if (mode == 1) {
+
+    // if we haven't finished drawing a polygon
     if(draw_anno) {
       alert("Need to close current polygon first.");
       return;
@@ -39,7 +43,6 @@ function SetDrawingMode(mode){
 
    
     if(lmode != "mt"){
-    
       document.getElementById("segmDiv").setAttribute('style', 'border-color: #f00');
       document.getElementById("polygonDiv").setAttribute('style', 'border-color: #000');
     }
@@ -194,7 +197,7 @@ function scribble_canvas(tag) {
         context.moveTo(this.clickX[i-1]*ratio, this.clickY[i-1]*ratio);
       }
       else{
-	context.moveTo(this.clickX[i]*ratio-1, this.clickY[i]*ratio);
+	       context.moveTo(this.clickX[i]*ratio-1, this.clickY[i]*ratio);
       }
       context.lineTo(this.clickX[i]*ratio, this.clickY[i]*ratio);
       if (this.clickColor[i] == OBJECT_DRAWING){
@@ -239,7 +242,7 @@ function scribble_canvas(tag) {
         context.moveTo(this.clickX[i-1]*ratio, this.clickY[i-1]*ratio);
       }
       else{
-	context.moveTo(this.clickX[i]*ratio-1, this.clickY[i]*ratio);
+	      context.moveTo(this.clickX[i]*ratio-1, this.clickY[i]*ratio);
       }
       context.lineTo(this.clickX[i]*ratio, this.clickY[i]*ratio);
       if (this.clickColor[i] == OBJECT_DRAWING){
@@ -271,9 +274,9 @@ function scribble_canvas(tag) {
       type: "POST",
       url: "annotationTools/php/saveimage.php",
       data: { 
-	image: canvasData,
+	      image: canvasData,
         name: imname,
-	uploadDir: dir,
+	      uploadDir: dir,
       }
     }).done(function(o) {
       var Nobj = $(LM_xml).children("annotation").children("object").length;
@@ -299,7 +302,7 @@ function scribble_canvas(tag) {
       type: "POST",
       url: "annotationTools/php/createdir.php",
       data: { 
-	urlData: url
+	      urlData: url
       }
     }).done(function(o) {
       console.log(url);
@@ -401,6 +404,15 @@ function scribble_canvas(tag) {
   }
 
   this.WhatIsThisObjectDeleteButton = function (){
+    /*submission_edited = 0;
+    main_handler.QueryToRest();
+    this.cleanscribbles();
+    ClearMask('aux_mask');*/
+    DeleteAllScribbles();
+
+  }
+
+  this.DeleteAllScribbles = function (){
     submission_edited = 0;
     main_handler.QueryToRest();
     this.cleanscribbles();
@@ -432,7 +444,7 @@ function scribble_canvas(tag) {
       html_str += 'list="datalist1" />'; // insert list and close <input
       html_str += '<datalist id="datalist1"><select style="display:none">';
       for(var i = 0; i < object_choices.length; i++) {
-	html_str += '<option value="' + object_choices[i] + '">' + object_choices[i] + '</option>';
+	      html_str += '<option value="' + object_choices[i] + '">' + object_choices[i] + '</option>';
       }
       html_str += '</select></datalist>';
     }
@@ -481,19 +493,19 @@ function scribble_canvas(tag) {
       var idx = scribble_canvas.annotationid;
       
       if (scribble_canvas.clickX.length > 0){
-	var lx = Math.max(0, scribble_canvas.minclicX-(scribble_canvas.maxclicX - scribble_canvas.minclicX)*0.25);
-	var ly = Math.max(0, scribble_canvas.minclicY -  (scribble_canvas.maxclicY - scribble_canvas.minclicY)*0.25);
-	var rx = Math.min(main_media.width_orig, scribble_canvas.maxclicX+(scribble_canvas.maxclicX - scribble_canvas.minclicX)*0.25);
-	var ry = Math.min(main_media.height_orig, scribble_canvas.maxclicY+(scribble_canvas.maxclicY - scribble_canvas.minclicY)*0.25);
-	anno.SetImageCorners(Math.min(lx, scribble_canvas.editborderlx), 
+	      var lx = Math.max(0, scribble_canvas.minclicX-(scribble_canvas.maxclicX - scribble_canvas.minclicX)*0.25);
+	      var ly = Math.max(0, scribble_canvas.minclicY -  (scribble_canvas.maxclicY - scribble_canvas.minclicY)*0.25);
+	      var rx = Math.min(main_media.width_orig, scribble_canvas.maxclicX+(scribble_canvas.maxclicX - scribble_canvas.minclicX)*0.25);
+	      var ry = Math.min(main_media.height_orig, scribble_canvas.maxclicY+(scribble_canvas.maxclicY - scribble_canvas.minclicY)*0.25);
+	      anno.SetImageCorners(Math.min(lx, scribble_canvas.editborderlx), 
 			     Math.min(ly, scribble_canvas.editborderly),
 			     Math.max(rx, scribble_canvas.editborderrx), 
 			     Math.max(ry, scribble_canvas.editborderry));
-	anno.SetCorners(object_corners[0], object_corners[1], object_corners[2], object_corners[3]);
-	anno.SetRandomCache(scribble_canvas.cache_random_number);
-	AllAnnotations[scribble_canvas.annotationid] = anno;
+	      anno.SetCorners(object_corners[0], object_corners[1], object_corners[2], object_corners[3]);
+	      anno.SetRandomCache(scribble_canvas.cache_random_number);
+	      AllAnnotations[scribble_canvas.annotationid] = anno;
 	
-	scribble_canvas.UpdateMaskXML(idx, anno);
+	      scribble_canvas.UpdateMaskXML(idx, anno);
       }
       main_canvas.AttachAnnotation(anno);
       
@@ -550,8 +562,8 @@ function scribble_canvas(tag) {
       type: "POST",
       url: "annotationTools/php/resizeandsaveimage.php",
       data: { 
-	urlSource: urlSource,
-	namedest: namedest,
+	      urlSource: urlSource,
+	      namedest: namedest,
         urlDest: urlDest,
         scale: scale,
         posx: poslx,
@@ -568,47 +580,48 @@ function scribble_canvas(tag) {
       var Nobj = $(LM_xml).children("annotation").children("object").length;
       if (scribble_canvas.annotationid > -1) Nobj = scribble_canvas.annotationid;
       if (callback == 0){
-	var collectionName = main_media.GetFileInfo().GetDirName().replace("///","/");
-	scribble_canvas.resizeandsaveImage(imagetoSegmentURL, 'image.jpg', collectionName+"/", scale,fwidth,fheight,0,1, annotation_ended);
+	      var collectionName = main_media.GetFileInfo().GetDirName().replace("///","/");
+	      scribble_canvas.resizeandsaveImage(imagetoSegmentURL, 'image.jpg', collectionName+"/", scale,fwidth,fheight,0,1, annotation_ended);
       }
       else if (callback == 1){
-	console.log(data_response);
-	var collectionName = main_media.GetFileInfo().GetDirName().replace("///","/");
-	scribble_canvas.createDir("Masks/"+collectionName+"/");
+	      console.log(data_response);
+	      var collectionName = main_media.GetFileInfo().GetDirName().replace("///","/");
+	      scribble_canvas.createDir("Masks/"+collectionName+"/");
 	
-	// Execute the cgi to perform the segmentation
-	var url = 'annotationTools/scribble/segment.cgi';
+	      // Execute the cgi to perform the segmentation
+	      var url = 'annotationTools/scribble/segment.cgi';
 	
-	var req_submit;
-	if (window.XMLHttpRequest) {
-	  path = data_response;
-	  tmpPath = path+main_media.GetFileInfo().GetDirName().replace("///","/");
+	      var req_submit;
+	      if (window.XMLHttpRequest) {
+	        path = data_response;
+	        tmpPath = path+main_media.GetFileInfo().GetDirName().replace("///","/");
 
-	  req_submit = new XMLHttpRequest();
-	  req_submit.open("POST", url, false);
+	        req_submit = new XMLHttpRequest();
+	        req_submit.open("POST", url, false);
           
-	  req_submit.send(imagetoSegmentURL+"&"+Nobj+"&"+scribble_canvas.colorseg+"&"+tmpPath);
-	  var cadena = req_submit.responseText.split('&');
-	  resp = cadena[0];
-	  object_corners = new Array();
-	  object_corners.push(poslx + (cadena[1]/scale)); 
-	  object_corners.push(posly + (cadena[2]/scale)); 
-	  object_corners.push(poslx + (cadena[3]/scale)); 
-	  object_corners.push(posly + (cadena[4]/scale));
+	        req_submit.send(imagetoSegmentURL+"&"+Nobj+"&"+scribble_canvas.colorseg+"&"+tmpPath);
+	        var cadena = req_submit.responseText.split('&');
+	        resp = cadena[0];
+	        object_corners = new Array();
+	        object_corners.push(poslx + (cadena[1]/scale)); 
+	        object_corners.push(posly + (cadena[2]/scale)); 
+	        object_corners.push(poslx + (cadena[3]/scale)); 
+	        object_corners.push(posly + (cadena[4]/scale));
           
-	  // Save the segmentation result in the Masks folder:
-	  console.log(collectionName);
-	  scribble_canvas.resizeandsaveImage(collectionName+"/",resp,collectionName+"/",1./scale,main_media.width_orig,main_media.height_orig,1,2, annotation_ended);
-	}
+	        // Save the segmentation result in the Masks folder:
+	        console.log(collectionName);
+	        scribble_canvas.resizeandsaveImage(collectionName+"/",resp,collectionName+"/",1./scale,main_media.width_orig,main_media.height_orig,1,2, annotation_ended);
+	      }
       }
       else if (callback == 2){
-	scribble_canvas.drawMask(1);
-	scribble_canvas.hidespinner();
-	scribble_canvas.segmentation_in_progress = 0;
-	scribble_canvas.flag_changed = 0;
-	if (annotation_ended){
-	  scribble_canvas.preparetoSubmit();
-	}
+	      scribble_canvas.drawMask(1);
+	      scribble_canvas.hidespinner();
+	      scribble_canvas.segmentation_in_progress = 0;
+	      scribble_canvas.flag_changed = 0;
+
+	      if (annotation_ended){
+	          scribble_canvas.preparetoSubmit();
+	      }
       }
     });
   }
@@ -719,10 +732,10 @@ function scribble_canvas(tag) {
       if (e.button > 1) return;
       // If we are hiding all polygons, then clear the main canvas:
       if(IsHidingAllPolygons) {
-	for(var i = 0; i < main_canvas.annotations.length; i++) {
-	  main_canvas.annotations[i].hidden = true;
-	  main_canvas.annotations[i].DeletePolygon();
-	}
+	      for(var i = 0; i < main_canvas.annotations.length; i++) {
+	        main_canvas.annotations[i].hidden = true;
+	        main_canvas.annotations[i].DeletePolygon();
+	      }
       }
       
       var mouseX = GetEventPosX(e.originalEvent);
@@ -738,8 +751,8 @@ function scribble_canvas(tag) {
 
     $('#scribble_canvas').mousemove(function(e){
       if(this.paint){
-	scribble_canvas.addClick(GetEventPosX(e.originalEvent) , GetEventPosY(e.originalEvent) , true);
-	scribble_canvas.redraw();
+	      scribble_canvas.addClick(GetEventPosX(e.originalEvent) , GetEventPosY(e.originalEvent) , true);
+	      scribble_canvas.redraw();
       }
     });
     
@@ -851,20 +864,19 @@ function LMplot(xml,imagename) {
       var X = Array();
       var Y = Array();
       if (obj.children("polygon") != null){
-	for(var j = 0; j < obj.children("polygon").children("pt").length; j++) {
-	  X.push(parseInt(obj.children("polygon").children("pt").eq(j).children("x").text()));
-	  Y.push(parseInt(obj.children("polygon").children("pt").eq(j).children("y").text()));
-	}
+	       for(var j = 0; j < obj.children("polygon").children("pt").length; j++) {
+	          X.push(parseInt(obj.children("polygon").children("pt").eq(j).children("x").text()));
+	          Y.push(parseInt(obj.children("polygon").children("pt").eq(j).children("y").text()));
+	       }
       }
       else {
-	X.push(parseInt(obj.children("segm").children("box").children("xmin").text()));
-	X.push(parseInt(obj.children("segm").children("box").children("xmax").text()));
-	X.push(parseInt(obj.children("segm").children("box").children("xmax").text()));
-	X.push(parseInt(obj.children("segm").children("box").children("xmin").text()));
-	Y.push(parseInt(obj.children("segm").children("box").children("ymin").text()));
-	Y.push(parseInt(obj.children("segm").children("box").children("ymin").text()));
-	Y.push(parseInt(obj.children("segm").children("box").children("ymax").text()));
-	Y.push(parseInt(obj.children("segm").children("box").children("ymax").text()));
+	          X.push(parseInt(obj.children("segm").children("box").children("xmin").text()));
+	          X.push(parseInt(obj.children("segm").children("box").children("xmax").text()));
+           	X.push(parseInt(obj.children("segm").children("box").children("xmax").text()));
+          	X.push(parseInt(obj.children("segm").children("box").children("xmin").text()));
+          	Y.push(parseInt(obj.children("segm").children("box").children("ymin").text()));
+          	Y.push(parseInt(obj.children("segm").children("box").children("ymin").text()));
+          	Y.push(parseInt(obj.children("segm").children("box").children("ymax").text()));            	Y.push(parseInt(obj.children("segm").children("box").children("ymax").text()));
       }
       // Draw polygon:
       var attr = 'fill="none" stroke="' + HashObjectColor(name) + '" stroke-width="4"';

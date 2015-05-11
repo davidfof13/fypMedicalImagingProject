@@ -1,0 +1,71 @@
+
+<script id="template" type="text/x-handlebars-template">
+
+<div id="container" style="margin-left:20px; margin-top:20px; margin-right:20px;"> 
+
+      
+      <div class="jumbotron" style="min-width: 853px;">  
+          <div id="hit-container" class="container">
+
+          <h1 class="page-header" style="border-bottom: 3px solid #000000; display: inline-block;"> Where is the tumour? </h1>
+          <p> Find and label the tumour in the MRI brain scan below. Use the commands on the menu to select the region where the tumour lies in </p>
+          <p></p>
+          
+          
+          <div  id="hit-menu" style="min-width:124px; min-height: 200px;"> 
+            <div class="panel panel-primary">
+              <div class="panel-heading">Menu</div>
+              <div class="panel-body nav-collapse navbar-responsive container navbar-inverse">
+                <ul class= "nav nav-pills nav-stacked">
+                  <li role="presentation"><a href="#"> Draw box</a></li>
+                  <li role="presentation"><a href="#"> Scribble</a></li>
+                  <li role="presentation"><a href="#">delete</a></li>
+                </ul>
+              </div>
+            </div>
+          
+          </div>
+          <div  id="hit-image"></div>
+
+
+
+          <div id="hit-bottom" style="float:left; width:15%; min-width: 117px; min-height:  258px;">
+     
+            <strong> Do you wish to provide any feedback on this task? (Optional) </strong>
+            <p></p>
+<<<<<<< HEAD
+            <form action="{{extURL}}">
+=======
+            <form action="{{extURL}}" method="post">
+>>>>>>> master
+              <div class="form-group">
+                <textarea id="hit-feedback" class="form-control" rows="5" cols="35" name="textform">Please enter your message here
+                </textarea>
+              </div>
+              <div>
+<<<<<<< HEAD
+                  <input type="hidden" id="assignmentId" name="assignmentId" value="{{aId}}"/>
+=======
+		<input type="hidden" id="assignmentId" name="assignmentId" value="{{aId}}"/>
+>>>>>>> master
+                  <input type="hidden" id="number_objects" name="number_objects" value="" />
+                  <input type="hidden" id="object_name" name="object_name" value="" />
+                  <input type="hidden" id="LMurl" name="LMurl" value="" />
+                  <input type="hidden" id="mt_comments" name="mt_comments" value="" />
+<<<<<<< HEAD
+
+=======
+>>>>>>> master
+                  <button type="submit" name="Submit" id="mt_submit" class="btn btn-primary" disabled="true" onmousedown="javascript:document.getElementById(\'mt_comments\').value=document.getElementById(\'hit-feedback\').textContent;">Submit hit</button>
+              </div>
+            </form>
+  
+          </div> 
+        </div>  
+      </div> 
+    
+
+</div>
+
+
+</script> 

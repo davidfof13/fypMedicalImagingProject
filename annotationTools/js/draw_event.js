@@ -3,9 +3,17 @@
 var draw_anno = null;
 var query_anno = null;
 
+// rectangle starting x, y positions
+var startX = null; 
+var startY = null;
+var rectangle = null;
+var rx,ry = null;
+
 // This function is called when the draw event is started.  It can be 
 // triggered when the user (1) clicks on the base canvas.
 function StartDrawEvent(event) {
+
+/*
   if(!action_CreatePolygon) return;
   if(active_canvas != REST_CANVAS) return;
 
@@ -55,7 +63,156 @@ function StartDrawEvent(event) {
       return DrawCanvasMouseDown(e.originalEvent);
     });
 
-  WriteLogMsg('*start_polygon');
+  WriteLogMsg('*start_polygon');*/
+
+  $('#draw_canvas_div').css('cursor', 'default');
+  $('#draw_canvas_div').empty();
+
+
+  $('#draw_canvas_div').mousemove(function(e) {
+
+      
+      /*var ev = e || window.event; //Moz || IE
+      if (ev.pageX) { //Moz
+            rx = ev.pageX + window.pageXOffset;
+            ry = ev.pageY + window.pageYOffset;
+        } else if (ev.clientX) { //IE
+            rx = ev.clientX + document.body.scrollLeft;
+            ry = ev.clientY + document.body.scrollTop;
+      }*/
+
+       rx  = GetEventPosX(e);
+       ry = GetEventPosY(e);
+
+      var scale = main_media.GetImRatio();
+       //scale = 1;
+      //x = Math.round(x/scale);
+     // y = Math.round(y/scale);
+      //var x = Math.round(GetEventPosX(event)/scale);
+     // var y = Math.round(GetEventPosY(event)/scale);
+     scale = 1;
+
+      if(rectangle){
+        rectangle.style.width = Math.abs(rx - startX)*scale + 'px';
+        rectangle.style.height = Math.abs(ry - startY)*scale + 'px';
+        rectangle.style.left = (rx - startX < 0) ? rx*scale + 'px' : startX*scale + 'px';
+        rectangle.style.top =  (ry - startY < 0) ? ry*scale + 'px' : startY*scale + 'px';
+      }
+
+  });
+
+
+  // 3. Handles when user closes the rectangle. 
+  //$('#draw_canvas_div').unbind();
+  $('#draw_canvas_div').mousedown(function(e) {
+
+      // start rectangle
+      if(rectangle == null)
+          DrawRectangle(e);
+
+      else{ // close rectangle
+        rectangle = null;
+        active_canvas = REST_CANVAS;
+        $('#draw_canvas_div').css('cursor', 'default');
+        //return CloseRectangle(e.originalEvent);
+      }
+
+    });
+
+ DrawRectangle(event);
+}
+
+function DrawRectangle(event){
+
+  if(!action_CreatePolygon) return;
+  if(active_canvas != REST_CANVAS) return;
+
+
+
+
+  // Write message to the console:
+  console.log('LabelMe: Starting draw event...');
+
+  // If we are hiding all polygons, then clear the main canvas:
+  if(IsHidingAllPolygons) {
+    for(var i = 0; i < main_canvas.annotations.length; i++) {
+      main_canvas.annotations[i].hidden = true;
+      main_canvas.annotations[i].DeletePolygon();
+    }
+  }
+
+  // Set active canvas:
+  active_canvas = DRAW_CANVAS;
+
+  // Get (x,y) mouse click location and button.
+  // startX = Math.round(GetEventPosX(event)/main_media.GetImRatio());
+  // startY = Math.round(GetEventPosY(event)/main_media.GetImRatio());
+  startX = GetEventPosX(event);
+  startY = GetEventPosY(event);
+
+
+  var button = event.button;
+  
+  // If the user does not left click, then ignore mouse-down action.
+  if(button>1) return;
+  
+  // Move draw canvas to front:
+  //$('#draw_canvas').css('z-index','0');
+  $('#draw_canvas_div').css('z-index','0');
+  
+  //$('#draw_canvas_div').empty();
+
+  if(username_flag) submit_username();
+  
+  // Create new annotation structure:
+  draw_anno = new annotation(AllAnnotations.length);
+  //var elem = $('#draw_canvas_div');
+
+  rectangle = document.createElement('div');
+
+  rectangle.className = 'rectangle';
+  rectangle.style.left = startX + 'px';
+  rectangle.style.top  = startY + 'px';
+  $('#draw_canvas_div').append(rectangle);
+  $('#draw_canvas_div').css('cursor' , 'crosshair');
+
+
+  // 2. when moving the rectangle
+
+  /*
+  $('#draw_canvas_div').mousemove(function(e) {
+
+      var x,y;
+      var ev = e || window.event; //Moz || IE
+      if (ev.pageX) { //Moz
+            x = ev.pageX + window.pageXOffset;
+            y = ev.pageY + window.pageYOffset;
+        } else if (ev.clientX) { //IE
+            x = ev.clientX + document.body.scrollLeft;
+            y = ev.clientY + document.body.scrollTop;
+      }
+
+      var scale = main_media.GetImRatio();
+      //x = Math.round(x/scale);
+     // y = Math.round(y/scale);
+      //var x = Math.round(GetEventPosX(event)/scale);
+     // var y = Math.round(GetEventPosY(event)/scale);
+
+      if(rectangle){
+        rectangle.style.width = Math.abs(x - startX)*scale + 'px';
+        rectangle.style.height = Math.abs(y - startY)*scale + 'px';
+        rectangle.style.left = (x - startX < 0) ? x + 'px' : startX*scale + 'px';
+        rectangle.style.top =  (y - startY < 0) ? y + 'px' : startY*scale + 'px';
+      }
+
+  })*/
+
+
+}
+
+function CloseRectangle(event){
+
+  $('#draw_canvas_div').css('cursor', 'default');
 }
 
 // Handles when the user presses the mouse button down on the drawing
@@ -83,7 +240,7 @@ function DrawCanvasMouseDown(event) {
   var line_idx = draw_anno.line_ids.length;
   var n = draw_anno.pts_x.length-1;
   
-  // Draw line segment:
+  // Draw new line segment and save its id:
   draw_anno.line_ids.push(DrawLineSegment(draw_anno.div_attach,draw_anno.pts_x[n-1],draw_anno.pts_y[n-1],draw_anno.pts_x[n],draw_anno.pts_y[n],'stroke="#0000ff" stroke-width="4"',scale));
 
   // Set cursor to be crosshair on line segment:

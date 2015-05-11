@@ -100,23 +100,23 @@ height:100%; z-index:0;}
 #anno_list {font-size:small;}
 
 
-#menu-content {
+.menu-content {
   padding: 4px;
 }
 
-#menu-ul>li>a{
+.menu-ul>li>a{
   background-color: #4D3D3C;
 
 }
 
 
 /*on user click */
-#menu-ul>li>a.active{
+.menu-ul>li>a.active{
   background-color: #773E3A; 
 }
 
 /* on hover*/
-#menu-ul>li>a:hover{
+.menu-ul>li>a:hover{
   background-color: #773E3A;
   color: #FFFFFF;
 
@@ -167,4 +167,9 @@ height:100%; z-index:0;}
 .nav-stacked>li+li {
   margin-top: 3px;
   margin-left: 0;
+}
+
+.rectangle {
+    border: 2px solid #FF0000;
+    position: inherit;
 }

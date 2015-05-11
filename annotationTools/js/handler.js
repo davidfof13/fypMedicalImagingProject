@@ -153,8 +153,9 @@ function handler() {
     this.CanvasMouseMove = function (event,pp) {
         var x = GetEventPosX(event);
         var y = GetEventPosY(event);
-        if(IsNearPolygon(x,y,pp)) selectObject(pp);
-        else unselectObjects();
+        //if(IsNearPolygon(x,y,pp)) selectObject(pp);
+        selectObject(pp);
+        //else unselectObjects();
     };
     
     // Submits the object label in response to the "What is this object?"
@@ -219,8 +220,7 @@ function handler() {
       var html_str = '<object>';
       html_str += '<name>' + new_name + '</name>';
       html_str += '<deleted>0</deleted>';
-      html_str += '<verified>0</verified>'
-      ;
+      html_str += '<verified>0</verified>';
       if(use_attributes) {
 	       html_str += '<occluded>' + new_occluded + '</occluded>';
 	       html_str += '<attributes>' + new_attributes + '</attributes>';
@@ -233,63 +233,63 @@ function handler() {
       
       if(anno.GetType() == 1) {
         
-	/*************************************************************/
-	/*************************************************************/
-	// Scribble: Add annotation to LM_xml:
-	html_str += '<segm>';
-	html_str += '<username>' + username + '</username>';
+	    /*************************************************************/
+	    /*************************************************************/
+	    // Scribble: Add annotation to LM_xml:
+	    html_str += '<segm>';
+	    html_str += '<username>' + username + '</username>';
 	
-	html_str += '<box>';
-	html_str += '<xmin>' + anno.GetPtsX()[0] + '</xmin>'; 
-	html_str += '<ymin>' + anno.GetPtsY()[0] + '</ymin>';
-	html_str += '<xmax>' + anno.GetPtsX()[1] + '</xmax>'; 
-	html_str += '<ymax>' + anno.GetPtsY()[2] + '</ymax>';
-	html_str += '</box>';
+	    html_str += '<box>';
+	    html_str += '<xmin>' + anno.GetPtsX()[0] + '</xmin>'; 
+	    html_str += '<ymin>' + anno.GetPtsY()[0] + '</ymin>';
+	    html_str += '<xmax>' + anno.GetPtsX()[1] + '</xmax>'; 
+	    html_str += '<ymax>' + anno.GetPtsY()[2] + '</ymax>';
+	    html_str += '</box>';
 	
-	html_str += '<mask>'+ anno.GetImName()+'</mask>';
+	    html_str += '<mask>'+ anno.GetImName()+'</mask>';
 	
-	html_str += '<scribbles>';
-	html_str += '<xmin>' + anno.GetCornerLX() + '</xmin>'; 
-	html_str += '<ymin>' + anno.GetCornerLY() + '</ymin>';
-	html_str += '<xmax>' + anno.GetCornerRX() + '</xmax>'; 
-	html_str += '<ymax>' + anno.GetCornerRY() + '</ymax>';
-	html_str += '<scribble_name>'+ anno.GetScribbleName()+'</scribble_name>'; 
-	html_str += '</scribbles>';
+	    html_str += '<scribbles>';
+	    html_str += '<xmin>' + anno.GetCornerLX() + '</xmin>'; 
+	    html_str += '<ymin>' + anno.GetCornerLY() + '</ymin>';
+	    html_str += '<xmax>' + anno.GetCornerRX() + '</xmax>'; 
+	    html_str += '<ymax>' + anno.GetCornerRY() + '</ymax>';
+	    html_str += '<scribble_name>'+ anno.GetScribbleName()+'</scribble_name>'; 
+	    html_str += '</scribbles>';
 	
-	html_str += '</segm>';
-	html_str += '</object>';
-	$(LM_xml).children("annotation").append($(html_str));
-	/*************************************************************/
-	/*************************************************************/
+	    html_str += '</segm>';
+	    html_str += '</object>';
+	    $(LM_xml).children("annotation").append($(html_str));
+	    /*************************************************************/
+	    /*************************************************************/
       }
       else {
-	html_str += '<polygon>';
-	html_str += '<username>' + username + '</username>';
-	for(var jj=0; jj < anno.GetPtsX().length; jj++) {
-	  html_str += '<pt>';
-	  html_str += '<x>' + anno.GetPtsX()[jj] + '</x>';
-	  html_str += '<y>' + anno.GetPtsY()[jj] + '</y>';
-	  html_str += '</pt>';
-	}
-	html_str += '</polygon>';
-	html_str += '</object>';
-	$(LM_xml).children("annotation").append($(html_str));
+	        html_str += '<polygon>';
+	        html_str += '<username>' + username + '</username>';
+	     for(var jj=0; jj < anno.GetPtsX().length; jj++) {
+	        html_str += '<pt>';
+	        html_str += '<x>' + anno.GetPtsX()[jj] + '</x>';
+	        html_str += '<y>' + anno.GetPtsY()[jj] + '</y>';
+	        html_str += '</pt>';
+	     }
+	        html_str += '</polygon>';
+	        html_str += '</object>';
+	        $(LM_xml).children("annotation").append($(html_str));
       }
       
       AllAnnotations.push(anno);
       
       if(!anno.GetDeleted()||view_Deleted) {
-	main_canvas.AttachAnnotation(anno);
-	anno.RenderAnnotation('rest');
+	      main_canvas.AttachAnnotation(anno);
+	      anno.RenderAnnotation('rest');
       }
       
       /*************************************************************/
       /*************************************************************/
       // Scribble: Clean scribbles.
       if(anno.GetType() == 1) {
-	scribble_canvas.cleanscribbles();
-	scribble_canvas.scribble_image = "";
-	scribble_canvas.colorseg = Math.floor(Math.random()*14);
+	       scribble_canvas.cleanscribbles();
+	       scribble_canvas.scribble_image = "";
+	       scribble_canvas.colorseg = Math.floor(Math.random()*14);
       }
       /*************************************************************/
       /*************************************************************/
@@ -308,21 +308,22 @@ function handler() {
       }
     };
     
-    // Handles when we wish to change from "query" to "rest".
-    this.QueryToRest = function () {
-        active_canvas = REST_CANVAS;
+      // Handles when we wish to change from "query" to "rest".
+      this.QueryToRest = function () {
+      active_canvas = REST_CANVAS;
 
-	// Move query canvas to the back:
-	document.getElementById('query_canvas').style.zIndex = -2;
-	document.getElementById('query_canvas_div').style.zIndex = -2;
+	   
+      // Move query canvas to the back:
+	     document.getElementById('query_canvas').style.zIndex = -2;
+	     document.getElementById('query_canvas_div').style.zIndex = -2;
 
-	// Remove polygon from the query canvas:
-	if(query_anno) query_anno.DeletePolygon();
-	var anno = query_anno;
-	query_anno = null;
+	     // Remove polygon from the query canvas:
+	     if(query_anno) query_anno.DeletePolygon();
+	     var anno = query_anno;
+	     query_anno = null;
 
-	CloseQueryPopup();
-	main_media.ScrollbarsOn();
+	     CloseQueryPopup();
+	     main_media.ScrollbarsOn();
 
         return anno;
     };
@@ -354,9 +355,19 @@ function handler() {
     this.setHITMenu = function () {  
 
         // set current list element to active
-        $('#menu-ul>li>a').click(function(){
-          $('#menu-ul').find('.active').removeClass('active');
+        $('.menu-ul>li>a').click(function(){
+            var el = $('.menu-ul').find('.active');
+            el.removeClass('active');
             this.className += ' active';
+
+            // if we click on any other button execept the drop downn menu,
+            // close dropdown menu
+            if (el.attr("id") =="dropdownMenu" && this.id != "dropdownMenu"){
+              $('.hit-submenu').slideToggle();
+              $('.caret').attr('class', 'caret-right');
+            }
+
+
         });
 
          // set current sublist element to active
@@ -367,11 +378,6 @@ function handler() {
 
 
          this.className += ' active';
-
-         // get the new color of this element
-         //var cl = this.css('background-color');
-
-         //var cl = window.getComputedStyle(this).getPropertyValue('background-color');
 
          // also set it to the li encompassing it
          //this.parentNode.style.backgroundColor = cl;
@@ -395,22 +401,10 @@ function handler() {
 
             $('#foreground').addClass('active');
 
-            // get colour of <a> link
-           // var cl = $('#foreground').css('background-color');
-
-            // add it to li element
-           // $('#foreground').parent().css('background-color', cl);
-
            $('#foreground').parent().addClass('active');
 
             // caret right
             $('.caret-right').attr('class', 'caret');
-
-           /* var tmp = $('.hit-submenu').children()[0];
-
-            
-            // set foreground to active by default
-            tmp.className += ' active';*/
           }
 
 
