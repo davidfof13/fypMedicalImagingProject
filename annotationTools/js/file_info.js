@@ -205,7 +205,6 @@ function file_info() {
             if(this.mode=='mt') {
 
                 if(!this.mt_instructions) {
-                    //if(mt_N=='inf') this.mt_instructions = 'Please label as many objects as you want in this image.';
                     if(mt_N != 'inf' ) 
                         this.mt_instructions = 'Please label at least ' + mt_N + ' object in this image.';
 

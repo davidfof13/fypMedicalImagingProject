@@ -108,7 +108,7 @@ function image(id) {
     };
 
     // Resizes the image so that it fits inside the mTurk
-    // hit display based its dimensions. Whether only the width 
+    // hit display based on its dimensions. Whether only the width 
     // or the height exceeds the bound, we always multiply 
     // both dimension  by the same factor to maintain the image ratio.
     // We also make the ratio slightly smaller to fit the image in the bound
@@ -189,32 +189,6 @@ function image(id) {
 
     }
 
-
-/*
-    this.ResizeImage = function() {
-
-       // var maxWidth = $('#hit-image').width(); // Max width for the image
-       // var maxHeight = $('#hit-image').height();   // Max height for the image
-
-        maxWidth = $('#hit-image').css('width');
-        maxHeight = $('#hit-image').css('height');
-
-        var srcWidth = this.width_curr;    // Current image width
-        var srcHeight = this.height_curr;  // Current image height
-
-        //var ratio = Math.min(maxWidth / srcWidth, maxHeight / srcHeight);
-        var ratioW = Math.min(maxWidth / srcWidth);
-        var ratioH = Math.min(maxHeight / srcHeight);
-
-        this.width_curr = srcWidth*ratioW;
-        this.height_curr = srcHeight*ratioH;
-
-        this.SetDimensions();
-    }*/
-
-
-
-    
     // If (x,y) is not in view, then scroll it into view.  Return adjusted
     // (x,y) point that takes into account the slide offset.
     this.SlideWindow = function (x,y) {

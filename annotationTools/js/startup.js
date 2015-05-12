@@ -41,9 +41,29 @@ function StartupLabelMe() {
 	       main_media.SetImageDimensions();
 
          // Resize image for mTurk 
-         if(mmInfo.GetMode() == "mt")
-          main_media.ResizeImage();
+         if(mmInfo.GetMode() == "mt"){
+            main_media.ResizeImage();
 
+
+            // Set events to resize image whenever we resize window
+            // Courtesy of http://stackoverflow.com/questions/2996431/detect-when-a-window-is-resized-using-javascript
+            $(window).resize(function() {
+              if(this.resizeTO) clearTimeout(this.resizeTO);
+                this.resizeTO = setTimeout(function() {
+                  $(this).trigger('resizeEnd');
+                }, 60);
+            });
+
+            // Run Jquery function on window resize
+            $(window).bind('resizeEnd', function() {
+              if(main_media){
+                $(document).ready(function(){
+                  main_media.ResizeImage();
+                });
+              }
+            });
+
+          }
       
 	       // Read the XML annotation file:
 	       var anno_file = main_media.GetFileInfo().GetFullName();

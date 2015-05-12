@@ -21,54 +21,18 @@ function StartDrawEvent(event) {
  $('#draw_canvas_div').css('cursor', 'default');
  $('#draw_canvas_div').empty();
 
-  offsetX = $('#draw_canvas_div').offset().left;
-  offsetY = $('#draw_canvas_div').offset().top;
-
-
   $('#draw_canvas_div').mousemove(function(e) {
 
 
-      //e = e.originalEvent;
-      /*var ev = e || window.event; //Moz || IE
-      if (ev.pageX) { //Moz
-            rx = ev.pageX + window.pageXOffset;
-            ry = ev.pageY + window.pageYOffset;
-        } else if (ev.clientX) { //IE
-            rx = ev.clientX + document.body.scrollLeft;
-            ry = ev.clientY + document.body.scrollTop;
-      }*/
-
-     /* rectangle.style.width = '0px';
-      rectangle.style.height  = '0px';*/
-
-
- 
-
-      /* var ev = e || window.event;
-
-       if (ev.pageX) { //Moz
-            rx = e.clientX;
-            ry = e.clientY;
-        }*/
-
        var scale = main_media.GetImRatio();
-
-       //scale = 1;
 
        if(rectangle != null){
 
-          var d = ((Math.abs(rx - e.offsetX))/rx)*100;
-
-          if(rx != 0 && d > 50)
-              console.log('big');
-
-         /*rx = GetEventPosX(e.originalEvent);
-         ry = GetEventPosY(e.originalEvent); */
-
-         rx = parseInt(e.clientX - offsetX);
-         ry = parseInt(e.clientY - offsetY);
+         rx = parseInt(e.clientX + $(window).scrollLeft()  - offsetX);
+         ry = parseInt(e.clientY + $(window).scrollTop() - offsetY);
         
 
+         // set rectangle dimensions based on start end end co-ordinates
          rectangle.style.width = Math.abs(rx - startX)  + 'px';
          rectangle.style.height = Math.abs(ry - startY) + 'px';
          rectangle.style.left = (rx - startX < 0) ? rx + 'px' : startX + 'px';
@@ -90,9 +54,6 @@ function StartDrawEvent(event) {
         rectangle = null;
         active_canvas = REST_CANVAS;
         $('#draw_canvas_div').css('cursor', 'default');
-        //document.getElementById('draw_canvas_div').style.zIndex = -2;
-        //$('#draw_canvas_div').unbind();
-        //return CloseRectangle(e.originalEvent);
       }
 
     });
@@ -120,14 +81,16 @@ function DrawRectangle(event){
   // Set active canvas:
   active_canvas = DRAW_CANVAS;
 
-  // Get (x,y) mouse click location and button.
-  // startX = Math.round(GetEventPosX(event)/main_media.GetImRatio());
-  // startY = Math.round(GetEventPosY(event)/main_media.GetImRatio());
-  /*startX = GetEventPosX(event);
-  startY = GetEventPosY(event);*/
+  offsetX = $('#draw_canvas_div').offset().left;
+  offsetY = $('#draw_canvas_div').offset().top;
 
-  startX =  parseInt(event.clientX - offsetX);
-  startY = parseInt(event.clientY - offsetY);
+
+  startX =  parseInt(event.pageX - offsetX);
+  startY = parseInt(event.pageY - offsetY);
+
+  console.log('startX = ' + startX + '. clientX = ' + event.clientX);
+  console.log('startY = ' + startX + '. clientY = ' + event.clientY);
+
 
   var button = event.button;
   
@@ -135,14 +98,12 @@ function DrawRectangle(event){
   if(button>1) return;
   
   // Move draw canvas to front:
-  //$('#draw_canvas').css('z-index','0');
   $('#draw_canvas_div').css('z-index','0');
 
   if(username_flag) submit_username();
   
   // Create new annotation structure:
   draw_anno = new annotation(AllAnnotations.length);
-  //var elem = $('#draw_canvas_div');
 
   rectangle = document.createElement('div');
 
@@ -152,43 +113,6 @@ function DrawRectangle(event){
   $('#draw_canvas_div').append(rectangle);
   $('#draw_canvas_div').css('cursor' , 'crosshair');
 
-
-  // 2. when moving the rectangle
-
-  /*
-  $('#draw_canvas_div').mousemove(function(e) {
-
-      var x,y;
-      var ev = e || window.event; //Moz || IE
-      if (ev.pageX) { //Moz
-            x = ev.pageX + window.pageXOffset;
-            y = ev.pageY + window.pageYOffset;
-        } else if (ev.clientX) { //IE
-            x = ev.clientX + document.body.scrollLeft;
-            y = ev.clientY + document.body.scrollTop;
-      }
-
-      var scale = main_media.GetImRatio();
-      //x = Math.round(x/scale);
-     // y = Math.round(y/scale);
-      //var x = Math.round(GetEventPosX(event)/scale);
-     // var y = Math.round(GetEventPosY(event)/scale);
-
-      if(rectangle){
-        rectangle.style.width = Math.abs(x - startX)*scale + 'px';
-        rectangle.style.height = Math.abs(y - startY)*scale + 'px';
-        rectangle.style.left = (x - startX < 0) ? x + 'px' : startX*scale + 'px';
-        rectangle.style.top =  (y - startY < 0) ? y + 'px' : startY*scale + 'px';
-      }
-
-  })*/
-
-
-}
-
-function CloseRectangle(event){
-
-  $('#draw_canvas_div').css('cursor', 'default');
 }
 
 // Handles when the user presses the mouse button down on the drawing

@@ -37,12 +37,12 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     
 <style type="text/css">
     
-      .hit-menu {
+      #hit-menu {
         width: 15%;
         height: 200px; 
+      //  background-color: #000000;
         float: left;
         margin-right: 35px;
-        display: block;
         
       }
   
@@ -53,6 +53,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
         float: left;
         margin-right: 20px;
         max-width: 60%;
+        min-width: 469px;
         max-height: 500px;
       
       }
@@ -93,7 +94,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 <!--#include virtual="handlebars.js" -->
 // ]]>
 
-/*
  $(window).resize(function() {
     if(this.resizeTO) clearTimeout(this.resizeTO);
     this.resizeTO = setTimeout(function() {
@@ -101,15 +101,15 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     }, 60);
 });
 
-// Run Jquery function on window resize
-$(window).bind('resizeEnd', function() {
+ // Run Jquery function on window resize
+ $(window).bind('resizeEnd', function() {
     if(main_media){
         $(document).ready(function(){
           main_media.ResizeImage();
         });
 
     }
-});*/
+  });
 </script>
 
 
@@ -132,7 +132,7 @@ $(window).bind('resizeEnd', function() {
 <body id="body" style="visibility:hidden;" onload="javascript:StartupLabelMe();">
 
   <!-- Mechanical Turk hit  -->
-  <div id="mt_submit_form"></div>
+  <div id="mt_submit_form" style="visibility: hidden;"></div>
   
   <!-- HEADER AND LOGO -->  
   <div class="header" id="header">
@@ -203,7 +203,7 @@ $(window).bind('resizeEnd', function() {
   <!-- IMAGE CANVAS -->
   <div class="image_canvas" id="main_section">
     <div id="loading">Loading image...</div>
-    <div id="main_media" class="top" style="visibility:hidden; overflow:hidden;">
+    <div id="main_media" class="top" style="visibility:hidden; overflow:auto;">
       <img id="im" style="vertical-align:bottom;z-index:-3;" />
       
       <div id="myCanvas_bg_div" style="position:absolute;left:0px;top:0px;z-index:0;cursor:crosshair;width:100%;height:100%;background-color:rgba(128,64,0,0);">
@@ -241,7 +241,7 @@ $(window).bind('resizeEnd', function() {
   </div>
   
   <!-- DIV that will contain the object list -->
-  <div id="anno_anchor"></div>
+  <div id="anno_anchor" onload="javascript:ImageCanvasPos();"></div>
   
   <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>

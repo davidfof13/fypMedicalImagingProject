@@ -25,7 +25,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
 <link rel="shortcut icon" href="Icons/favicon16.ico" />
-<link rel="stylesheet" href="https://code.jquery.com/ui/1.10.0/themes/base/jquery-ui.css" type="text/css"/> 
+<link rel="stylesheet" href="//code.jquery.com/ui/1.10.0/themes/base/jquery-ui.css" type="text/css"/> 
 <link rel="import" href="annotationTools/html/mTurkUI.html"/>
 
 <!--Courtesy of http://www.hongkiat.com/blog/html-import/-->
@@ -40,6 +40,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
       .hit-menu {
         width: 15%;
         height: 200px; 
+      //  background-color: #000000;
         float: left;
         margin-right: 35px;
         display: block;
@@ -92,24 +93,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 <!--#include virtual="./annotationTools/js/player.js" -->
 <!--#include virtual="handlebars.js" -->
 // ]]>
-
-/*
- $(window).resize(function() {
-    if(this.resizeTO) clearTimeout(this.resizeTO);
-    this.resizeTO = setTimeout(function() {
-        $(this).trigger('resizeEnd');
-    }, 60);
-});
-
-// Run Jquery function on window resize
-$(window).bind('resizeEnd', function() {
-    if(main_media){
-        $(document).ready(function(){
-          main_media.ResizeImage();
-        });
-
-    }
-});*/
 </script>
 
 
