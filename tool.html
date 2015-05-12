@@ -94,10 +94,21 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 <!--#include virtual="handlebars.js" -->
 // ]]>
 
- 
- // Run Jquery function on window resize
  $(window).resize(function() {
-    main_media.ResizeImage();
+    if(this.resizeTO) clearTimeout(this.resizeTO);
+    this.resizeTO = setTimeout(function() {
+        $(this).trigger('resizeEnd');
+    }, 60);
+});
+
+ // Run Jquery function on window resize
+ $(window).bind('resizeEnd', function() {
+    if(main_media){
+        $(document).ready(function(){
+          main_media.ResizeImage();
+        });
+
+    }
   });
 </script>
 
