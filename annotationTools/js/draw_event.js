@@ -7,71 +7,28 @@ var query_anno = null;
 var startX = null; 
 var startY = null;
 var rectangle = null;
-var rx,ry = null;
+var rx = 0;
+var ry = 0;
+
+var offsetX, offsetY;
+//courtesy of http://jsfiddle.net/m1erickson/7uNfW/
 
 // This function is called when the draw event is started.  It can be 
 // triggered when the user (1) clicks on the base canvas.
 function StartDrawEvent(event) {
 
-/*
-  if(!action_CreatePolygon) return;
-  if(active_canvas != REST_CANVAS) return;
 
-  // Write message to the console:
-  console.log('LabelMe: Starting draw event...');
+ $('#draw_canvas_div').css('cursor', 'default');
+ $('#draw_canvas_div').empty();
 
-  // If we are hiding all polygons, then clear the main canvas:
-  if(IsHidingAllPolygons) {
-    for(var i = 0; i < main_canvas.annotations.length; i++) {
-      main_canvas.annotations[i].hidden = true;
-      main_canvas.annotations[i].DeletePolygon();
-    }
-  }
-
-  // Set active canvas:
-  active_canvas = DRAW_CANVAS;
-
-  // Get (x,y) mouse click location and button.
-  var x = GetEventPosX(event);
-  var y = GetEventPosY(event);
-  var button = event.button;
-  
-  // If the user does not left click, then ignore mouse-down action.
-  if(button>1) return;
-  
-  // Move draw canvas to front:
-  $('#draw_canvas').css('z-index','0');
-  $('#draw_canvas_div').css('z-index','0');
-  
-  if(username_flag) submit_username();
-  
-  // Create new annotation structure:
-  draw_anno = new annotation(AllAnnotations.length);
-  
-  // Add first control point:
-  draw_anno.pts_x.push(Math.round(x/main_media.GetImRatio()));
-  draw_anno.pts_y.push(Math.round(y/main_media.GetImRatio()));
-  
-  // Draw polyline:
-  draw_anno.SetDivAttach('draw_canvas');
-  draw_anno.DrawPolyLine();
-
-  // Set mousedown action to handle when user clicks on the drawing canvas:
-  // Now the next time the user clicks we want to call DrawCanvasMouseDown instead
-  $('#draw_canvas_div').unbind();
-  $('#draw_canvas_div').mousedown({obj: this},function(e) {
-      return DrawCanvasMouseDown(e.originalEvent);
-    });
-
-  WriteLogMsg('*start_polygon');*/
-
-  $('#draw_canvas_div').css('cursor', 'default');
-  $('#draw_canvas_div').empty();
+  offsetX = $('#draw_canvas_div').offset().left;
+  offsetY = $('#draw_canvas_div').offset().top;
 
 
   $('#draw_canvas_div').mousemove(function(e) {
 
-      
+
+      //e = e.originalEvent;
       /*var ev = e || window.event; //Moz || IE
       if (ev.pageX) { //Moz
             rx = ev.pageX + window.pageXOffset;
@@ -81,23 +38,42 @@ function StartDrawEvent(event) {
             ry = ev.clientY + document.body.scrollTop;
       }*/
 
-       rx  = GetEventPosX(e);
-       ry = GetEventPosY(e);
+     /* rectangle.style.width = '0px';
+      rectangle.style.height  = '0px';*/
 
-      var scale = main_media.GetImRatio();
+
+ 
+
+      /* var ev = e || window.event;
+
+       if (ev.pageX) { //Moz
+            rx = e.clientX;
+            ry = e.clientY;
+        }*/
+
+       var scale = main_media.GetImRatio();
+
        //scale = 1;
-      //x = Math.round(x/scale);
-     // y = Math.round(y/scale);
-      //var x = Math.round(GetEventPosX(event)/scale);
-     // var y = Math.round(GetEventPosY(event)/scale);
-     scale = 1;
 
-      if(rectangle){
-        rectangle.style.width = Math.abs(rx - startX)*scale + 'px';
-        rectangle.style.height = Math.abs(ry - startY)*scale + 'px';
-        rectangle.style.left = (rx - startX < 0) ? rx*scale + 'px' : startX*scale + 'px';
-        rectangle.style.top =  (ry - startY < 0) ? ry*scale + 'px' : startY*scale + 'px';
-      }
+       if(rectangle != null){
+
+          var d = ((Math.abs(rx - e.offsetX))/rx)*100;
+
+          if(rx != 0 && d > 50)
+              console.log('big');
+
+         /*rx = GetEventPosX(e.originalEvent);
+         ry = GetEventPosY(e.originalEvent); */
+
+         rx = parseInt(e.clientX - offsetX);
+         ry = parseInt(e.clientY - offsetY);
+        
+
+         rectangle.style.width = Math.abs(rx - startX)  + 'px';
+         rectangle.style.height = Math.abs(ry - startY) + 'px';
+         rectangle.style.left = (rx - startX < 0) ? rx + 'px' : startX + 'px';
+         rectangle.style.top =  (ry - startY < 0) ? ry + 'px' : startY + 'px';
+       }
 
   });
 
@@ -114,6 +90,8 @@ function StartDrawEvent(event) {
         rectangle = null;
         active_canvas = REST_CANVAS;
         $('#draw_canvas_div').css('cursor', 'default');
+        //document.getElementById('draw_canvas_div').style.zIndex = -2;
+        //$('#draw_canvas_div').unbind();
         //return CloseRectangle(e.originalEvent);
       }
 
@@ -126,8 +104,6 @@ function DrawRectangle(event){
 
   if(!action_CreatePolygon) return;
   if(active_canvas != REST_CANVAS) return;
-
-
 
 
   // Write message to the console:
@@ -147,9 +123,11 @@ function DrawRectangle(event){
   // Get (x,y) mouse click location and button.
   // startX = Math.round(GetEventPosX(event)/main_media.GetImRatio());
   // startY = Math.round(GetEventPosY(event)/main_media.GetImRatio());
-  startX = GetEventPosX(event);
-  startY = GetEventPosY(event);
+  /*startX = GetEventPosX(event);
+  startY = GetEventPosY(event);*/
 
+  startX =  parseInt(event.clientX - offsetX);
+  startY = parseInt(event.clientY - offsetY);
 
   var button = event.button;
   
@@ -159,8 +137,6 @@ function DrawRectangle(event){
   // Move draw canvas to front:
   //$('#draw_canvas').css('z-index','0');
   $('#draw_canvas_div').css('z-index','0');
-  
-  //$('#draw_canvas_div').empty();
 
   if(username_flag) submit_username();
   
