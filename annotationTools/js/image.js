@@ -22,6 +22,10 @@ function image(id) {
     this.browser_im_ratio; // Initial im_ratio; this should not get changed!!
     this.curr_frame_width;  // Current width of main_media.
     this.curr_frame_height; // Current height of main_media.
+    this.resize_state = 0; // state of resizing of image (shrinking or expanding)
+
+    this.maxWidth = 0;
+    this.maxHeight = 0;
     
     // *******************************************
     // Public methods:
@@ -110,14 +114,28 @@ function image(id) {
     // We also make the ratio slightly smaller to fit the image in the bound
     // Courtesy of http://stackoverflow.com/questions/3971841/how-to-resize-images-proportionally-keeping-the-aspect-ratio
     this.ResizeImage = function(){
-        
+    
+
         var maxWidth = $('#hit-image').width(); // Max width for the image
         var maxHeight = $('#hit-image').height();   // Max height for the image
         var ratio = 0;  // Used for aspect ratio
         var width = this.width_curr;    // Current image width
         var height = this.height_curr;  // Current image height
 
-        // Check if the current width is larger than the max
+        if(width == maxWidth && height == maxHeight) return;
+
+
+        if(width > maxWidth || height > maxHeight)
+            this.shrinkImage(width, maxWidth, height, maxHeight);
+
+        else
+            this.expandImage(width, maxWidth, height, maxHeight);
+    }
+
+    this.shrinkImage = function(width, maxWidth, height, maxHeight){
+
+        console.log('im=' + width + 'x' + height + ', hit=' + maxWidth + 'x' + maxHeight + '-> shrinking to ');
+         // Check if the current width is larger than the max
         if(width > maxWidth){
             ratio = (maxWidth / width);   // get ratio for scaling image
             this.width_curr = maxWidth;
@@ -133,9 +151,41 @@ function image(id) {
             ratio = (maxHeight / height); // get ratio for scaling image
             this.height_curr = maxHeight;   // Set new height
             this.width_curr = Math.round(width * ratio);   // Scale width based on ratio
+        }
+
+        console.log('im=' + this.width_curr + 'x' + this.height_curr);
+        console.log('');
+
+    }
+
+    this.expandImage = function(width, maxWidth, height, maxHeight){
+
+        console.log('im=' + width + 'x' + height + ', hit=' + maxWidth + 'x' + maxHeight + '-> expanding to ');
+        // enlarging
+        if(maxWidth > width){
+            ratio = (maxWidth / width); 
+            this.width_curr = maxWidth;
+            this.height_curr = Math.round(height * ratio);
+
+            if(this.height_curr > maxHeight) this.height_curr = maxHeight;
+
+            this.SetDimensions();
+            height = height * ratio;    // Reset height to match scaled image
+            width = maxWidth;    // Reset width to match scaled image
+
+        }
+        if(maxHeight > height){
+            ratio = (maxHeight / height); // get ratio for scaling image
+            this.height_curr = maxHeight;   // Set new height
+            this.width_curr = Math.round(width * ratio);   // Scale width based on ratio
+
+            if(this.width_curr > maxWidth) this.width_curr = maxWidth;
+
             this.SetDimensions();
         }
 
+        console.log('im=' + this.width_curr + 'x' + this.height_curr);
+        console.log('');
 
     }
 
