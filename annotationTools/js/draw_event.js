@@ -21,6 +21,7 @@ function StartDrawEvent(event) {
  $('#draw_canvas_div').css('cursor', 'default');
  $('#draw_canvas_div').empty();
 
+   // Handles when user moves mouse
   $('#draw_canvas_div').mousemove(function(e) {
 
 
@@ -30,7 +31,6 @@ function StartDrawEvent(event) {
 
          rx = parseInt(e.clientX + $(window).scrollLeft()  - offsetX);
          ry = parseInt(e.clientY + $(window).scrollTop() - offsetY);
-        
 
          // set rectangle dimensions based on start end end co-ordinates
          rectangle.style.width = Math.abs(rx - startX)  + 'px';
@@ -42,7 +42,7 @@ function StartDrawEvent(event) {
   });
 
 
-  // 3. Handles when user closes the rectangle. 
+  // Handles when user closes the rectangle. 
   //$('#draw_canvas_div').unbind();
   $('#draw_canvas_div').mousedown(function(e) {
 
@@ -54,6 +54,7 @@ function StartDrawEvent(event) {
         rectangle = null;
         active_canvas = REST_CANVAS;
         $('#draw_canvas_div').css('cursor', 'default');
+        DrawCanvasCloseRectangle();
       }
 
     });
@@ -70,6 +71,12 @@ function DrawRectangle(event){
   // Write message to the console:
   console.log('LabelMe: Starting draw event...');
 
+
+  var button = event.button;
+  
+  // If the user does not left click, then ignore mouse-down action.
+  if(button>1) return;
+
   // If we are hiding all polygons, then clear the main canvas:
   if(IsHidingAllPolygons) {
     for(var i = 0; i < main_canvas.annotations.length; i++) {
@@ -81,9 +88,10 @@ function DrawRectangle(event){
   // Set active canvas:
   active_canvas = DRAW_CANVAS;
 
+  // Get starting co-ordinates
+
   offsetX = $('#draw_canvas_div').offset().left;
   offsetY = $('#draw_canvas_div').offset().top;
-
 
   startX =  parseInt(event.pageX - offsetX);
   startY = parseInt(event.pageY - offsetY);
@@ -91,11 +99,6 @@ function DrawRectangle(event){
   console.log('startX = ' + startX + '. clientX = ' + event.clientX);
   console.log('startY = ' + startX + '. clientY = ' + event.clientY);
 
-
-  var button = event.button;
-  
-  // If the user does not left click, then ignore mouse-down action.
-  if(button>1) return;
   
   // Move draw canvas to front:
   $('#draw_canvas_div').css('z-index','0');
@@ -105,6 +108,12 @@ function DrawRectangle(event){
   // Create new annotation structure:
   draw_anno = new annotation(AllAnnotations.length);
 
+  var scale = main_media.GetImRatio();
+
+  // save co-ordinates
+  draw_anno.pts_x.push(Math.round(startX/scale));
+  draw_anno.pts_y.push(Math.round(startY/scale));
+
   rectangle = document.createElement('div');
 
   rectangle.className = 'rectangle';
@@ -113,6 +122,35 @@ function DrawRectangle(event){
   $('#draw_canvas_div').append(rectangle);
   $('#draw_canvas_div').css('cursor' , 'crosshair');
 
+}
+
+function DrawCanvasCloseRectangle(){
+
+
+    // Set active canvas:
+    active_canvas = DRAW_CANVAS;
+    // Save remaining corners of rectangle
+
+    var scale = main_media.GetImRatio();
+
+    // (sx, ry)
+    draw_anno.pts_x.push(Math.round(startX/scale));
+    draw_anno.pts_y.push(Math.round(ry/scale));
+
+    // (rx, ry)
+    draw_anno.pts_x.push(Math.round(rx/scale));
+    draw_anno.pts_y.push(Math.round(ry/scale));
+
+    // (rx, sy)
+    draw_anno.pts_x.push(Math.round(rx/scale));
+    draw_anno.pts_y.push(Math.round(startY/scale));
+
+    DrawCanvasClosePolygon();
+
+    // removing rectangle is simply deleting the 
+    // rectangle div element
+
+    // save annotation
 }
 
 // Handles when the user presses the mouse button down on the drawing
@@ -163,7 +201,7 @@ function DrawCanvasClosePolygon() {
   active_canvas = QUERY_CANVAS;
   
   // Move draw canvas to the back:
-  document.getElementById('draw_canvas').style.zIndex = -2;
+ // document.getElementById('draw_canvas').style.zIndex = -2;
   document.getElementById('draw_canvas_div').style.zIndex = -2;
   
   // Remove polygon from the draw canvas:
@@ -175,7 +213,7 @@ function DrawCanvasClosePolygon() {
   }
   
   // Move query canvas to front:
-  document.getElementById('query_canvas').style.zIndex = 0;
+  //document.getElementById('query_canvas').style.zIndex = 0;
   document.getElementById('query_canvas_div').style.zIndex = 0;
   
   // Set object list choices for points and lines:
