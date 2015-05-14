@@ -163,21 +163,26 @@ function handler() {
     this.SubmitQuery = function () {
       var nn;
       var anno;
+
+      var lmode = main_media.GetFileInfo().GetMode();
       
       // If the attributes are active, read the fields.
       if (use_attributes) {
 
-	   // get attributes (is the field exists)
-	   if(document.getElementById('attributes')) new_attributes = RemoveSpecialChars(document.getElementById('attributes').value);
-	     else new_attributes = "";
+	      // get attributes (is the field exists)
+	      if(document.getElementById('attributes')) new_attributes = RemoveSpecialChars(document.getElementById('attributes').value);
+	      else new_attributes = "";
 	
-	   // get occlusion field (is the field exists)
-	   if (document.getElementById('occluded')) new_occluded = RemoveSpecialChars(document.getElementById('occluded').value);
-	     else new_occluded = "";
+	      // get occlusion field (is the field exists)
+	      if (document.getElementById('occluded')) new_occluded = RemoveSpecialChars(document.getElementById('occluded').value);
+	      else new_occluded = "";
       }
       
       if((object_choices!='...') && (object_choices.length==1)) {
-	       nn = RemoveSpecialChars(object_choices[0]);
+
+         if(lmode != "mt")
+	         nn = RemoveSpecialChars(object_choices[0]);
+
 	       active_canvas = REST_CANVAS;
 	
 	       // Move draw canvas to the back:
@@ -195,10 +200,17 @@ function handler() {
 
 
       else {
+
+          if(lmode != "mt")
 	         nn = RemoveSpecialChars(document.getElementById('objEnter').value);
+
 	         anno = this.QueryToRest();
       }
       
+      if(lmode == "mt")
+          nn = "rect" + AllAnnotations.length; // rec + id
+
+
       var re = /[a-zA-Z0-9]/;
 
       if(!re.test(nn)) {

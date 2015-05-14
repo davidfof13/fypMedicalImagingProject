@@ -15,6 +15,7 @@ function SetDrawingMode(mode){
   // Get LabelMe Mode
   var lmode = main_media.GetFileInfo().GetMode();
   
+  // changing to polygon mode
   if (mode == 0){
     if (scribble_canvas.annotationid != -1){
       alert("You can't change drawing mode while editting scribbles.");
@@ -26,13 +27,22 @@ function SetDrawingMode(mode){
       document.getElementById("segmDiv").setAttribute('style', 'border-color: #000');
       document.getElementById("polygonDiv").setAttribute('style', 'border-color: #f00');
 
+      // removes scribbles when we move to polygon drawing
+      scribble_canvas.scribble_image = "";
+      scribble_canvas.cleanscribbles();
+      scribble_canvas.CloseCanvas();
+
+    } else {
+
+      // put scribble canvas underneath
+      $('#myCanvas_bg_div').append($('#canvasDiv'));
+      $('#canvasDiv').css('z-index', '-2');
     }
 
-    // removes scribbles when we move to polygon drawing
-    scribble_canvas.scribble_image = "";
-    scribble_canvas.cleanscribbles();
-    scribble_canvas.CloseCanvas();
+
   }
+
+  // changing to scribble mode
   if (mode == 1) {
 
     // if we haven't finished drawing a polygon
@@ -160,13 +170,23 @@ function scribble_canvas(tag) {
   // This function is called once we set the scribble mode. It prepares the canvas where the scribbles
   // will be drawn and initializes the necessary data structures.
   this.startSegmentationMode = function(){
-    this.clickX = new Array();
-    this.clickY = new Array();
-    this.clickDrag = new Array();
-    this.clickColor = new Array();
+  
     paint = false;
     resp = "";
-    this.prepareHTMLtoDraw();    
+    
+
+    // if the scribble canvas already exist, we move it back on  top
+    if($('#canvasDiv').length){
+        $('#canvasDiv').css('z-index', 1);
+        $('#' + this.tagcanvasDiv).append($('#canvasDiv'));
+    }
+    else {
+      this.clickX = new Array();
+      this.clickY = new Array();
+      this.clickDrag = new Array();
+      this.clickColor = new Array();
+      this.prepareHTMLtoDraw();    
+    }
   };
 
   // Close the canvas where the scribbles will be drawn.
@@ -412,12 +432,23 @@ function scribble_canvas(tag) {
 
   }
 
+  // Delete all scribbles on user request
+  this.UserDeleteScribbles = function() {
+    // body...
+
+    // prompt user first
+
+
+    this.DeleteAllScribbles();
+  }
   this.DeleteAllScribbles = function (){
     submission_edited = 0;
     main_handler.QueryToRest();
     this.cleanscribbles();
     ClearMask('aux_mask');
   }
+
+
   
   this.HTMLobjectBox = function(obj_name) {
     var html_str="";

@@ -2,6 +2,7 @@
 
 var draw_anno = null;
 var query_anno = null;
+//var allowed;
 
 // rectangle starting x, y positions
 var startX = null; 
@@ -25,9 +26,25 @@ function StartDrawEvent(event) {
   $('#draw_canvas_div').mousemove(function(e) {
 
 
-       var scale = main_media.GetImRatio();
+       //var scale = main_media.GetImRatio();
 
        if(rectangle != null){
+
+        /*$(document).one("keyup", function(event) {
+
+
+              if(rectangle!= null){
+                if (event.keyCode == 27) { 
+
+                  rectangle.style.width = 0;
+                  rectangle.style.height = 0;
+                  rectangle.parentNode.removeChild(rectangle);
+                  rectangle = null;
+                  return; 
+
+               }   // escape key maps to keycode `27`
+            }
+        });*/
 
          rx = parseInt(e.clientX + $(window).scrollLeft()  - offsetX);
          ry = parseInt(e.clientY + $(window).scrollTop() - offsetY);
@@ -88,6 +105,8 @@ function DrawRectangle(event){
   // Set active canvas:
   active_canvas = DRAW_CANVAS;
 
+  allowed = true;
+
   // Get starting co-ordinates
 
   offsetX = $('#draw_canvas_div').offset().left;
@@ -129,8 +148,9 @@ function DrawCanvasCloseRectangle(){
 
     // Set active canvas:
     active_canvas = DRAW_CANVAS;
-    // Save remaining corners of rectangle
 
+
+    // Save remaining corners of rectangle
     var scale = main_media.GetImRatio();
 
     // (sx, ry)
@@ -145,12 +165,9 @@ function DrawCanvasCloseRectangle(){
     draw_anno.pts_x.push(Math.round(rx/scale));
     draw_anno.pts_y.push(Math.round(startY/scale));
 
+    // prompt user to save annotation
     DrawCanvasClosePolygon();
 
-    // removing rectangle is simply deleting the 
-    // rectangle div element
-
-    // save annotation
 }
 
 // Handles when the user presses the mouse button down on the drawing

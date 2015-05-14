@@ -33,15 +33,28 @@
             </div>
 
 
-                  <!-- delete menu -->
+                  <!-- Edit menu -->
                   <div class="panel" style="background-color: #943F3F; color: #FFF;">
-                    <div class="panel-heading">Delete</div>
+                    <div class="panel-heading">Edit</div>
                     <div  class="menu-content nav-collapse navbar-responsive container navbar-inverse">
                       <ul class= "menu-ul nav nav-pills nav-stacked">
                           <li role="presentation"><a class="li-base" href="#/"> Contours </a></li>
-                          <li role="presentation"><a class="li-base" onclick="scribble_canvas.setCurrentDraw(RUBBER_DRAWING)" href="#/"> Scribbles</a></li>
-                          <li role="presentation"><a class="li-base" onclick="scribble_canvas.DeleteAllScribbles()" href="#/"> All scribbles</a></li>
+                          <li role="presentation"><a class="li-base" onclick="scribble_canvas.setCurrentDraw(RUBBER_DRAWING)" href="#/"> erase scribble</a></li>
+                          <li role="presentation" >
+                              <a class="li-base" data-toggle="modal" data-target=".bs-example-modal-sm"  href="#/"> delete scribbles</a>
+                        
 
+                              <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+                              
+                                  <div class="modal-dialog modal-sm">
+                                    <div class="modal-content"></div>
+                                      ...
+                                  </div>
+                              </div>
+
+
+                          </li>
+                            <!--onclick="scribble_canvas.DeleteAllScribbles()"-->
                       </ul>
                     </div>
                   </div>
