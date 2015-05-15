@@ -63,12 +63,15 @@ function StartupLabelMe() {
               }
             });
 
-          }
+          } //else {
+            // Read the XML annotation file:
+            var anno_file = main_media.GetFileInfo().GetFullName();
+            anno_file = 'Annotations/' + anno_file.substr(0,anno_file.length-4) + '.xml' + '?' + Math.random();
+            ReadXML(anno_file,LoadAnnotationSuccess,LoadAnnotation404);
+         // }
       
-	       // Read the XML annotation file:
-	       var anno_file = main_media.GetFileInfo().GetFullName();
-	       anno_file = 'Annotations/' + anno_file.substr(0,anno_file.length-4) + '.xml' + '?' + Math.random();
-	       ReadXML(anno_file,LoadAnnotationSuccess,LoadAnnotation404);
+
+	       
       };
 
         // Get the image:
@@ -91,111 +94,113 @@ function StartupLabelMe() {
 function LoadAnnotationSuccess(xml) {
   console.time('load success');
 
-  // Set global variable:
-  LM_xml = xml;
-  if (video_mode){
-    FinishStartup();
-    return;
-  }
-  var obj_elts = LM_xml.getElementsByTagName("object");
-  var num_obj = obj_elts.length;
-  
-  AllAnnotations = Array(num_obj);
-  num_orig_anno = num_obj;
-
-  console.time('initialize XML');
-  // Initialize any empty tags in the XML file:
-  for(var pp = 0; pp < num_obj; pp++) {
-    var curr_obj = $(LM_xml).children("annotation").children("object").eq(pp);
-
-    // Initialize object name if empty in the XML file:
-    if(curr_obj.children("name").length == 0) curr_obj.append($("<name></name>"));
-
-    // Set object IDs:
-    if(curr_obj.children("id").length > 0) curr_obj.children("id").text(""+pp);
-    else curr_obj.append($("<id>" + pp + "</id>"));
-
-    /*************************************************************/
-    /*************************************************************/
-    // Scribble: 
-    // Initialize username if empty in the XML file. Check first if we 
-    // have a polygon or a segmentation:
-    if(curr_obj.children("polygon").length == 0) { // Segmentation
-      if(curr_obj.children("segm").children("username").length == 0) {
-        curr_obj.children("segm").append($("<username>anonymous</username>"));
-      }
+  if (main_media.GetFileInfo().GetMode() != "mt"){ 
+    // Set global variable:
+    LM_xml = xml;
+    if (video_mode){
+      FinishStartup();
+      return;
     }
-    else if(curr_obj.children("polygon").children("username").length == 0) curr_obj.children("polygon").append($("<username>anonymous</username>"));
-    /*************************************************************/
-    /*************************************************************/
-  }
-  console.timeEnd('initialize XML');
+    var obj_elts = LM_xml.getElementsByTagName("object");
+    var num_obj = obj_elts.length;
+  
+    AllAnnotations = Array(num_obj);
+    num_orig_anno = num_obj;
 
-  console.time('addPartFields()');
-  // Add part fields (this calls a funcion inside object_parts.js)
-  addPartFields(); // makes sure all the annotations have all the fields.
-  console.timeEnd('addPartFields()');
+    console.time('initialize XML');
+    // Initialize any empty tags in the XML file:
+    for(var pp = 0; pp < num_obj; pp++) {
+      var curr_obj = $(LM_xml).children("annotation").children("object").eq(pp);
 
-  console.time('loop annotated');
-  // Loop over annotated objects
-  for(var pp = 0; pp < num_obj; pp++) {
-    AllAnnotations[pp] = new annotation(pp);
+      // Initialize object name if empty in the XML file:
+      if(curr_obj.children("name").length == 0) curr_obj.append($("<name></name>"));
+
+      // Set object IDs:
+      if(curr_obj.children("id").length > 0) curr_obj.children("id").text(""+pp);
+      else curr_obj.append($("<id>" + pp + "</id>"));
+
+      //*************************************************************
+      //*************************************************************
+      // Scribble: 
+      // Initialize username if empty in the XML file. Check first if we 
+      // have a polygon or a segmentation:
+      if(curr_obj.children("polygon").length == 0) { // Segmentation
+        if(curr_obj.children("segm").children("username").length == 0) {
+          curr_obj.children("segm").append($("<username>anonymous</username>"));
+        }
+      }
+      else if(curr_obj.children("polygon").children("username").length == 0) curr_obj.children("polygon").append($("<username>anonymous</username>"));
+      /*************************************************************/
+      /*************************************************************/
+    }
+    console.timeEnd('initialize XML');
+
+    console.time('addPartFields()');
+    // Add part fields (this calls a funcion inside object_parts.js)
+    addPartFields(); // makes sure all the annotations have all the fields.
+    console.timeEnd('addPartFields()');
+
+    console.time('loop annotated');
+    // Loop over annotated objects
+    for(var pp = 0; pp < num_obj; pp++) {
+      AllAnnotations[pp] = new annotation(pp);
     
-    /*************************************************************/
-    /*************************************************************/
-    // Scribble: 
-    // If annotation is polygon, insert polygon:
-    if(obj_elts[pp].getElementsByTagName("polygon").length > 0){
-      var pt_elts = obj_elts[pp].getElementsByTagName("polygon")[0].getElementsByTagName("pt");
-      var numpts = pt_elts.length;
-      AllAnnotations[pp].CreatePtsX(numpts);
-      AllAnnotations[pp].CreatePtsY(numpts);
-      for(ii=0; ii < numpts; ii++) {
-        AllAnnotations[pp].GetPtsX()[ii] = parseInt(pt_elts[ii].getElementsByTagName("x")[0].firstChild.nodeValue);
-        AllAnnotations[pp].GetPtsY()[ii] = parseInt(pt_elts[ii].getElementsByTagName("y")[0].firstChild.nodeValue);
+      //************************************************************/
+      //************************************************************/
+      // Scribble: 
+     // If annotation is polygon, insert polygon:
+     if(obj_elts[pp].getElementsByTagName("polygon").length > 0){
+       var pt_elts = obj_elts[pp].getElementsByTagName("polygon")[0].getElementsByTagName("pt");
+       var numpts = pt_elts.length;
+       AllAnnotations[pp].CreatePtsX(numpts);
+       AllAnnotations[pp].CreatePtsY(numpts);
+       for(ii=0; ii < numpts; ii++) {
+         AllAnnotations[pp].GetPtsX()[ii] = parseInt(pt_elts[ii].getElementsByTagName("x")[0].firstChild.nodeValue);
+         AllAnnotations[pp].GetPtsY()[ii] = parseInt(pt_elts[ii].getElementsByTagName("y")[0].firstChild.nodeValue);
+       }
+     }
+     // Otherwise, insert segmentation:
+     else if (scribble_mode){
+       AllAnnotations[pp].SetType(1);
+       AllAnnotations[pp].SetImName(obj_elts[pp].getElementsByTagName("segm")[0].getElementsByTagName("mask")[0].firstChild.nodeValue);
+       AllAnnotations[pp].SetScribbleName(obj_elts[pp].getElementsByTagName("segm")[0].getElementsByTagName("scribbles")[0].getElementsByTagName("scribble_name")[0].firstChild.nodeValue);
+       var xc1 = parseInt (obj_elts[pp].getElementsByTagName("segm")[0].getElementsByTagName("scribbles")[0].getElementsByTagName("xmin")[0].firstChild.nodeValue);
+       var yc1 = parseInt (obj_elts[pp].getElementsByTagName("segm")[0].getElementsByTagName("scribbles")[0].getElementsByTagName("ymin")[0].firstChild.nodeValue);
+       var xc2 = parseInt (obj_elts[pp].getElementsByTagName("segm")[0].getElementsByTagName("scribbles")[0].getElementsByTagName("xmax")[0].firstChild.nodeValue);
+       var yc2 = parseInt (obj_elts[pp].getElementsByTagName("segm")[0].getElementsByTagName("scribbles")[0].getElementsByTagName("ymax")[0].firstChild.nodeValue);
+       var xc3 = parseInt (obj_elts[pp].getElementsByTagName("segm")[0].getElementsByTagName("box")[0].getElementsByTagName("xmin")[0].firstChild.nodeValue);
+       var yc3 = parseInt (obj_elts[pp].getElementsByTagName("segm")[0].getElementsByTagName("box")[0].getElementsByTagName("ymin")[0].firstChild.nodeValue);
+       var xc4 = parseInt (obj_elts[pp].getElementsByTagName("segm")[0].getElementsByTagName("box")[0].getElementsByTagName("xmax")[0].firstChild.nodeValue);
+       var yc4 = parseInt (obj_elts[pp].getElementsByTagName("segm")[0].getElementsByTagName("box")[0].getElementsByTagName("ymax")[0].firstChild.nodeValue);
+  
+       AllAnnotations[pp].SetImageCorners(xc1,yc1,xc2,yc2);
+       AllAnnotations[pp].SetCorners(xc3,yc3,xc4,yc4);
+     }
+     //*************************************************************/
+     //*************************************************************/
+    }
+
+    console.timeEnd('loop annotated');
+
+    console.time('attach main_canvas');
+    // Attach valid annotations to the main_canvas:
+    for(var pp = 0; pp < num_obj; pp++) {
+      var isDeleted = AllAnnotations[pp].GetDeleted();
+      if((view_Existing&&!isDeleted)||(isDeleted&&view_Deleted)) {
+        // Attach to main_canvas:
+        main_canvas.AttachAnnotation(AllAnnotations[pp]);
       }
     }
-    // Otherwise, insert segmentation:
-    else if (scribble_mode){
-      AllAnnotations[pp].SetType(1);
-      AllAnnotations[pp].SetImName(obj_elts[pp].getElementsByTagName("segm")[0].getElementsByTagName("mask")[0].firstChild.nodeValue);
-      AllAnnotations[pp].SetScribbleName(obj_elts[pp].getElementsByTagName("segm")[0].getElementsByTagName("scribbles")[0].getElementsByTagName("scribble_name")[0].firstChild.nodeValue);
-      var xc1 = parseInt (obj_elts[pp].getElementsByTagName("segm")[0].getElementsByTagName("scribbles")[0].getElementsByTagName("xmin")[0].firstChild.nodeValue);
-      var yc1 = parseInt (obj_elts[pp].getElementsByTagName("segm")[0].getElementsByTagName("scribbles")[0].getElementsByTagName("ymin")[0].firstChild.nodeValue);
-      var xc2 = parseInt (obj_elts[pp].getElementsByTagName("segm")[0].getElementsByTagName("scribbles")[0].getElementsByTagName("xmax")[0].firstChild.nodeValue);
-      var yc2 = parseInt (obj_elts[pp].getElementsByTagName("segm")[0].getElementsByTagName("scribbles")[0].getElementsByTagName("ymax")[0].firstChild.nodeValue);
-      var xc3 = parseInt (obj_elts[pp].getElementsByTagName("segm")[0].getElementsByTagName("box")[0].getElementsByTagName("xmin")[0].firstChild.nodeValue);
-      var yc3 = parseInt (obj_elts[pp].getElementsByTagName("segm")[0].getElementsByTagName("box")[0].getElementsByTagName("ymin")[0].firstChild.nodeValue);
-      var xc4 = parseInt (obj_elts[pp].getElementsByTagName("segm")[0].getElementsByTagName("box")[0].getElementsByTagName("xmax")[0].firstChild.nodeValue);
-      var yc4 = parseInt (obj_elts[pp].getElementsByTagName("segm")[0].getElementsByTagName("box")[0].getElementsByTagName("ymax")[0].firstChild.nodeValue);
-  
-      AllAnnotations[pp].SetImageCorners(xc1,yc1,xc2,yc2);
-      AllAnnotations[pp].SetCorners(xc3,yc3,xc4,yc4);
-    }
-    /*************************************************************/
-    /*************************************************************/
+    console.timeEnd('attach main_canvas');
 
-  }
-  console.timeEnd('loop annotated');
+    console.time('RenderAnnotations()');
+    // Render the annotations:
+    main_canvas.RenderAnnotations();
+    console.timeEnd('RenderAnnotations()');
 
-  console.time('attach main_canvas');
-  // Attach valid annotations to the main_canvas:
-  for(var pp = 0; pp < num_obj; pp++) {
-    var isDeleted = AllAnnotations[pp].GetDeleted();
-    if((view_Existing&&!isDeleted)||(isDeleted&&view_Deleted)) {
-      // Attach to main_canvas:
-      main_canvas.AttachAnnotation(AllAnnotations[pp]);
-    }
-  }
-  console.timeEnd('attach main_canvas');
+    console.timeEnd('load success');
 
-  console.time('RenderAnnotations()');
-  // Render the annotations:
-  main_canvas.RenderAnnotations();
-  console.timeEnd('RenderAnnotations()');
-
-  console.timeEnd('load success');
-
+  } 
   // Finish the startup scripts:
   FinishStartup();
 }

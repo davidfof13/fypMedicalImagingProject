@@ -30,7 +30,7 @@ function StartDrawEvent(event) {
 
        if(rectangle != null){
 
-        /*$(document).one("keyup", function(event) {
+          $(document).one("keyup", function(event) {
 
 
               if(rectangle!= null){
@@ -40,11 +40,13 @@ function StartDrawEvent(event) {
                   rectangle.style.height = 0;
                   rectangle.parentNode.removeChild(rectangle);
                   rectangle = null;
+
+                  $(this).off('keyup');
                   return; 
 
                }   // escape key maps to keycode `27`
             }
-        });*/
+          });
 
          rx = parseInt(e.clientX + $(window).scrollLeft()  - offsetX);
          ry = parseInt(e.clientY + $(window).scrollTop() - offsetY);
@@ -107,10 +109,11 @@ function DrawRectangle(event){
 
   allowed = true;
 
-  // Get starting co-ordinates
-
+  // Get starting co-ordinates. Courtesy of s
+  // http://stackoverflow.com/questions/6460116/detecting-offset-of-an-element-on-scroll-in-javascript-jquery
   offsetX = $('#draw_canvas_div').offset().left;
   offsetY = $('#draw_canvas_div').offset().top;
+
 
   startX =  parseInt(event.pageX - offsetX);
   startY = parseInt(event.pageY - offsetY);

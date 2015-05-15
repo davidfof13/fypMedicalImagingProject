@@ -372,9 +372,9 @@ function handler() {
             el.removeClass('active');
             this.className += ' active';
 
-            // if we click on any other button execept the drop downn menu,
+            // if we click on any other button except the drop downn menu,
             // close dropdown menu
-            if (el.attr("id") =="dropdownMenu" && this.id != "dropdownMenu"){
+            if (el.attr("id") =="dropdownMenu" && this.id != "dropdownMenu" && $('.caret').length){
               $('.hit-submenu').slideToggle();
               $('.caret').attr('class', 'caret-right');
             }
