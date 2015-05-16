@@ -116,8 +116,22 @@ function CloseEditPopup() {
 // ****************************
 
 function GetPopupFormDraw() {
-  html_str = "<b>Enter object name</b><br />";
-  html_str += HTMLobjectBox("");
+
+
+  var lmode = main_media.GetFileInfo().GetMode();
+
+
+  // In MTurk mode, we don't want user to provide 
+  // a name. We'll name the objects ourselves
+  if(lmode != "mt"){
+    html_str = "<b>Enter object name</b><br />";
+    html_str += HTMLobjectBox("");
+
+  } else{ 
+    html_str = "";
+  }
+
+  
   
   if(use_attributes) {
     html_str += HTMLoccludedBox("");
@@ -134,7 +148,9 @@ function GetPopupFormDraw() {
   html_str += '<input type="button" value="Done" title="Press this button after you have provided all the information you want about the object." onclick="main_handler.SubmitQuery();" tabindex="0" />';
   
   // Undo close button:
-  html_str += '<input type="button" value="Undo close" title="Press this button if you accidentally closed the polygon. You can continue adding control points." onclick="UndoCloseButton();" tabindex="0" />';
+
+  if(lmode != "mt")
+    html_str += '<input type="button" value="Undo close" title="Press this button if you accidentally closed the polygon. You can continue adding control points." onclick="UndoCloseButton();" tabindex="0" />';
   
   // Delete button:
   html_str += '<input type="button" value="Delete" title="Press this button if you wish to delete the polygon." onclick="main_handler.WhatIsThisObjectDeleteButton();" tabindex="0" />';
@@ -143,6 +159,10 @@ function GetPopupFormDraw() {
 }
 
 function GetPopupFormEdit(anno) {
+
+
+  var lmode = main_media.GetFileInfo().GetMode();
+
   // get object name and attributes from 'anno'
   var obj_name = LMgetObjectField(LM_xml,anno.anno_id,'name');
   if(obj_name=="") obj_name = "?";
@@ -150,8 +170,17 @@ function GetPopupFormEdit(anno) {
   var occluded = LMgetObjectField(LM_xml,anno.anno_id,'occluded');
   var parts = LMgetObjectField(LM_xml, anno.anno_id, 'parts');
   
-  html_str = "<b>Enter object name</b><br />";
-  html_str += HTMLobjectBox(obj_name);
+
+
+  if(lmode != "mt"){
+    html_str = "<b>Enter object name</b><br />";
+    html_str += HTMLobjectBox(obj_name);
+  
+  } else {
+    html_str = "";
+  }
+    
+  //}
   
   if(use_attributes) {
     html_str += HTMLoccludedBox(occluded);
@@ -166,20 +195,30 @@ function GetPopupFormEdit(anno) {
   html_str += "<br />";
   
   // Done button:
-  if (video_mode) html_str += '<input type="button" value="Done" title="Press this button when you are done editing." onclick="main_media.SubmitEditObject();" tabindex="0" />';
+
+  if(lmode != "mt"){
+
+     if (video_mode) html_str += '<input type="button" value="Done" title="Press this button when you are done editing." onclick="main_media.SubmitEditObject();" tabindex="0" />';
   
-  else html_str += '<input type="button" value="Done" title="Press this button when you are done editing." onclick="main_handler.SubmitEditLabel();" tabindex="0" />';
+    else html_str += '<input type="button" value="Done" title="Press this button when you are done editing." onclick="main_handler.SubmitEditLabel();" tabindex="0" />';
+
+    html_str += '<input type="button" value="Done" title="Press this button when you are done editing." onclick="main_handler.SubmitEditLabel();" tabindex="0" />';
+  
   
   /*************************************************************/
   /*************************************************************/
   // Scribble: if anno.GetType() != 0 then scribble mode:
 
-  // Adjust polygon button:
-  if (anno.GetType() == 0) {
-    html_str += '<input type="button" value="Adjust polygon" title="Press this button if you wish to update the polygon\'s control points." onclick="javascript:AdjustPolygonButton();" />';
-  }
-  else {
-    html_str += '<input type="button" value="Edit Scribbles" title="Press this button if you wish to update the segmentation." onclick="javascript:EditBubbleEditScribble();" />';  
+    // Adjust polygon button:
+    if (anno.GetType() == 0) 
+      html_str += '<input type="button" value="Adjust polygon" title="Press this button if you wish to update the polygon\'s control points." onclick="javascript:AdjustPolygonButton();" />';
+    
+    else 
+      html_str += '<input type="button" value="Edit Scribbles" title="Press this button if you wish to update the segmentation." onclick="javascript:EditBubbleEditScribble();" />';  
+    
+
+  } else{
+    html_str += '<input type="button" value="Resize" title="Press this button if you wish to resize the rectangle" />';
   }
   /*************************************************************/
   /*************************************************************/

@@ -67,6 +67,7 @@ function file_info() {
                         this.im_name = this.im_name + '.jpg';
                     }
                 }
+
                 if(par_field=='hitId') {
                     this.hitId = par_value;
                     isMT = true;
@@ -151,6 +152,7 @@ function file_info() {
                     object_choices = par_value.replace('_',' ');
                     object_choices = object_choices.split(/,/);
                 }
+
                 if((par_field=='scribble')&&(par_value=='true')) {
 		                  scribble_mode = true;
 		        }
@@ -167,7 +169,7 @@ function file_info() {
             
             if(isMT) {
 
-                
+
                 // activate mTurk display
                 document.getElementById('mt_submit_form').style.visibility = 'visible';
 
@@ -183,6 +185,7 @@ function file_info() {
                 document.getElementById('body').style.visibility = 'visible';
             }
             else if((this.mode=='im') || (this.mode=='mt')) {
+
                 var p = document.getElementById('header');
                 p.parentNode.removeChild(p);
 
@@ -190,6 +193,7 @@ function file_info() {
                 p.parentNode.removeChild(p);
 
                 document.getElementById('body').style.visibility = 'visible';
+
             }
             else {
                 this.mode = 'i';
@@ -201,12 +205,15 @@ function file_info() {
                 p.parentNode.removeChild(p);
             }
             
-            // display the general instructions page
+
+            // MTurk Preview Mode: display the general instructions page
             if(this.assignmentId=='ASSIGNMENT_ID_NOT_AVAILABLE') {
                 window.location = MThelpPage;
                 return false;
             }
 
+
+            // display the actual hit page
             if(this.mode=='mt') {
 
                 if(!this.mt_instructions) {
@@ -242,6 +249,7 @@ function file_info() {
             
                 // add code to div element
                 $('#mt_submit_form').append(html_str);
+
 
                 if(global_count >= mt_N) document.getElementById('mt_submit').disabled=false;
 
@@ -362,8 +370,8 @@ function file_info() {
         }
         
         if(im_req.status==200) {
-            this.dir_name = im_req.responseXML.getElementsByTagName("dir")[0].firstChild.nodeValue;
-            this.im_name = im_req.responseXML.getElementsByTagName("file")[0].firstChild.nodeValue;
+           this.dir_name = im_req.responseXML.getElementsByTagName("dir")[0].firstChild.nodeValue;
+           this.im_name = im_req.responseXML.getElementsByTagName("file")[0].firstChild.nodeValue;
         }
         else {
             alert('Fatal: there are problems with fetch_image.cgi');

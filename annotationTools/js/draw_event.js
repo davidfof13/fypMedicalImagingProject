@@ -2,8 +2,11 @@
 
 var draw_anno = null;
 var query_anno = null;
+//var allowed;
+
 
 //var allowed;
+
 
 // rectangle starting x, y positions
 var startX = null; 
@@ -14,6 +17,7 @@ var ry = 0;
 
 var offsetX, offsetY;
 //courtesy of http://jsfiddle.net/m1erickson/7uNfW/
+
 
 
 /** This function is called with the draw event is started.  It can be 
@@ -102,6 +106,7 @@ function StartDrawEvent(event) {
          rectangle.style.height = Math.abs(ry - startY) + 'px';
          rectangle.style.left = (rx - startX < 0) ? rx + 'px' : startX + 'px';
          rectangle.style.top =  (ry - startY < 0) ? ry + 'px' : startY + 'px';
+
       }
 
     });
@@ -136,6 +141,12 @@ function CheckBeforeDrawing(event){
   // Write message to the console:
   console.log('LabelMe: Starting draw event...');
 
+
+  var button = event.button;
+  
+  // If the user does not left click, then ignore mouse-down action.
+  if(button>1) return;
+
   // If we are hiding all polygons, then clear the main canvas:
   if(IsHidingAllPolygons) {
     for(var i = 0; i < main_canvas.annotations.length; i++) {
@@ -147,6 +158,7 @@ function CheckBeforeDrawing(event){
   // Set active canvas:
   active_canvas = DRAW_CANVAS;
   if (video_mode) oVP.Pause();
+
 
   var button = event.button;
 
@@ -160,6 +172,7 @@ function DrawRectangle(event){
 
   if(!CheckBeforeDrawing(event))
       return false;
+
 
   allowed = true;
 
@@ -175,12 +188,14 @@ function DrawRectangle(event){
   console.log('startX = ' + startX + '. clientX = ' + event.clientX);
   console.log('startY = ' + startX + '. clientY = ' + event.clientY);
 
+
   // Move draw canvas to front:
   $('#draw_canvas_div').css('z-index','0');
-  
+
   if(username_flag) submit_username();
   
   // Create new annotation structure:
+
   var numItems = $(LM_xml).children('annotation').children('object').length;
   draw_anno = new annotation(numItems);
   
@@ -240,6 +255,7 @@ function DrawCanvasCloseRectangle(){
     // prompt user to save annotation
     DrawCanvasClosePolygon();
 
+
 }
 
 /** Handles when the user presses the mouse button down on the drawing
@@ -284,8 +300,10 @@ function DrawCanvasMouseDown(event) {
   var line_idx = draw_anno.line_ids.length;
   var n = draw_x.length-1;
   
+
   // Draw line segment:
   draw_anno.line_ids.push(DrawLineSegment(draw_anno.div_attach,draw_x[n-1],draw_y[n-1],draw_x[n],draw_y[n],'stroke="#0000ff" stroke-width="4"',scale));
+
 
   // Set cursor to be crosshair on line segment:
   $('#'+draw_anno.line_ids[line_idx]).css('cursor','crosshair');
@@ -311,6 +329,7 @@ function DrawCanvasClosePolygon() {
   
   // Move draw canvas to the back:
   //document.getElementById('draw_canvas').style.zIndex = -2;
+
   document.getElementById('draw_canvas_div').style.zIndex = -2;
   
   // Remove polygon from the draw canvas:
@@ -323,7 +342,7 @@ function DrawCanvasClosePolygon() {
     draw_anno = null;
   }
   // Move query canvas to front:
-  document.getElementById('query_canvas').style.zIndex = 0;
+  //document.getElementById('query_canvas').style.zIndex = 0;
   document.getElementById('query_canvas_div').style.zIndex = 0;
   
   // Set object list choices for points and lines:

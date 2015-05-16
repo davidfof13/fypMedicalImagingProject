@@ -1,2 +1,5 @@
+<<<<<<< HEAD
 example_folder,img1.jpg
 example_folder,img3.jpg
+=======
+>>>>>>> ee764803037f51b9ccd43aacf79e22e0d4126de1

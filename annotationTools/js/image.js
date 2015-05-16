@@ -188,12 +188,14 @@ function image(id) {
 
     }
 
+
     /** If (x,y) is not in view, then scroll it into view.  Return adjusted
      * (x,y) point that takes into account the slide offset.
      * @param {int} x
      * @param {int} y
      * @returns {intarray}
     */
+
     this.SlideWindow = function (x,y) {
         var pt = Array(2);
         if(!this.IsPointVisible(x,y)) {
@@ -358,3 +360,4 @@ function image(id) {
     };
     
 }
+

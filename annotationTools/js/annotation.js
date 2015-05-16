@@ -181,12 +181,14 @@ function annotation(anno_id) {
             this.polygon_id = DrawPolygon(this.div_attach,xp,yp,obj_name,attr,im_ratio);
         }
         return this.polygon_id;
+
     };
     
     // Draw a poly-line given this annotation's control points (i.e.
     // don't connect the last point to the first point).  This function
     // is used when we zoom, close the "what is this object?" popup bubble, 
     // or start a new polygon.
+
     this.DrawPolyLine = function (xp, yp) {
         // Draw line segments:
         var im_ratio = main_media.GetImRatio();
@@ -215,6 +217,7 @@ function annotation(anno_id) {
     // Deletes the annotation's polygon from the screen.
     this.DeletePolygon = function () {
       // Remove drawn polygon:
+
         if(this.polygon_id) {
             console.log('deleting polygon: ',this.polygon_id);
             $('#'+this.polygon_id).remove();
@@ -226,6 +229,7 @@ function annotation(anno_id) {
             for(var i = 0; i < this.line_ids.length; i++) $('#'+this.line_ids[i]).remove();
             this.line_ids = null;
         }
+
 
         /*************************************************************/
         /*************************************************************/

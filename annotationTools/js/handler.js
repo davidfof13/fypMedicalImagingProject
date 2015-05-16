@@ -41,6 +41,7 @@ function handler() {
       }
       
       if (use_attributes) {
+
 	      // occlusion field
 	      if (document.getElementById('occluded')) new_occluded = RemoveSpecialChars(document.getElementById('occluded').value);
 	      else new_occluded = RemoveSpecialChars(adjust_occluded);
@@ -48,6 +49,7 @@ function handler() {
 	      // attributes field
 	      if(document.getElementById('attributes')) new_attributes = RemoveSpecialChars(document.getElementById('attributes').value);
 	      else new_attributes = RemoveSpecialChars(adjust_attributes);
+
       }
       
       StopEditEvent();
@@ -68,8 +70,10 @@ function handler() {
       // Insert attributes (and create field if it is not there):
       LMsetObjectField(LM_xml, obj_ndx, "attributes", new_attributes);
         
+
       
       LMsetObjectField(LM_xml, obj_ndx, "occluded", new_occluded);
+
       
       // Write XML to server:
       WriteXML(SubmitXmlUrl,LM_xml,function(){return;});
@@ -138,8 +142,10 @@ function handler() {
       }
       if(active_canvas==REST_CANVAS) StartEditEvent(idx,null);
       else if(active_canvas==SELECTED_CANVAS) {
+
       	var anno_id = select_anno.GetAnnoID();
       	if(edit_popup_open && (idx==anno_id)) StopEditEvent();
+
       }
     };
     
@@ -167,8 +173,9 @@ function handler() {
     this.CanvasMouseMove = function (event,pp) {
         var x = GetEventPosX(event);
         var y = GetEventPosY(event);
-        if(IsNearPolygon(x,y,pp)) selectObject(pp);
-        else unselectObjects();
+        //if(IsNearPolygon(x,y,pp)) selectObject(pp);
+        selectObject(pp);
+        //else unselectObjects();
     };
     
     // Submits the object label in response to the "What is this object?"
@@ -176,11 +183,14 @@ function handler() {
     this.SubmitQuery = function () {
       var nn;
       var anno;
+
+      var lmode = main_media.GetFileInfo().GetMode();
       
       var lmode = main_media.GetFileInfo().GetMode();
 
       // If the attributes are active, read the fields.
       if (use_attributes) {
+
 
 	     // get attributes (is the field exists)
 	     if(document.getElementById('attributes')) new_attributes = RemoveSpecialChars(document.getElementById('attributes').value);
@@ -193,6 +203,7 @@ function handler() {
       
       if((object_choices!='...') && (object_choices.length==1)) {
 	       nn = RemoveSpecialChars(object_choices[0]);
+
 	       active_canvas = REST_CANVAS;
 	
 	       // Move draw canvas to the back:
@@ -221,6 +232,10 @@ function handler() {
           nn = "rect" + $(LM_xml).children('annotation').children('object').length; 
 
       
+      if(lmode == "mt")
+          nn = "rect" + AllAnnotations.length; // rec + id
+
+
       var re = /[a-zA-Z0-9]/;
 
       if(!re.test(nn)) {
@@ -261,7 +276,7 @@ function handler() {
       } 
 
       if(anno.GetType() == 1) {
-        
+
 	      /*************************************************************/
       	/*************************************************************/
       	// Scribble: Add annotation to LM_xml:
@@ -290,9 +305,40 @@ function handler() {
       	$(LM_xml).children("annotation").append($(html_str));
       	/*************************************************************/
        	/*************************************************************/
+
+	    /*************************************************************/
+	    /*************************************************************/
+	    // Scribble: Add annotation to LM_xml:
+	    html_str += '<segm>';
+	    html_str += '<username>' + username + '</username>';
+	
+	    html_str += '<box>';
+	    html_str += '<xmin>' + anno.GetPtsX()[0] + '</xmin>'; 
+	    html_str += '<ymin>' + anno.GetPtsY()[0] + '</ymin>';
+	    html_str += '<xmax>' + anno.GetPtsX()[1] + '</xmax>'; 
+	    html_str += '<ymax>' + anno.GetPtsY()[2] + '</ymax>';
+	    html_str += '</box>';
+	
+	    html_str += '<mask>'+ anno.GetImName()+'</mask>';
+	
+	    html_str += '<scribbles>';
+	    html_str += '<xmin>' + anno.GetCornerLX() + '</xmin>'; 
+	    html_str += '<ymin>' + anno.GetCornerLY() + '</ymin>';
+	    html_str += '<xmax>' + anno.GetCornerRX() + '</xmax>'; 
+	    html_str += '<ymax>' + anno.GetCornerRY() + '</ymax>';
+	    html_str += '<scribble_name>'+ anno.GetScribbleName()+'</scribble_name>'; 
+	    html_str += '</scribbles>';
+	
+	    html_str += '</segm>';
+	    html_str += '</object>';
+	    $(LM_xml).children("annotation").append($(html_str));
+	    /*************************************************************/
+	    /*************************************************************/
+
       }
 
       else {
+
       	html_str += '<polygon>';
       	html_str += '<username>' + username + '</username>';
       	for(var jj=0; jj < draw_x.length; jj++) {
@@ -305,21 +351,26 @@ function handler() {
       	html_str += '</polygon>';
 	      html_str += '</object>';
 	      $(LM_xml).children("annotation").append($(html_str));
+
       }
       
       
+
       if(!LMgetObjectField(LM_xml, LMnumberOfObjects(LM_xml)-1, 'deleted') ||view_Deleted) {
       	main_canvas.AttachAnnotation(anno);
       	anno.RenderAnnotation('rest');
+
       }
       
       /*************************************************************/
       /*************************************************************/
       // Scribble: Clean scribbles.
       if(anno.GetType() == 1) {
+
       	scribble_canvas.cleanscribbles();
       	scribble_canvas.scribble_image = "";
       	scribble_canvas.colorseg = Math.floor(Math.random()*14);
+
       }
       /*************************************************************/
       /*************************************************************/
@@ -331,20 +382,24 @@ function handler() {
       
       var m = main_media.GetFileInfo().GetMode();
       if(m=='mt') {
+
 	      document.getElementById('object_name').value=new_name;
 	      document.getElementById('number_objects').value=global_count;
       	document.getElementById('LMurl').value = LMbaseurl + '?collection=LabelMe&mode=i&folder=' + main_media.GetFileInfo().GetDirName() + '&image=' + main_media.GetFileInfo().GetImName();
       	if(global_count >= mt_N) document.getElementById('mt_submit').disabled=false;
+
       }
   };
     
-    // Handles when we wish to change from "query" to "rest".
-    this.QueryToRest = function () {
-        active_canvas = REST_CANVAS;
+      // Handles when we wish to change from "query" to "rest".
+      this.QueryToRest = function () {
+      active_canvas = REST_CANVAS;
 
-	// Move query canvas to the back:
-	document.getElementById('query_canvas').style.zIndex = -2;
-	document.getElementById('query_canvas_div').style.zIndex = -2;
+	   
+      // Move query canvas to the back:
+	     document.getElementById('query_canvas').style.zIndex = -2;
+	     document.getElementById('query_canvas_div').style.zIndex = -2;
+
 
 	// Remove polygon from the query canvas:
 	if(query_anno) query_anno.DeletePolygon();
@@ -353,6 +408,7 @@ function handler() {
   
 	CloseQueryPopup();
 	main_media.ScrollbarsOn();
+
 
         return anno;
     };
@@ -379,7 +435,9 @@ function handler() {
         return draw_anno;
     };
     
+
   // handles when the user clicks on a dropdown menu of the 
+
     // hit menu of the MTurk user interface
     this.setHITMenu = function () {  
 
@@ -439,5 +497,6 @@ function handler() {
 
         });
     };
+
     
 }

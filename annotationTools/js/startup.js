@@ -99,7 +99,6 @@ function LoadAnnotationSuccess(xml) {
 
   console.time('load success');
 
-
   if (main_media.GetFileInfo().GetMode() != "mt"){ 
 
     // Set global variable:
@@ -137,6 +136,7 @@ function LoadAnnotationSuccess(xml) {
 
 /** Sets AllAnnotations array from LM_xml */
 function SetAllAnnotationsArray() {
+
   var obj_elts = LM_xml.getElementsByTagName("object");
   var num_obj = obj_elts.length;
   
@@ -162,22 +162,25 @@ function SetAllAnnotationsArray() {
     if(curr_obj.children("polygon").length == 0) { // Segmentation
       if(curr_obj.children("segm").children("username").length == 0) {
         curr_obj.children("segm").append($("<username>anonymous</username>"));
+
       }
+      else if(curr_obj.children("polygon").children("username").length == 0) curr_obj.children("polygon").append($("<username>anonymous</username>"));
+      /*************************************************************/
+      /*************************************************************/
     }
-    else if(curr_obj.children("polygon").children("username").length == 0) curr_obj.children("polygon").append($("<username>anonymous</username>"));
-    /*************************************************************/
-    /*************************************************************/
-  }
-  console.timeEnd('initialize XML');
+    console.timeEnd('initialize XML');
 
-  console.time('addPartFields()');
-  // Add part fields (this calls a funcion inside object_parts.js)
-  addPartFields(); // makes sure all the annotations have all the fields.
-  console.timeEnd('addPartFields()');
+    console.time('addPartFields()');
+    // Add part fields (this calls a funcion inside object_parts.js)
+    addPartFields(); // makes sure all the annotations have all the fields.
+    console.timeEnd('addPartFields()');
 
-  console.time('loop annotated');
+
+    console.time('loop annotated');
   
-  console.timeEnd('loop annotated');
+     console.timeEnd('loop annotated');
+   }
+
 }
 
 /** Annotation file does not exist, so load template. */
@@ -257,7 +260,21 @@ function FinishStartup() {
   console.log('LabelMe: finished loading');
 
   console.timeEnd('startup');
+
+  // if the mTurk div element has been activited then move the image
+  if (document.getElementById('mt_submit_form').style.visibility == 'visible')
+        $(".image_canvas").css({position: 'relative'});  
+
 }
+
+// re-positions the image canvas for the MTurk
+// worker page
+function repositionImageCanvas(ele){
+
+  var target = document.getElementById("image_canvas");
+  e.parentNode.replaceChild(target, e);
+}
+
 
 // Initialize the segmentation tool. This function is called when the field 
 // scribble of the url is true
@@ -327,14 +344,21 @@ function SetDrawingMode(mode){
 
 
     if(lmode != "mt"){
-      document.getElementById("segmDiv").setAttribute('style', 'border-color: #000');
-      document.getElementById("polygonDiv").setAttribute('style', 'border-color: #f00');
+        document.getElementById("segmDiv").setAttribute('style', 'border-color: #000');
+        document.getElementById("polygonDiv").setAttribute('style', 'border-color: #f00');
 
+        // removes scribbles when we move to polygon drawing
+        scribble_canvas.scribble_image = "";
+        scribble_canvas.cleanscribbles();
+        scribble_canvas.CloseCanvas();
+    } else {
+
+      // put scribble canvas underneath
+      $('#myCanvas_bg_div').append($('#canvasDiv'));
+      $('#canvasDiv').css('z-index', '-2');
     }
-    scribble_canvas.scribble_image = "";
-    scribble_canvas.cleanscribbles();
-    scribble_canvas.CloseCanvas();
   }
+  
   if (mode == 1) {
     if(draw_anno) {
       alert("Need to close current polygon first.");
@@ -364,4 +388,5 @@ function SetPolygonDrawingMode(bounding){
   else document.getElementById("bounding_box").setAttribute('style', 'background-color: #faa');
   bounding_box = bounding;
   SetDrawingMode(0);
+
 }

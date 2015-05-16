@@ -25,7 +25,7 @@ var view_ObjList = true;
 var LMbaseurl = 'https://' + window.location.host + window.location.pathname;
 var MThelpPage = 'annotationTools/html/mt_instructions.html';
 var externalSubmitURL = 'https://mturk.com/mturk/externalSubmit';
-var externalSubmitURLsandbox = 'http://workersandbox.mturk.com/mturk/externalSubmit';
+var externalSubmitURLsandbox = 'https://workersandbox.mturk.com/mturk/externalSubmit';
 var mt_N = 'inf';
 
 var object_choices = '...';
@@ -182,13 +182,13 @@ function GetTimeStamp() {
   // branch for native XMLHttpRequest object
   if (window.XMLHttpRequest) {
     req_anno = new XMLHttpRequest();
-    req_anno.open("POST", url, false);
+    req_anno.open("POST", url);
     req_anno.send();
   } 
   else if (window.ActiveXObject) {
     req_anno = new ActiveXObject("Microsoft.XMLHTTP");
     if (req_anno) {
-      req_anno.open("POST", url, false);
+      req_anno.open("POST", url);
       req_anno.send();
     }
   }

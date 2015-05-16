@@ -18,6 +18,8 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
       xmlns:xlink="http://www.w3.org/1999/xlink">
 
 <head>
+
+
   <title>LabelMe: The open annotation tool</title>
   <META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE,NO-STORE,MUST-REVALIDATE" />
   <META HTTP-EQUIV="imagetoolbar" CONTENT="no" />
@@ -34,6 +36,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 
   <style type="text/css">
+
 
       .hit-menu {
         width: 15%;
@@ -105,12 +108,16 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
   </style>
 
 
+
+<!-- mTurk user interface code -->
+
+
 </head>
 
 <!-- Start up LabelMe after HTML elements load -->
 <body id="body" style="visibility:hidden;" onload="javascript:StartupLabelMe();">
 
-  <!-- Mechanical Turk instructions and submit button -->
+  <!-- Mechanical Turk hit  -->
   <div id="mt_submit_form"></div>
   
   <!-- HEADER AND LOGO -->  
@@ -222,7 +229,5 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
   <!-- DIV that will contain the object list -->
   <div id="anno_anchor"></div>
   
-
-
 </body>
 </html>

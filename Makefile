@@ -6,7 +6,7 @@ BASE_DIR = /var/www/
 
 
 # Get LabelMe path settings:
-LM_URL_HOME = http://$(shell hostname --long)/$(shell pwd | sed -e s@$(BASE_DIR)@@)/
+LM_URL_HOME = http://$(shell hostname)/$(shell pwd | sed -e s@$(BASE_DIR)@@)/
 LM_TOOL_HOME = $(shell pwd)/
 
 # Get path for perl scripts:
