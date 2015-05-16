@@ -1,5 +1,4 @@
-/** @file 
-This contains the high-level commands for transitioning between the different annotation tool states.  They are: REST, DRAW, SELECTED, QUERY.
+/** @file This contains the high-level commands for transitioning between the different annotation tool states.  They are: REST, DRAW, SELECTED, QUERY.
 */
 
 // Handles all of the user's actions and delegates tasks to other classes.
@@ -178,15 +177,17 @@ function handler() {
       var nn;
       var anno;
       
+      var lmode = main_media.GetFileInfo().GetMode();
+
       // If the attributes are active, read the fields.
       if (use_attributes) {
 
-	   // get attributes (is the field exists)
-	   if(document.getElementById('attributes')) new_attributes = RemoveSpecialChars(document.getElementById('attributes').value);
+	     // get attributes (is the field exists)
+	     if(document.getElementById('attributes')) new_attributes = RemoveSpecialChars(document.getElementById('attributes').value);
 	     else new_attributes = "";
 	
-	   // get occlusion field (is the field exists)
-	   if (document.getElementById('occluded')) new_occluded = RemoveSpecialChars(document.getElementById('occluded').value);
+	     // get occlusion field (is the field exists)
+	     if (document.getElementById('occluded')) new_occluded = RemoveSpecialChars(document.getElementById('occluded').value);
 	     else new_occluded = "";
       }
       
@@ -216,8 +217,8 @@ function handler() {
 	         anno = this.QueryToRest();
       }
 
-      if(lmode == "mt")
-          nn = "rect" + AllAnnotations.length; // rec + id
+      if(lmode == "mt") // rec + id
+          nn = "rect" + $(LM_xml).children('annotation').children('object').length; 
 
       
       var re = /[a-zA-Z0-9]/;
@@ -242,6 +243,7 @@ function handler() {
       html_str += '<name>' + new_name + '</name>';
       html_str += '<deleted>0</deleted>';
       html_str += '<verified>0</verified>';
+      
       if(use_attributes) {
 	       html_str += '<occluded>' + new_occluded + '</occluded>';
 	       html_str += '<attributes>' + new_attributes + '</attributes>';
@@ -251,70 +253,73 @@ function handler() {
       var ts = GetTimeStamp();
       if(ts.length==20) html_str += '<date>' + ts + '</date>';
       html_str += '<id>' + anno.anno_id + '</id>';
+
       if (bounding_box){
           html_str += '<type>'
           html_str += 'bounding_box';
           html_str += '</type>'
-        } 
+      } 
+
       if(anno.GetType() == 1) {
         
-        
-	/*************************************************************/
-	/*************************************************************/
-	// Scribble: Add annotation to LM_xml:
-	html_str += '<segm>';
-	html_str += '<username>' + username + '</username>';
+	      /*************************************************************/
+      	/*************************************************************/
+      	// Scribble: Add annotation to LM_xml:
+       	html_str += '<segm>';
+	      html_str += '<username>' + username + '</username>';
 	
-	html_str += '<box>';
-	html_str += '<xmin>' + scribble_canvas.object_corners[0] + '</xmin>'; 
-	html_str += '<ymin>' + scribble_canvas.object_corners[1] + '</ymin>';
-	html_str += '<xmax>' + scribble_canvas.object_corners[2] + '</xmax>'; 
-	html_str += '<ymax>' + scribble_canvas.object_corners[3] + '</ymax>';
-	html_str += '</box>';
+      	html_str += '<box>';
+       	html_str += '<xmin>' + scribble_canvas.object_corners[0] + '</xmin>'; 
+       	html_str += '<ymin>' + scribble_canvas.object_corners[1] + '</ymin>';
+       	html_str += '<xmax>' + scribble_canvas.object_corners[2] + '</xmax>'; 
+       	html_str += '<ymax>' + scribble_canvas.object_corners[3] + '</ymax>';
+      	html_str += '</box>';
 	
-	html_str += '<mask>'+ scribble_canvas.image_name +'</mask>';
+       	html_str += '<mask>'+ scribble_canvas.image_name +'</mask>';
 	
-	html_str += '<scribbles>';
-	html_str += '<xmin>' + scribble_canvas.image_corners[0] + '</xmin>'; 
-	html_str += '<ymin>' + scribble_canvas.image_corners[1] + '</ymin>';
-	html_str += '<xmax>' + scribble_canvas.image_corners[2] + '</xmax>'; 
-	html_str += '<ymax>' + scribble_canvas.image_corners[3] + '</ymax>';
-	html_str += '<scribble_name>'+ scribble_canvas.scribble_name +'</scribble_name>'; 
-	html_str += '</scribbles>';
+       	html_str += '<scribbles>';
+       	html_str += '<xmin>' + scribble_canvas.image_corners[0] + '</xmin>'; 
+       	html_str += '<ymin>' + scribble_canvas.image_corners[1] + '</ymin>';
+       	html_str += '<xmax>' + scribble_canvas.image_corners[2] + '</xmax>'; 
+      	html_str += '<ymax>' + scribble_canvas.image_corners[3] + '</ymax>';
+      	html_str += '<scribble_name>'+ scribble_canvas.scribble_name +'</scribble_name>'; 
+       	html_str += '</scribbles>';
 	
-	html_str += '</segm>';
-	html_str += '</object>';
-	$(LM_xml).children("annotation").append($(html_str));
-	/*************************************************************/
-	/*************************************************************/
+       	html_str += '</segm>';
+      	html_str += '</object>';
+      	$(LM_xml).children("annotation").append($(html_str));
+      	/*************************************************************/
+       	/*************************************************************/
       }
+
       else {
-	html_str += '<polygon>';
-	html_str += '<username>' + username + '</username>';
-	for(var jj=0; jj < draw_x.length; jj++) {
-	  html_str += '<pt>';
-	  html_str += '<x>' + draw_x[jj] + '</x>';
-	  html_str += '<y>' + draw_y[jj] + '</y>';
-	  html_str += '</pt>';
-	}
-	html_str += '</polygon>';
-	html_str += '</object>';
-	$(LM_xml).children("annotation").append($(html_str));
+      	html_str += '<polygon>';
+      	html_str += '<username>' + username + '</username>';
+      	for(var jj=0; jj < draw_x.length; jj++) {
+      	  html_str += '<pt>';
+      	  html_str += '<x>' + draw_x[jj] + '</x>';
+      	  html_str += '<y>' + draw_y[jj] + '</y>';
+      	  html_str += '</pt>';
+      	}
+
+      	html_str += '</polygon>';
+	      html_str += '</object>';
+	      $(LM_xml).children("annotation").append($(html_str));
       }
       
       
       if(!LMgetObjectField(LM_xml, LMnumberOfObjects(LM_xml)-1, 'deleted') ||view_Deleted) {
-	main_canvas.AttachAnnotation(anno);
-	anno.RenderAnnotation('rest');
+      	main_canvas.AttachAnnotation(anno);
+      	anno.RenderAnnotation('rest');
       }
       
       /*************************************************************/
       /*************************************************************/
       // Scribble: Clean scribbles.
       if(anno.GetType() == 1) {
-	scribble_canvas.cleanscribbles();
-	scribble_canvas.scribble_image = "";
-	scribble_canvas.colorseg = Math.floor(Math.random()*14);
+      	scribble_canvas.cleanscribbles();
+      	scribble_canvas.scribble_image = "";
+      	scribble_canvas.colorseg = Math.floor(Math.random()*14);
       }
       /*************************************************************/
       /*************************************************************/
@@ -326,12 +331,12 @@ function handler() {
       
       var m = main_media.GetFileInfo().GetMode();
       if(m=='mt') {
-	document.getElementById('object_name').value=new_name;
-	document.getElementById('number_objects').value=global_count;
-	document.getElementById('LMurl').value = LMbaseurl + '?collection=LabelMe&mode=i&folder=' + main_media.GetFileInfo().GetDirName() + '&image=' + main_media.GetFileInfo().GetImName();
-	if(global_count >= mt_N) document.getElementById('mt_submit').disabled=false;
+	      document.getElementById('object_name').value=new_name;
+	      document.getElementById('number_objects').value=global_count;
+      	document.getElementById('LMurl').value = LMbaseurl + '?collection=LabelMe&mode=i&folder=' + main_media.GetFileInfo().GetDirName() + '&image=' + main_media.GetFileInfo().GetImName();
+      	if(global_count >= mt_N) document.getElementById('mt_submit').disabled=false;
       }
-    };
+  };
     
     // Handles when we wish to change from "query" to "rest".
     this.QueryToRest = function () {

@@ -1,7 +1,7 @@
-body {font-family:Arial;  color:black; overflow:hidden; 
+body {font-family:Arial;  color:black; overflow:scroll; 
 margin-top:0px; margin-left:0px; margin-right:0px; margin-bottom: 0px;}
-a:link {color: #0000FF; text-decoration: underline;}
-a:visited {color: #0000FF; text-decoration: underline;}
+a:link {color: #FFFFFF;}
+a:visited {color: #FFFFFF; text-decoration: blink;}
 a:hover {color: #0000FF; text-decoration: underline;}
 
 table, div {border-collapse:collapse;}
@@ -91,7 +91,7 @@ position:relative;
 .content {
   border: 1px solid #ffffff;
   padding: 0.2em;
-  overflow: auto;
+  overflow: scroll;
 }
 
 #right_side {position:absolute; top:0px; right:0px; width:20em;
@@ -99,30 +99,24 @@ height:100%; z-index:0;}
 #examples {width:100%; font-size:small;}
 #anno_list {font-size:small;}
 
-#w-container {
-  padding-right: 0px;
-  padding-left: 0px;
-  margin-left: auto;
-  margin-right: auto;
-}
 
-#menu-content {
+.menu-content {
   padding: 4px;
 }
 
-#menu-ul>li>a{
+.menu-ul>li>a{
   background-color: #4D3D3C;
 
 }
 
 
 /*on user click */
-#menu-ul>li>a.active{
+.menu-ul>li>a.active{
   background-color: #773E3A; 
 }
 
 /* on hover*/
-#menu-ul>li>a:hover{
+.menu-ul>li>a:hover{
   background-color: #773E3A;
   color: #FFFFFF;
 
@@ -161,5 +155,21 @@ height:100%; z-index:0;}
 .hit-submenu>li>a.active{
   background-color: #7a7a7a;
 }
-
   
+.hit-submenu{
+
+  color: #FFFFFF;
+  display: none;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.nav-stacked>li+li {
+  margin-top: 3px;
+  margin-left: 0;
+}
+
+.rectangle {
+    border: 3px solid #FF0000;
+    position: inherit;
+}

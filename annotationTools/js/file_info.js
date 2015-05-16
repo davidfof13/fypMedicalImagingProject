@@ -166,8 +166,17 @@ function file_info() {
             if((!this.dir_name) || (!this.im_name)) return this.SetURL(labelme_url);
             
             if(isMT) {
+
+                
+                // activate mTurk display
+                document.getElementById('mt_submit_form').style.visibility = 'visible';
+
+                // reposition image canvas
+                $(".image_canvas").css({top: '0px', left: '0px'});  
+
                 this.mode='mt'; // Ensure that we are in MT mode
                 view_ObjList = default_view_ObjList;
+
             }
             
             if((this.mode=='i') || (this.mode=='c') || (this.mode=='f')) {
@@ -176,8 +185,10 @@ function file_info() {
             else if((this.mode=='im') || (this.mode=='mt')) {
                 var p = document.getElementById('header');
                 p.parentNode.removeChild(p);
+
                 var p = document.getElementById('tool_buttons');
                 p.parentNode.removeChild(p);
+
                 document.getElementById('body').style.visibility = 'visible';
             }
             else {
@@ -195,16 +206,17 @@ function file_info() {
                 window.location = MThelpPage;
                 return false;
             }
+
             if(this.mode=='mt') {
 
                 if(!this.mt_instructions) {
-                    //if(mt_N=='inf') this.mt_instructions = 'Please label as many objects as you want in this image.';
                     if(mt_N != 'inf' ) 
                         this.mt_instructions = 'Please label at least ' + mt_N + ' object in this image.';
 
                     else 
                         this.mt_instructions = 'Please draw a rectangle where the tumour is located';
                 }
+
                 if(mt_N=='inf') mt_N = 1;
                 
                 // import external file first
@@ -213,39 +225,28 @@ function file_info() {
                 // select the content that will be appended to tool.html
                 var content = getImport.import.querySelector('#template');
 
-               // document.getElementById('#template').appendChild(content);
-
-                //var tempDiv = document.createElement('div');
-                //tempDiv.innerHTML = document.importNode(content, true).outerHTML;
-
+                // convert content to string
                 var source = document.importNode(content, true).innerText;
                
-                //document.getElementsByTagName('head')[0].appendChild(tempDiv.firstChild);
-
-                //$('#template').append(document.importNode(content, true).innerHTML);
-
-                // append the content within the body
-                //document.body.appendChild(document.importNode(getContent, true));
-
-               //$('head').append(document.importNode(getContent, true));
-
-                //var source = "<div>{{mt_instr}}</div>";
-                // display worker page
+               
+                // template values to be passed to code
                 var context = {
                     mt_instr: this.mt_instructions,
                     extURL: externalSubmitURL,
                     aId: this.assignmentId
                 };
 
-                //var template = Handlebars.compile($('#template').html());
-
+                // compile code
                 var template = Handlebars.compile(source);
                 var html_str = template(context);
-
-                //console.log(template);
             
-		        $('#mt_submit_form').append(html_str);
+                // add code to div element
+                $('#mt_submit_form').append(html_str);
+
                 if(global_count >= mt_N) document.getElementById('mt_submit').disabled=false;
+
+                 // configure hit menu
+                main_handler.setHITMenu();
             }
         }
         else {
