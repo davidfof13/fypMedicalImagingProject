@@ -367,8 +367,6 @@ function handler() {
         return draw_anno;
     };
     
-<<<<<<< HEAD
-=======
     // handles when the user clicks on a dropdown menu of the 
     // hit menu of the MTurk user interface
     this.setHITMenu = function () {  
@@ -377,6 +375,18 @@ function handler() {
         $('#menu-ul>li>a').click(function(){
           $('#menu-ul').find('.active').removeClass('active');
             this.className += ' active';
+<<<<<<< HEAD
+=======
+
+            // if we click on any other button except the drop downn menu,
+            // close dropdown menu
+            if (el.attr("id") =="dropdownMenu" && this.id != "dropdownMenu" && $('.caret').length){
+              $('.hit-submenu').slideToggle();
+              $('.caret').attr('class', 'caret-right');
+            }
+
+
+>>>>>>> Annotations do not load on Mturk mode
         });
 
          // set current sublist element to active
@@ -440,7 +450,6 @@ function handler() {
 
 
 
->>>>>>> actived the mask tool: configured buttons for
     // *******************************************
     // Private methods:
     // *******************************************

@@ -15,19 +15,15 @@ function StartupLabelMe() {
     main_handler = new handler();
     main_canvas = new canvas('myCanvas_bg');
     main_media = new image('im');
-
-    // main media file Info
-    var mmInfo = main_media.GetFileInfo();
-    var mode = mmInfo.GetMode();
     // Parse the input URL.  Returns false if the URL does not set the 
     // annotation folder or image filename.  If false is returned, the 
     // function fetches a new image and sets the URL to reflect the 
     // fetched image.
-    if(!mmInfo.ParseURL()) return;
+    if(!main_media.GetFileInfo().ParseURL()) return;
 
     if(video_mode) {
       main_media = new video('videoplayer');
-      mmInfo.ParseURL();
+      main_media.GetFileInfo().ParseURL();
       console.log("Video mode...");
       var anno_file = main_media.GetFileInfo().GetFullName();
       main_media.GetNewVideo();
@@ -37,50 +33,17 @@ function StartupLabelMe() {
     else {
       // This function gets run after image is loaded:
       function main_media_onload_helper() {
-	       // Set the image dimensions:
-	       main_media.SetImageDimensions();
-
-         // Resize image for mTurk 
-         if(mmInfo.GetMode() == "mt"){
-            main_media.ResizeImage();
-
-
-            // Set events to resize image whenever we resize window
-            // Courtesy of http://stackoverflow.com/questions/2996431/detect-when-a-window-is-resized-using-javascript
-            $(window).resize(function() {
-              if(this.resizeTO) clearTimeout(this.resizeTO);
-                this.resizeTO = setTimeout(function() {
-                  $(this).trigger('resizeEnd');
-                }, 60);
-            });
-
-            // Run Jquery function on window resize
-            $(window).bind('resizeEnd', function() {
-              if(main_media){
-                $(document).ready(function(){
-                  main_media.ResizeImage();
-                });
-              }
-            });
-
-          } //else {
-            // Read the XML annotation file:
-            var anno_file = main_media.GetFileInfo().GetFullName();
-            anno_file = 'Annotations/' + anno_file.substr(0,anno_file.length-4) + '.xml' + '?' + Math.random();
-            ReadXML(anno_file,LoadAnnotationSuccess,LoadAnnotation404);
-         // }
+  // Set the image dimensions:
+  main_media.SetImageDimensions();
       
-
-	       
+  // Read the XML annotation file:
+  var anno_file = main_media.GetFileInfo().GetFullName();
+  anno_file = 'Annotations/' + anno_file.substr(0,anno_file.length-4) + '.xml' + '?' + Math.random();
+  ReadXML(anno_file,LoadAnnotationSuccess,LoadAnnotation404);
       };
 
-        // Get the image:
-        main_media.GetNewImage(main_media_onload_helper);
-
-       
-        if(mmInfo.GetMode() == "mt")
-          $(".image_canvas").appendTo("#hit-image");
-
+      // Get the image:
+      main_media.GetNewImage(main_media_onload_helper);
     }
   }
   else {
@@ -95,44 +58,38 @@ function StartupLabelMe() {
 */
 function LoadAnnotationSuccess(xml) {
   
-
-
   console.time('load success');
 
+  // Set global variable:
+  LM_xml = xml;
 
-  if (main_media.GetFileInfo().GetMode() != "mt"){ 
+  // Set AllAnnotations array:
+  SetAllAnnotationsArray();
 
-    // Set global variable:
-    LM_xml = xml;
-
-    // Set AllAnnotations array:
-    SetAllAnnotationsArray();
-
-    console.time('attach main_canvas');
-    // Attach valid annotations to the main_canvas:
-    for(var pp = 0; pp < LMnumberOfObjects(LM_xml); pp++) {
-      var isDeleted = LMgetObjectField(LM_xml, pp, 'deleted');
-      if((view_Existing&&!isDeleted)||(isDeleted&&view_Deleted)) {
-        // Attach to main_canvas:
-       main_canvas.AttachAnnotation(new annotation(pp));
-        if (!video_mode && LMgetObjectField(LM_xml, pp, 'x') == null){
-         main_canvas.annotations[main_canvas.annotations.length -1].SetType(1);
-         main_canvas.annotations[main_canvas.annotations.length -1].scribble = new scribble(pp);
-        }
+  console.time('attach main_canvas');
+  // Attach valid annotations to the main_canvas:
+  for(var pp = 0; pp < LMnumberOfObjects(LM_xml); pp++) {
+    var isDeleted = LMgetObjectField(LM_xml, pp, 'deleted');
+    if((view_Existing&&!isDeleted)||(isDeleted&&view_Deleted)) {
+      // Attach to main_canvas:
+      main_canvas.AttachAnnotation(new annotation(pp));
+      if (!video_mode && LMgetObjectField(LM_xml, pp, 'x') == null){
+        main_canvas.annotations[main_canvas.annotations.length -1].SetType(1);
+        main_canvas.annotations[main_canvas.annotations.length -1].scribble = new scribble(pp);
       }
     }
-    console.timeEnd('attach main_canvas');
-
-    console.time('RenderAnnotations()');
-    // Render the annotations:
-    main_canvas.RenderAnnotations();
-    console.timeEnd('RenderAnnotations()');
-
-    console.timeEnd('load success');
   }
+  console.timeEnd('attach main_canvas');
 
-    // Finish the startup scripts:
-    FinishStartup();
+  console.time('RenderAnnotations()');
+  // Render the annotations:
+  main_canvas.RenderAnnotations();
+  console.timeEnd('RenderAnnotations()');
+
+  console.timeEnd('load success');
+
+  // Finish the startup scripts:
+  FinishStartup();
 }
 
 /** Sets AllAnnotations array from LM_xml */

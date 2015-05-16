@@ -1,29 +1,5 @@
 
 <script id="template" type="text/x-handlebars-template">
-<<<<<<< HEAD
-<table>
-	<tr>
-		<td>
-			<font size="4">
-				<b> {{mt_instr}} 
-					<br />Scroll down to see the entire image. &#160;&#160;&#160; 
-				</b>
-			</font>
-		</td>
-
-		<td>
-			<form action="{{extURL}}">
-				<input type="hidden" id="assignmentId" name="assignmentId" value="{{aId}}"/>
-				<input type="hidden" id="number_objects" name="number_objects" value="" />
-				<input type="hidden" id="object_name" name="object_name" value="" />
-				<input type="hidden" id="LMurl" name="LMurl" value="" />
-				<input type="hidden" id="mt_comments" name="mt_comments" value="" />
-				<input disabled="true" type="submit" id="mt_submit" name="Submit" value="Submit HIT" onmousedown="javascript:document.getElementById(\'mt_comments\').value=document.getElementById(\'mt_comments_textbox\').value;" />
-			</form>
-		</td>
-	</tr>
-</table>
-=======
 
 <div id="container" style="margin-left:20px; margin-top:20px; margin-right:20px;"> 
 
@@ -40,16 +16,14 @@
 
             <div class="panel panel-primary">
               <div class="panel-heading">Draw</div>
-              <div id="menu-content" class="nav-collapse navbar-responsive container navbar-inverse">
-                <ul id="menu-ul" class= "nav nav-pills nav-stacked">
+              <div class="menu-content nav-collapse navbar-responsive container navbar-inverse">
+                <ul class= "menu-ul nav nav-pills nav-stacked">
                   <!--<li role="presentation" class="active"><a class="li-base" href="#/"> Original Image </a></li> -->
-                  <li role="presentation"><a onclick="SetDrawingMode(0)" class="li-base" href="#/" > Contour </a></li>
+                  <li role="presentation"><a onclick="SetDrawingMode(0)" class="li-base" href="#/" > Box </a></li>
                   <li role="presentation" class="dropdown">
                     <a id="dropdownMenu" onclick="scribble_canvas.setCurrentDraw(OBJECT_DRAWING)" class="li-base" href="#/">Scribble <span class="caret-right"></span></a>
-                    <ul  class="nav  nav-stacked hit-submenu" role="menu">
+                    <ul class="nav  nav-stacked hit-submenu" role="menu">
                       <li><a id="foreground" onclick="scribble_canvas.setCurrentDraw(OBJECT_DRAWING)" href='#/'>Foreground</a></li>
-
-
                       <li><a onclick="scribble_canvas.setCurrentDraw(BG_DRAWING)" href='#/'>Background</a></li>
                     </ul>
                   </li>
@@ -59,12 +33,28 @@
             </div>
 
 
-                  <!-- delete menu -->
+                  <!-- Edit menu -->
                   <div class="panel" style="background-color: #943F3F; color: #FFF;">
-                    <div class="panel-heading">Delete</div>
-                    <div id="menu-content" class="nav-collapse navbar-responsive container navbar-inverse">
-                      <ul id="menu-ul" class= "nav nav-pills nav-stacked">
-                          <li role="presentation"><a href="#/"> anything</a></li>
+                    <div class="panel-heading">Edit</div>
+                    <div  class="menu-content nav-collapse navbar-responsive container navbar-inverse">
+                      <ul class= "menu-ul nav nav-pills nav-stacked">
+                          <!--<li role="presentation"><a class="li-base" href="#/"> Rectangle </a></li> -->
+                          <li role="presentation"><a class="li-base" onclick="scribble_canvas.setCurrentDraw(RUBBER_DRAWING)" href="#/"> erase scribble</a></li>
+                          <li role="presentation" >
+                              <a class="li-base" data-toggle="modal" data-target=".bs-example-modal-sm"  href="#/"> delete scribbles</a>
+                        
+
+                              <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+                              
+                                  <div class="modal-dialog modal-sm">
+                                    <div class="modal-content"></div>
+                                      ...
+                                  </div>
+                              </div>
+
+
+                          </li>
+                            <!--onclick="scribble_canvas.DeleteAllScribbles()"-->
                       </ul>
                     </div>
                   </div>
@@ -105,5 +95,4 @@
 </div>
 
 
->>>>>>> actived the mask tool: configured buttons for
 </script> 

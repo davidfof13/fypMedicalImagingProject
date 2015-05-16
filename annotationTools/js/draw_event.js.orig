@@ -2,17 +2,80 @@
 
 var draw_anno = null;
 var query_anno = null;
-<<<<<<< HEAD
 /** This function is called with the draw event is started.  It can be 
  triggered when the user (1) clicks on the base canvas. */
-=======
-
-// This function is called when the draw event is started.  It can be 
-// triggered when the user (1) clicks on the base canvas.
->>>>>>> -added handlebars template engine to write static html
 function StartDrawEvent(event) {
+<<<<<<< HEAD
   draw_x = new Array();
   draw_y = new Array();
+=======
+
+
+ $('#draw_canvas_div').css('cursor', 'default');
+ $('#draw_canvas_div').empty();
+
+   // Handles when user moves mouse
+  $('#draw_canvas_div').mousemove(function(e) {
+
+
+       //var scale = main_media.GetImRatio();
+
+       if(rectangle != null){
+
+          $(document).one("keyup", function(event) {
+
+
+              if(rectangle!= null){
+                if (event.keyCode == 27) { 
+
+                  rectangle.style.width = 0;
+                  rectangle.style.height = 0;
+                  rectangle.parentNode.removeChild(rectangle);
+                  rectangle = null;
+
+                  $(this).off('keyup');
+                  return; 
+
+               }   // escape key maps to keycode `27`
+            }
+          });
+
+         rx = parseInt(e.clientX + $(window).scrollLeft()  - offsetX);
+         ry = parseInt(e.clientY + $(window).scrollTop() - offsetY);
+
+         // set rectangle dimensions based on start end end co-ordinates
+         rectangle.style.width = Math.abs(rx - startX)  + 'px';
+         rectangle.style.height = Math.abs(ry - startY) + 'px';
+         rectangle.style.left = (rx - startX < 0) ? rx + 'px' : startX + 'px';
+         rectangle.style.top =  (ry - startY < 0) ? ry + 'px' : startY + 'px';
+       }
+
+  });
+
+
+  // Handles when user closes the rectangle. 
+  //$('#draw_canvas_div').unbind();
+  $('#draw_canvas_div').mousedown(function(e) {
+
+      // start rectangle
+      if(rectangle == null)
+          DrawRectangle(e);
+
+      else{ // close rectangle
+        rectangle = null;
+        active_canvas = REST_CANVAS;
+        $('#draw_canvas_div').css('cursor', 'default');
+        DrawCanvasCloseRectangle();
+      }
+
+    });
+
+ DrawRectangle(event);
+}
+
+function DrawRectangle(event){
+
+>>>>>>> Annotations do not load on Mturk mode
   if(!action_CreatePolygon) return;
   if(active_canvas != REST_CANVAS) return;
   
@@ -29,6 +92,7 @@ function StartDrawEvent(event) {
 
   // Set active canvas:
   active_canvas = DRAW_CANVAS;
+<<<<<<< HEAD
   if (video_mode) oVP.Pause();
   // Get (x,y) mouse click location and button.
   var x = GetEventPosX(event);
@@ -37,6 +101,23 @@ function StartDrawEvent(event) {
   
   // If the user does not left click, then ignore mouse-down action.
   if(button>1) return;
+=======
+
+  allowed = true;
+
+  // Get starting co-ordinates. Courtesy of s
+  // http://stackoverflow.com/questions/6460116/detecting-offset-of-an-element-on-scroll-in-javascript-jquery
+  offsetX = $('#draw_canvas_div').offset().left;
+  offsetY = $('#draw_canvas_div').offset().top;
+
+
+  startX =  parseInt(event.pageX - offsetX);
+  startY = parseInt(event.pageY - offsetY);
+
+  console.log('startX = ' + startX + '. clientX = ' + event.clientX);
+  console.log('startY = ' + startX + '. clientY = ' + event.clientY);
+
+>>>>>>> Annotations do not load on Mturk mode
   
   // Move draw canvas to front:
   $('#draw_canvas').css('z-index','0');

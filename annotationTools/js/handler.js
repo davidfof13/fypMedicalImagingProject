@@ -37,18 +37,18 @@ function handler() {
       
       var re = /[a-zA-Z0-9]/;
       if(!re.test(new_name)) {
-	alert('Please enter an object name');
-	return;
+	       alert('Please enter an object name');
+	       return;
       }
       
       if (use_attributes) {
-	// occlusion field
-	if (document.getElementById('occluded')) new_occluded = RemoveSpecialChars(document.getElementById('occluded').value);
-	else new_occluded = RemoveSpecialChars(adjust_occluded);
+	      // occlusion field
+	      if (document.getElementById('occluded')) new_occluded = RemoveSpecialChars(document.getElementById('occluded').value);
+	      else new_occluded = RemoveSpecialChars(adjust_occluded);
 	
-	// attributes field
-	if(document.getElementById('attributes')) new_attributes = RemoveSpecialChars(document.getElementById('attributes').value);
-	else new_attributes = RemoveSpecialChars(adjust_attributes);
+	      // attributes field
+	      if(document.getElementById('attributes')) new_attributes = RemoveSpecialChars(document.getElementById('attributes').value);
+	      else new_attributes = RemoveSpecialChars(adjust_attributes);
       }
       
       StopEditEvent();
@@ -113,7 +113,7 @@ function handler() {
         // Write XML to server:
         WriteXML(SubmitXmlUrl,LM_xml,function(){return;});
 
-	// Refresh object list:
+	       // Refresh object list:
         if(view_ObjList) RenderObjectList();
         selected_poly = -1;
         unselectObjects(); // Perhaps this should go elsewhere...
@@ -209,9 +209,16 @@ function handler() {
 
 
       else {
+
+          if(lmode != "mt")
 	         nn = RemoveSpecialChars(document.getElementById('objEnter').value);
+
 	         anno = this.QueryToRest();
       }
+
+      if(lmode == "mt")
+          nn = "rect" + AllAnnotations.length; // rec + id
+
       
       var re = /[a-zA-Z0-9]/;
 
@@ -367,14 +374,24 @@ function handler() {
         return draw_anno;
     };
     
-    // handles when the user clicks on a dropdown menu of the 
+  // handles when the user clicks on a dropdown menu of the 
     // hit menu of the MTurk user interface
     this.setHITMenu = function () {  
 
         // set current list element to active
-        $('#menu-ul>li>a').click(function(){
-          $('#menu-ul').find('.active').removeClass('active');
+        $('.menu-ul>li>a').click(function(){
+            var el = $('.menu-ul').find('.active');
+            el.removeClass('active');
             this.className += ' active';
+
+            // if we click on any other button except the drop downn menu,
+            // close dropdown menu
+            if (el.attr("id") =="dropdownMenu" && this.id != "dropdownMenu" && $('.caret').length){
+              $('.hit-submenu').slideToggle();
+              $('.caret').attr('class', 'caret-right');
+            }
+
+
         });
 
          // set current sublist element to active
@@ -385,11 +402,6 @@ function handler() {
 
 
          this.className += ' active';
-
-         // get the new color of this element
-         //var cl = this.css('background-color');
-
-         //var cl = window.getComputedStyle(this).getPropertyValue('background-color');
 
          // also set it to the li encompassing it
          //this.parentNode.style.backgroundColor = cl;
@@ -413,33 +425,14 @@ function handler() {
 
             $('#foreground').addClass('active');
 
-            // get colour of <a> link
-           // var cl = $('#foreground').css('background-color');
-
-            // add it to li element
-           // $('#foreground').parent().css('background-color', cl);
-
            $('#foreground').parent().addClass('active');
 
             // caret right
             $('.caret-right').attr('class', 'caret');
-
-           /* var tmp = $('.hit-submenu').children()[0];
-
-            
-            // set foreground to active by default
-            tmp.className += ' active';*/
           }
 
 
         });
     };
-
-
-
-
-    // *******************************************
-    // Private methods:
-    // *******************************************
     
 }

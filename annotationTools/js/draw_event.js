@@ -2,11 +2,91 @@
 
 var draw_anno = null;
 var query_anno = null;
+
+//var allowed;
+
+// rectangle starting x, y positions
+var startX = null; 
+var startY = null;
+var rectangle = null;
+var rx = 0;
+var ry = 0;
+
+var offsetX, offsetY;
+//courtesy of http://jsfiddle.net/m1erickson/7uNfW/
+
+
 /** This function is called with the draw event is started.  It can be 
  triggered when the user (1) clicks on the base canvas. */
 function StartDrawEvent(event) {
+
   draw_x = new Array();
   draw_y = new Array();
+
+ $('#draw_canvas_div').css('cursor', 'default');
+ $('#draw_canvas_div').empty();
+
+   // Handles when user moves mouse
+  $('#draw_canvas_div').mousemove(function(e) {
+
+
+       //var scale = main_media.GetImRatio();
+
+       if(rectangle != null){
+
+          $(document).one("keyup", function(event) {
+
+
+              if(rectangle!= null){
+                if (event.keyCode == 27) { 
+
+                  rectangle.style.width = 0;
+                  rectangle.style.height = 0;
+                  rectangle.parentNode.removeChild(rectangle);
+                  rectangle = null;
+
+                  $(this).off('keyup');
+                  return; 
+
+               }   // escape key maps to keycode `27`
+            }
+          });
+
+         rx = parseInt(e.clientX + $(window).scrollLeft()  - offsetX);
+         ry = parseInt(e.clientY + $(window).scrollTop() - offsetY);
+
+         // set rectangle dimensions based on start end end co-ordinates
+         rectangle.style.width = Math.abs(rx - startX)  + 'px';
+         rectangle.style.height = Math.abs(ry - startY) + 'px';
+         rectangle.style.left = (rx - startX < 0) ? rx + 'px' : startX + 'px';
+         rectangle.style.top =  (ry - startY < 0) ? ry + 'px' : startY + 'px';
+       }
+
+  });
+
+
+  // Handles when user closes the rectangle. 
+  //$('#draw_canvas_div').unbind();
+  $('#draw_canvas_div').mousedown(function(e) {
+
+      // start rectangle
+      if(rectangle == null)
+          DrawRectangle(e);
+
+      else{ // close rectangle
+        rectangle = null;
+        active_canvas = REST_CANVAS;
+        $('#draw_canvas_div').css('cursor', 'default');
+        DrawCanvasCloseRectangle();
+      }
+
+    });
+
+ DrawRectangle(event);
+}
+
+function DrawRectangle(event){
+
   if(!action_CreatePolygon) return;
   if(active_canvas != REST_CANVAS) return;
   
@@ -23,17 +103,26 @@ function StartDrawEvent(event) {
 
   // Set active canvas:
   active_canvas = DRAW_CANVAS;
-  if (video_mode) oVP.Pause();
-  // Get (x,y) mouse click location and button.
-  var x = GetEventPosX(event);
-  var y = GetEventPosY(event);
-  var button = event.button;
+
+  allowed = true;
+
+  // Get starting co-ordinates. Courtesy of s
+  // http://stackoverflow.com/questions/6460116/detecting-offset-of-an-element-on-scroll-in-javascript-jquery
+  offsetX = $('#draw_canvas_div').offset().left;
+  offsetY = $('#draw_canvas_div').offset().top;
+
+
+  startX =  parseInt(event.pageX - offsetX);
+  startY = parseInt(event.pageY - offsetY);
+
+  console.log('startX = ' + startX + '. clientX = ' + event.clientX);
+  console.log('startY = ' + startX + '. clientY = ' + event.clientY);
+
   
   // If the user does not left click, then ignore mouse-down action.
   if(button>1) return;
   
   // Move draw canvas to front:
-  $('#draw_canvas').css('z-index','0');
   $('#draw_canvas_div').css('z-index','0');
   
   if(username_flag) submit_username();
@@ -42,28 +131,20 @@ function StartDrawEvent(event) {
   var numItems = $(LM_xml).children('annotation').children('object').length;
   draw_anno = new annotation(numItems);
   
-  // Add first control point:
-  draw_x.push(Math.round(x/main_media.GetImRatio()));
-  draw_y.push(Math.round(y/main_media.GetImRatio()));
-  
-  // Draw polyline:
-  draw_anno.SetDivAttach('draw_canvas');
-  draw_anno.DrawPolyLine(draw_x, draw_y);
- 
-  // Set mousedown action to handle when user clicks on the drawing canvas:
-  $('#draw_canvas_div').unbind();
-  $('#draw_canvas_div').mousedown({obj: this},function(e) {
-      return DrawCanvasMouseDown(e.originalEvent);
-    });
-  if (bounding_box){
-    draw_anno.bounding_box = true;  
-    $('#draw_canvas_div').mousemove({obj: this},function(e) {
-      return DrawCanvasMouseMove(e.originalEvent);
-    });
-    
-  }
+  var scale = main_media.GetImRatio();
 
-  WriteLogMsg('*start_polygon');
+  // save co-ordinates
+  draw_x.push(Math.round(startX/scale));
+  draw_y.push(Math.round(startY/scale));
+
+
+  rectangle = document.createElement('div');
+
+  rectangle.className = 'rectangle';
+  rectangle.style.left = startX + 'px';
+  rectangle.style.top  = startY + 'px';
+  $('#draw_canvas_div').append(rectangle);
+  $('#draw_canvas_div').css('cursor' , 'crosshair');
 }
 
 function DrawCanvasMouseMove(event){
@@ -80,6 +161,34 @@ function DrawCanvasMouseMove(event){
   DrawPoint(draw_anno.div_attach,draw_x[0],draw_y[0],'r="6" fill="#00ff00" stroke="#ffffff" stroke-width="3"',scale);*/
 
 }
+
+function DrawCanvasCloseRectangle(){
+
+
+    // Set active canvas:
+    active_canvas = DRAW_CANVAS;
+
+
+    // Save remaining corners of rectangle
+    var scale = main_media.GetImRatio();
+
+    // (sx, ry)
+    draw_anno.pts_x.push(Math.round(startX/scale));
+    draw_anno.pts_y.push(Math.round(ry/scale));
+
+    // (rx, ry)
+    draw_anno.pts_x.push(Math.round(rx/scale));
+    draw_anno.pts_y.push(Math.round(ry/scale));
+
+    // (rx, sy)
+    draw_anno.pts_x.push(Math.round(rx/scale));
+    draw_anno.pts_y.push(Math.round(startY/scale));
+
+    // prompt user to save annotation
+    DrawCanvasClosePolygon();
+
+}
+
 /** Handles when the user presses the mouse button down on the drawing
 canvas. */
 function DrawCanvasMouseDown(event) {
@@ -148,7 +257,7 @@ function DrawCanvasClosePolygon() {
   active_canvas = QUERY_CANVAS;
   
   // Move draw canvas to the back:
-  document.getElementById('draw_canvas').style.zIndex = -2;
+  //document.getElementById('draw_canvas').style.zIndex = -2;
   document.getElementById('draw_canvas_div').style.zIndex = -2;
   
   // Remove polygon from the draw canvas:

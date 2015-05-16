@@ -99,13 +99,12 @@ height:100%; z-index:0;}
 #examples {width:100%; font-size:small;}
 #anno_list {font-size:small;}
 
-<<<<<<< HEAD
 #w-container {
   padding-right: 0px;
   padding-left: 0px;
   margin-left: auto;
   margin-right: auto;
-=======
+}
 
 #menu-content {
   padding: 4px;
@@ -162,6 +161,5 @@ height:100%; z-index:0;}
 .hit-submenu>li>a.active{
   background-color: #7a7a7a;
 }
->>>>>>> actived the mask tool: configured buttons for
+
   
-}
