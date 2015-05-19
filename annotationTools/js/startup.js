@@ -336,7 +336,9 @@ function SetDrawingMode(mode){
   // Get LabelMe Mode
   var lmode = main_media.GetFileInfo().GetMode();
   
-  if (mode == 0){
+
+  // Changing to polygon mode
+  if (mode == 0){ 
     if (scribble_canvas.annotationid != -1){
       alert("You can't change drawing mode while editting scribbles.");
       return;
@@ -353,13 +355,13 @@ function SetDrawingMode(mode){
         scribble_canvas.CloseCanvas();
     } else {
 
-      // put scribble canvas underneath
-      $('#myCanvas_bg_div').append($('#canvasDiv'));
-      $('#canvasDiv').css('z-index', '-2');
+        // put scribble canvas underneath
+        $('#myCanvas_bg_div').append($('#canvasDiv'));
+        $('#canvasDiv').css('z-index', '-2');
     }
   }
   
-  if (mode == 1) {
+  if (mode == 1) { 
     if(draw_anno) {
       alert("Need to close current polygon first.");
       return;

@@ -2,8 +2,8 @@
 # Sets up directory structure.
 
 # Change this if the Apache server is not located in "/var/www":
-BASE_DIR = /var/www/
-
+#BASE_DIR = /var/www/
+BASE_DIR = /Users/David/Documents/Imperial/4thYear/fyp/fypMedicalImagingProject
 
 # Get LabelMe path settings:
 LM_URL_HOME = http://$(shell hostname)/$(shell pwd | sed -e s@$(BASE_DIR)@@)/

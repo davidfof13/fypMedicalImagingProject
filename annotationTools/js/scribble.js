@@ -43,6 +43,7 @@ function scribble_canvas(tag) {
   // These two functions are called to show and hide the spinner wheel 
   // when the segmentation is in progress
   this.showspinner = function (){
+
     document.getElementById('segmentbtn').disabled = true;
     document.getElementById('donebtn').disabled = true;
     $('#loadspinner').show();
@@ -612,7 +613,13 @@ function scribble_canvas(tag) {
       return;
     }
     if (this.flag_changed == 1){
-      this.showspinner();
+
+      var lmode = main_media.GetFileInfo().mode;
+
+      if(lmode != "mt")
+        this.showspinner();
+
+      
       this.segmentation_in_progress = 1;
       
       this.redraw2(1, annotation_ended);
@@ -747,25 +754,39 @@ function scribble_canvas(tag) {
 
   // changes to foreground/backgorund/rubber
   this.setCurrentDraw = function(val){
+
+
     if (drawing_mode == 0){ 
       SetDrawingMode(1);
       if(draw_anno) return;
     }
+
+
     var buttons = document.getElementsByClassName("labelBtnDraw");
+    var lmode = main_media.GetFileInfo().mode;
+
+
     console.log(buttons);
     for (var i = 0; i < buttons.length; i++) buttons[i].setAttribute('style', 'background-color: #fff');
+
     if (val != OBJECT_DRAWING && val != BG_DRAWING && val != RUBBER_DRAWING) return;
     if (val == OBJECT_DRAWING){
       this.scribblecanvas.setAttribute('style','cursor:url(Icons/red_pointer.cur), default');
+
+    if (lmode != "mt")
       document.getElementById("ScribbleObj").setAttribute('style', 'background-color: #faa');
     } 
     else if (val == BG_DRAWING){
      this.scribblecanvas.setAttribute('style','cursor:url(Icons/blue_pointer.cur), default');
-     document.getElementById("ScribbleBg").setAttribute('style', 'background-color: #faa');
+
+     if (lmode != "mt")
+        document.getElementById("ScribbleBg").setAttribute('style', 'background-color: #faa');
     }
     else {
       this.scribblecanvas.setAttribute('style','cursor:url(Icons/rubber_pointer.cur), default');
-      document.getElementById("ScribbleRubber").setAttribute('style', 'background-color: #faa');
+
+      if(lmode != "mt")
+        document.getElementById("ScribbleRubber").setAttribute('style', 'background-color: #faa');
     } 
     this.currently_drawing = val;
   };

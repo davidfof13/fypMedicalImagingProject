@@ -1,6 +1,6 @@
 <annotation>
 	<filename>img1.jpg</filename>
-	<folder>samples</folder>
+	<folder>example_folder</folder>
 	<source>
 		<sourceImage>The MIT-CSAIL database of objects and scenes</sourceImage>
 		<sourceAnnotation>LabelMe Webtool</sourceAnnotation>
