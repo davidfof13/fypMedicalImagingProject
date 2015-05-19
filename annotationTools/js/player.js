@@ -1,16 +1,18 @@
-// retrieves a file via XMLHTTPRequest, calls fncCallback when done or fncError on error.
 
+/** @file This file the information about the video player. */
 
- var oVP;
+/** Global reference to the video player 
+ * @global 
+ 
+ */
+var oVP;
 
+/** 
+ * Creates a video player pointing to files specified by the url
+ * @constructor
+*/
 function JSVideo() {
 
-
-
-// var fname_folder_root = "/var/www/LabelMeVideo/VLMFrames/"
-// var fname_folder = location.search.split('source=')[1] ? location.search.split('source=')[1] : "unusual_clips/backing/";
-
-  var fname_folder_root = "/var/www/developers/xavierpuigf/LabelMeAnnotationTool/"
   var fname_folder = main_media.GetFileInfo().GetImagePath()+"/";
   fname_folder =  fname_folder;
 
@@ -58,6 +60,13 @@ function JSVideo() {
   this.getcurrentFrame = function (){
     return iFrameCtr;
   }
+
+/** This function checks that the loaded frames are correct, stores them in the video structure
+   * It prepares the polygon for scaling.
+   * @param {int} frame - the position corresponding to the first frame in the set
+   * @param {bool} first_time - boolean indicating whether it was the first frame load of the video
+   * @param {json} response - json with the set of jpg frames being loaded
+*/
 this.loadFile = function(frame, first_time, isbackground, response) {
 
 
@@ -76,7 +85,7 @@ this.loadFile = function(frame, first_time, isbackground, response) {
         oVP.GenerateFrames();
         if (first_time) ovP.GoToFrame(frame);
         ovP.seekChunkToDownload(frame);
-        if ((first_time || frame == iFrameCtr ) && uPaused == false) oVP.Play();
+        if (first_time || frame == iFrameCtr ) oVP.Play();
       }
       catch(e) {
          console.log("Error parsing video data ", e);
@@ -87,11 +96,47 @@ this.loadFile = function(frame, first_time, isbackground, response) {
     }
     if (response) fncLoad();
     else fncError();
+  } 
+  this.HighLightFrames = function(frames){
+    $('.oObjectshow').remove();
+    if (frames.length == 0) return;
+    var frame1 = frames[0];
+    var frame2 = frames[0];
+    var i = 1;
+
+    while (i < frames.length){
+      if (frames[i] == frames[i-1]+1){
+        frame2 = frames[i];
+        
+      }
+      else {
+        var width = this.imageWidth*(frame2 - frame1)/(oVideoData.frames-1);
+        var posx = this.imageWidth*(frame1 - 1)/(oVideoData.frames-1); 
+        var oObjectShow = '<div class="oObjectshow" style="display:inline-block;width:' + width + 'px;height:3px;position:relative;left:'+posx+'px;top:-30px;z-index:0;background-color:yellow;" />';
+        $('#oScroll').after(oObjectShow);
+        frame1 = frame2 = frames[i];
+
+      }
+      i++;
+    }
+
+    var width = this.imageWidth*(frame2 - frame1)/(oVideoData.frames-1);
+    var posx = this.imageWidth*(frame1 - 1)/(oVideoData.frames-1); 
+    var oObjectShow = '<div class="oObjectshow" style="display:inline-block;width:' + width + 'px;height:3px;position:relative;left:'+posx+'px;top:-30px;z-index:0;background-color:yellow;" />';
+    $('#oScroll').after(oObjectShow);
+    
   }
+  this.UnHighLightFrames = function (){
+    $('.oObjectshow').remove();
+    var oObjectShow = '<div class="oObjectshow" style="display:inline-block;width:' + this.imageWidth + 'px;height:3px;position:relative;left:'+0+'px;top:-30px;z-index:0;" />';
+    $('#oScroll').after(oObjectShow);
 
-
+  }
+  /** This function creates the html elements (display, scroll bar and buttons) for the video player */
   // Create video canvas elements.
   this.CreateVideoCanvas = function() {
+
+    
     // Create canvas:
     var oCanvas = '<svg id="canvas" width="' + this.imageWidth + '" height="' + this.imageHeight + '" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="position:absolute;left:8px;top:8px;z-index:-5;"></svg><div id="oCanvas" style="background-color:black;width:' + this.imageWidth + 'px;height:' + this.imageHeight + 'px;position:relative;z-index:-5;" />';
     $('#videoplayer').append(oCanvas);
@@ -103,31 +148,32 @@ this.loadFile = function(frame, first_time, isbackground, response) {
     // Create scroll bar:
     var oScroll = '<div id="oScroll" style="width:'+this.imageWidth+'px;"></div>'
     var oLoad = '<div id="oLoadBar" style="width:'+this.imageWidth+'px; z-index:0"></div>'
-
+    
           
     $('#videoplayer').append(oScroll);
     $('#oScroll').slider({
             range : "min",
-            min   : 0,
+            min   : 1,
             max   : this.imageWidth,
-            value : 0,
+            value : 1,
             slide : function (event, ui) {
-                //ovP.Pause(false);
                 pos = ui.value/ovP.imageWidth;
-                iFrameCtr = Math.floor(pos*(oVideoData.frames-1));
+                iFrameCtr = Math.max(Math.floor(pos*(oVideoData.frames-1)),1);
                 ovP.DisplayFrame(iFrameCtr);
             }
             
         });
-
+    // Object show
+    var oObjectShow = '<div class="oObjectshow" style="display:inline-block;width:' + this.imageWidth + 'px;height:3px;position:relative;left:'+0+'px;top:-30px;z-index:0;" />';
+    $('#oScroll').after(oObjectShow);
     // Create loaded bar
     
     $('#oScroll').append(oLoad);
     $('#oLoadBar').slider({
             range : "min",
-            min   : 0,
+            min   : 1,
             max   : this.imageWidth,
-            value : 0,
+            value : 1,
             
             
         });
@@ -172,43 +218,25 @@ this.loadFile = function(frame, first_time, isbackground, response) {
   this.X = Array();
   this.Y = Array();
   this.display_polygon = Array();
-
+  /** This function is called when the user clicks the Go to frame button. It displays the frame indicated by the text field */
   this.GoToFrameButtonClicked = function(){
     var framevalue = Math.max(Math.min(this.getnumFrames()-1,$('#frameinput').val()),0);
     this.GoToFrame(parseInt(framevalue));
   }
+
+  /** This function generates the html <img> elements that contain the loaded frames */
   this.GenerateFrames = function() {
     var shift = oVideoData.firstframe;
     for(var i = 0; i < oVideoData.data.video.length; i++) {
       var oImage = '<img src="' + oVideoData.data.video[i] + '" id="im" style="display:block;position:absolute;padding:0;border-width:0;width:' + this.imageWidth + 'px;height:' + this.imageHeight + 'px;z-index:-3;" />';
       aFrameImages[i+shift] = oImage;
     }
-  //   console.time('get all polygons');
-  //   // Get all polygons:
-  //   var allObjects = LM_xml.getElementsByTagName('object');
-  //   for(var objndx = 0; objndx < allObjects.length; objndx++) {
-  //     console.log(allObjects[objndx]);
-  //     this.display_polygon[objndx] = false;
-  //     if(!parseInt(allObjects[objndx].getElementsByTagName('deleted')[0].innerHTML)) {
-  // this.display_polygon[objndx] = true;
-  // this.X[objndx] = Array();
-  // this.Y[objndx] = Array();
-  // var allPolygons = allObjects[objndx].getElementsByTagName('polygon');
-  // for(var i = 0; i < allPolygons.length; i++) {
-  //   // Get points:
-  //   var allPoints = allPolygons[i].getElementsByTagName('pt');
-  //   this.X[objndx][i] = Array();
-  //   this.Y[objndx][i] = Array();
-  //   for(var j = 0; j < allPoints.length; j++) {
-  //     this.X[objndx][i][j] = parseInt(allPoints[j].getElementsByTagName('x')[0].innerHTML);
-  //     this.Y[objndx][i][j] = parseInt(allPoints[j].getElementsByTagName('y')[0].innerHTML);
-  //   }
-  // } 
-  //     }
-  //   }
-  //   console.timeEnd('get all polygons');
+
   }
-  
+  /** This function displays the frame at position i, as well as the annotations corresponding to such frame. 
+   * If such frame is not available, it pauses the player, loads a chunk of frames starting from i and replays.
+   * @param {int} i - the index of the frame to be displayed
+  */
   this.DisplayFrame = function(i) {
     // Show frame:
     $('#framenum').html(i);
@@ -232,65 +260,90 @@ this.loadFile = function(frame, first_time, isbackground, response) {
     // Plot polygons:
     var xml = LM_xml
     var N = $(xml).children("annotation").children("object").length;
+    
     for(var it = 0; it < N; it++) {
-      var obj = $(xml).children("annotation").children("object").eq(it);
+        var del = parseInt($(LM_xml).children("annotation").children("object").eq(it).children("deleted").text());
+        if (del) continue;
+        var obj = $(xml).children("annotation").children("object").eq(it);
+        
         // Get object name:
 
         // Get points:
-        var X = Array();
-        var Y = Array();
-        var framestamps = (obj.children("polygon").children("t").text()).split(',')
-        for(var ti=0; ti<framestamps.length; ti++) { framestamps[ti] = parseInt(framestamps[ti], 10); } 
-        var objectind = framestamps.indexOf(i);
-        
-        if (objectind >= 0){
-         var pointsx = (obj.children("polygon").children("x").text()).split(';')[objectind]
-         X = pointsx.split(',')
-         for(var ti=0; ti<X.length; ti++) { X[ti] = parseInt(X[ti], 10); } 
-         var pointsy = (obj.children("polygon").children("y").text()).split(';')[objectind]
-         Y = pointsy.split(',')
-         for(var ti=0; ti<Y.length; ti++) { Y[ti] = parseInt(Y[ti], 10); } 
+        var anno_id = obj.children("id").text();
+          var X = LMgetObjectField(LM_xml,it, 'x',i);
+          var Y = LMgetObjectField(LM_xml,it, 'y', i);
+          if (X == null) continue;
+            var obj_name = "foo";
+           if (obj.children("name")) obj_name = obj.children("name").text();
+           if (select_anno == null || (select_anno && select_anno.anno_id != anno_id)){
+              var anoindex = main_canvas.GetAnnoIndex(it);
+              polid = main_canvas.annotations[anoindex].DrawPolygon(scale, X,Y);
+              $('#'+polid).attr('onmousedown','StartEditEvent('+ it + ',evt); return false;');
+              $('#'+polid).attr('onmousemove','main_handler.CanvasMouseMove(evt,'+ it +'); return false;');
+              $('#'+polid).attr('oncontextmenu','return false');
+              $('#'+polid).css('cursor','pointer');
+            }
+            else {
 
-         DrawPolygon('myCanvas_bg',X,Y,"foo",attr,scale);
+              $('#'+select_anno.polygon_id).parent().remove();
+              $('#'+select_anno.polygon_id).remove();
+              adjust_event.x  = X;
+              adjust_event.y = Y;
+              adjust_event.polygon_id = adjust_event.DrawPolygon(adjust_event.dom_attach,X,Y,obj_name,scale);
+              select_anno.polygon_id = adjust_event.polygon_id;
+              
+              adjust_event.RemoveScalingPoints();
+              adjust_event.RemoveControlPoints();
+              adjust_event.RemoveCenterOfMass();
+
+              if (adjust_event.bounding_box) adjust_event.ShowScalingPoints();
+              else adjust_event.ShowControlPoints();
+              adjust_event.ShowCenterOfMass();
+            }
         }
-    //     for(var j = 0; j < obj.children("polygon").children("pt").length; j++) {
-    // X.push(parseInt(obj.children("polygon").children("pt").eq(j).children("x").text()));
-    // Y.push(parseInt(obj.children("polygon").children("pt").eq(j).children("y").text()));
-    //     }
-
-    //     // Draw polygon:
-    //     var attr = 'fill="none" stroke="' + HashObjectColor(name) + '" stroke-width="4"';
-    //     var scale = 1;
-    //     DrawPolygon('canvas',X,Y,name,attr,scale);
-      
-    }
-
   }
+
+  /** This function sets the player to frame 'frame'. 
+   * @param {int} frame - the index of the frame of interest
+  */  
   this.GoToFrame = function(frame){
     iFrameCtr = frame;
     this.DisplayFrame(iFrameCtr);
     this.UpdateScrollbar(iFrameCtr/oVideoData.frames);
   }
+
+
+  
   this.ShowFirstFrame = function() {
     // $('#oCanvas').append(aFrameImages[0]);
     this.DisplayFrame(0);
     this.UpdateScrollbar(0);
   }
   
-  // Update location of scrollbar:
+  /** This function updates the position of the scroll bar. 
+    * @param {float} pos - float from 0 to 1 indicating the position of the scroll bar 
+  */
   this.UpdateScrollbar = function(pos) {
     $('#oScroll').slider('value',  pos*this.imageWidth);
     //$('#scrollbutton').css('left',pos*this.imageWidth);
     //$('#oProgress').css('width',pos*this.imageWidth);
   }
+
+  /** This function updates the position of the load bar. 
+    * @param {float} pos - float from 0 to 1 indicating the position of the load bar 
+  */
   this.UpdateLoadbar = function(pos){
     //$('#oLoadBar').css('width',pos*this.imageWidth);
     $('#oLoadBar').slider('value',  pos*this.imageWidth);
   }
 
-  // Start playback.
+  /** This function sets the player to play. It can be called when a chunk of needed frames is loaded or when the user hits the play button. 
+    * @param {bool} buttonClicked - boolean indicating whether the user clicked the play button or the video was played because the chunks got loaded
+  */
   this.Play = function(buttonClicked) {
+    //if (active_canvas != REST_CANVAS) return;
     if (buttonClicked) uPaused = false;
+    else if (uPaused == true) return;
     if (aFrameImages[iFrameCtr] == null) return;
     if (bPlaying) {
       if (bPaused) bPaused = false;
@@ -308,7 +361,8 @@ this.loadFile = function(frame, first_time, isbackground, response) {
     this.NextFrame();
   }
   
-  // render next frame
+  /** Displays the next frame in a video file according to the video rate. 
+  */
   this.NextFrame = function() {
     if (!bPlaying) return;
     
@@ -348,10 +402,11 @@ this.loadFile = function(frame, first_time, isbackground, response) {
     // Replace with play button:
     $('#playpausebutton').attr('src','./annotationTools/video/icons/video_play.png');
     $('#playpausebutton').attr('title','Play');
-    $('#playpausebutton').attr('onclick','oVP.Play();');
+    $('#playpausebutton').attr('onclick','oVP.Play(true);');
   }
   
-  // Step forward one frame:
+  /** This function forces to go to the next frame, regardless of frame rate. 
+  */
   this.StepForward = function() {
     if(!bPaused) this.Pause();
     else {
@@ -366,32 +421,35 @@ this.loadFile = function(frame, first_time, isbackground, response) {
     }
   }
   
-  // Step backward one frame:
+  /** This function goes to the previous frame. 
+  */
   this.StepBackward = function() {
     if(!bPaused) this.Pause();
     else {
       iFrameCtr--;
-      if (iFrameCtr < 0) {
-	iFrameCtr = 0;
+      if (iFrameCtr <= 0) {
+	iFrameCtr = 1;
       }
       
-      // Render next frame:
+      // Render next frame:s
       this.DisplayFrame(iFrameCtr);
       this.UpdateScrollbar(iFrameCtr/oVideoData.frames);
     }
   }
 
-  // Go to beginning of video:
+  /** This function goes to the start of the video. 
+  */
   this.StepBeginning = function() {
     this.Pause();
-    iFrameCtr = 0;
+    iFrameCtr = 1;
     
     // Render next frame:
     this.DisplayFrame(iFrameCtr);
     this.UpdateScrollbar(iFrameCtr/oVideoData.frames);
   }
 
-  // Go to end of video:
+  /** This function goes to the end of the video. 
+  */
   this.StepEnd = function() {
     this.Pause();
     iFrameCtr = oVideoData.frames-1;
@@ -400,10 +458,18 @@ this.loadFile = function(frame, first_time, isbackground, response) {
     this.DisplayFrame(iFrameCtr);
     this.UpdateScrollbar(iFrameCtr/oVideoData.frames);
   }
+  /** This function looks for future frames that haven't been loaded yet and loads them into the player. 
+    * @param {int} frame - the frame index from which to start seeking
+  */
   this.seekChunkToDownload = function (frame){
     while (aFrameImages[frame] != null) frame++;
     if (frame < oVideoData.frames) this.loadChunk(frame, 1, false, true);
   }
+  /** This function loads a set of frames to the player. 
+    * @param {int} frame - the first frame to load
+    * @param {int} duration - the duration of the chunk to be loaded
+    * @param {bool} first_time - boolean indicating whether the function is called for the first time
+  */
   this.loadChunk = function(frame, duration, first_time, isbackground){
     ovP = this;
     $.ajax({
@@ -421,10 +487,3 @@ this.loadFile = function(frame, first_time, isbackground, response) {
   }
 }
 
-
-// $(document).ready(function() {
-//   console.time('Load LabelMe XML file');
-// 	oVP = new JSVideo();
-// 	console.time('Load video');
-//   oVP.loadChunk(1, 1, true, false);
-// });

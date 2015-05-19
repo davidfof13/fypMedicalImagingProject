@@ -1,4 +1,3 @@
-
 // IMAGE CLASS
 ///////////////////////////////////////////////////////////////////////
 // Fetches and manipulates the main image that will be annotated.
@@ -22,6 +21,10 @@ function image(id) {
     this.browser_im_ratio; // Initial im_ratio; this should not get changed!!
     this.curr_frame_width;  // Current width of main_media.
     this.curr_frame_height; // Current height of main_media.
+    this.resize_state = 0; // state of resizing of image (shrinking or expanding)
+
+    this.maxWidth = 0;
+    this.maxHeight = 0;
     
     // *******************************************
     // Public methods:
@@ -104,20 +107,34 @@ function image(id) {
     };
 
     // Resizes the image so that it fits inside the mTurk
-    // hit display based its dimensions. Whether only the width 
+    // hit display based on its dimensions. Whether only the width 
     // or the height exceeds the bound, we always multiply 
     // both dimension  by the same factor to maintain the image ratio.
     // We also make the ratio slightly smaller to fit the image in the bound
     // Courtesy of http://stackoverflow.com/questions/3971841/how-to-resize-images-proportionally-keeping-the-aspect-ratio
     this.ResizeImage = function(){
-        
+    
+
         var maxWidth = $('#hit-image').width(); // Max width for the image
         var maxHeight = $('#hit-image').height();   // Max height for the image
         var ratio = 0;  // Used for aspect ratio
         var width = this.width_curr;    // Current image width
         var height = this.height_curr;  // Current image height
 
-        // Check if the current width is larger than the max
+        if(width == maxWidth && height == maxHeight) return;
+
+
+        if(width > maxWidth || height > maxHeight)
+            this.shrinkImage(width, maxWidth, height, maxHeight);
+
+        else
+            this.expandImage(width, maxWidth, height, maxHeight);
+    }
+
+    this.shrinkImage = function(width, maxWidth, height, maxHeight){
+
+        console.log('im=' + width + 'x' + height + ', hit=' + maxWidth + 'x' + maxHeight + '-> shrinking to ');
+         // Check if the current width is larger than the max
         if(width > maxWidth){
             ratio = (maxWidth / width);   // get ratio for scaling image
             this.width_curr = maxWidth;
@@ -133,40 +150,52 @@ function image(id) {
             ratio = (maxHeight / height); // get ratio for scaling image
             this.height_curr = maxHeight;   // Set new height
             this.width_curr = Math.round(width * ratio);   // Scale width based on ratio
+        }
+
+        console.log('im=' + this.width_curr + 'x' + this.height_curr);
+        console.log('');
+
+    }
+
+    this.expandImage = function(width, maxWidth, height, maxHeight){
+
+        console.log('im=' + width + 'x' + height + ', hit=' + maxWidth + 'x' + maxHeight + '-> expanding to ');
+        // enlarging
+        if(maxWidth > width){
+            ratio = (maxWidth / width); 
+            this.width_curr = maxWidth;
+            this.height_curr = Math.round(height * ratio);
+
+            if(this.height_curr > maxHeight) this.height_curr = maxHeight;
+
+            this.SetDimensions();
+            height = height * ratio;    // Reset height to match scaled image
+            width = maxWidth;    // Reset width to match scaled image
+
+        }
+        if(maxHeight > height){
+            ratio = (maxHeight / height); // get ratio for scaling image
+            this.height_curr = maxHeight;   // Set new height
+            this.width_curr = Math.round(width * ratio);   // Scale width based on ratio
+
+            if(this.width_curr > maxWidth) this.width_curr = maxWidth;
+
             this.SetDimensions();
         }
 
+        console.log('im=' + this.width_curr + 'x' + this.height_curr);
+        console.log('');
 
     }
 
 
-/*
-    this.ResizeImage = function() {
+    /** If (x,y) is not in view, then scroll it into view.  Return adjusted
+     * (x,y) point that takes into account the slide offset.
+     * @param {int} x
+     * @param {int} y
+     * @returns {intarray}
+    */
 
-       // var maxWidth = $('#hit-image').width(); // Max width for the image
-       // var maxHeight = $('#hit-image').height();   // Max height for the image
-
-        maxWidth = $('#hit-image').css('width');
-        maxHeight = $('#hit-image').css('height');
-
-        var srcWidth = this.width_curr;    // Current image width
-        var srcHeight = this.height_curr;  // Current image height
-
-        //var ratio = Math.min(maxWidth / srcWidth, maxHeight / srcHeight);
-        var ratioW = Math.min(maxWidth / srcWidth);
-        var ratioH = Math.min(maxHeight / srcHeight);
-
-        this.width_curr = srcWidth*ratioW;
-        this.height_curr = srcHeight*ratioH;
-
-        this.SetDimensions();
-    }*/
-
-
-
-    
-    // If (x,y) is not in view, then scroll it into view.  Return adjusted
-    // (x,y) point that takes into account the slide offset.
     this.SlideWindow = function (x,y) {
         var pt = Array(2);
         if(!this.IsPointVisible(x,y)) {
@@ -178,21 +207,23 @@ function image(id) {
         return pt;
     };
     
-    // Turn off image scrollbars if zoomed in.
+    /** Turn off image scrollbars if zoomed in. */
     this.ScrollbarsOff = function () {
         if(!this.IsFitImage()) {
             document.getElementById('main_media').style.overflow = 'hidden';
         }
     };
     
-    // Turn on image scrollbars if zoomed in.
+    /** Turn on image scrollbars if zoomed in. */
     this.ScrollbarsOn = function () {
         if(!this.IsFitImage()) {
             document.getElementById('main_media').style.overflow = 'auto';
         }
     };
     
-    // Zoom the image given a zoom level (amt) between 0 and inf (or 'fitted').
+    /** Zoom the image given a zoom level (amt) between 0 and inf (or 'fitted'). 
+     * @param {float} amt - amount of zoom
+    */
     this.Zoom = function(amt) {
         // if a new polygon is being added while the user press the zoom button then do nothing.
         if(wait_for_input) return;
@@ -216,12 +247,12 @@ function image(id) {
         // Scale and scroll the image so that the center stays in the center of the visible area
         this.ScaleFrame(amt);
         
-	// Remove polygon from draw canvas:
-	var anno = null;
-	if(draw_anno) {
-	  draw_anno.DeletePolygon();
-	  anno = draw_anno;
-	  draw_anno = null;
+    // Remove polygon from draw canvas:
+    var anno = null;
+    if(draw_anno) {
+      draw_anno.DeletePolygon();
+      anno = draw_anno;
+      draw_anno = null;
         }
 
         // set the size of the image (this.im is the image object)
@@ -234,24 +265,24 @@ function image(id) {
         $("#query_canvas").width(this.width_curr).height(this.height_curr);
         
         // Redraw polygons.
-	main_canvas.RenderAnnotations();
+    main_canvas.RenderAnnotations();
 
-	if(anno) {
-	  // Draw polyline:
-	  draw_anno = anno;
-	  draw_anno.SetDivAttach('draw_canvas');
-	  draw_anno.DrawPolyLine();
-	}
+    if(anno) {
+      // Draw polyline:
+      draw_anno = anno;
+      draw_anno.SetDivAttach('draw_canvas');
+      draw_anno.DrawPolyLine();
+    }
 
-	/*************************************************************/
-	/*************************************************************/
-	// Scribble: 
-	if (drawing_mode == 1){
-	  scribble_canvas.redraw();
-	  scribble_canvas.drawMask();
+    /*************************************************************/
+    /*************************************************************/
+    // Scribble: 
+    if (drawing_mode == 1){
+      scribble_canvas.redraw();
+      scribble_canvas.drawMask();
         }
-	/*************************************************************/
-	/*************************************************************/
+    /*************************************************************/
+    /*************************************************************/
     };
     
     
@@ -260,8 +291,7 @@ function image(id) {
     // Private methods:
     // *******************************************
     
-    //Tells the picture to take up the available
-    //space in the browser, if it needs it. 6.29.06
+    /** Tells the picture to take up the available space in the browser, if it needs it. 6.29.06*/
     this.ScaleFrame = function(amt) {
         // Look at the available browser (height,width) and the image (height,width),
         // and use the smaller of the two for the main_media (height,width).
@@ -285,20 +315,22 @@ function image(id) {
     };
     
     
-    // Retrieves and sets the original image's dimensions (width/height).
+    /** Retrieves and sets the original image's dimensions (width/height).
+     * @param {image} im
+    */
     this.SetOrigImDims = function (im) {
         this.width_orig = im.width;
         this.height_orig = im.height;
         return;
     };
     
-    //gets available width (6.14.06)
+    /** gets available width (6.14.06) */
     this.GetAvailWidth = function() {
         return $(window).width() - $("#main_media").offset().left -10 - 200;
         // we could include information about the size of the object box using $("#anno_list").offset().left
     };
     
-    //gets available height (6.14.06)
+    /** gets available height (6.14.06) */
     this.GetAvailHeight = function() {
         var m = main_media.GetFileInfo().GetMode();
         if(m=='mt') {
@@ -309,12 +341,12 @@ function image(id) {
     
     
     
-    // Returns true if the image is zoomed to the original (fitted) resolution.
+    /** Returns true if the image is zoomed to the original (fitted) resolution. */
     this.IsFitImage = function () {
         return (this.im_ratio < 0.01+this.browser_im_ratio);
     };
     
-    // Returns true if (x,y) is viewable.
+    /** Returns true if (x,y) is viewable. */
     this.IsPointVisible = function (x,y) {        
         var scrollLeft = $("#main_media").scrollLeft();
         var scrollTop = $("#main_media").scrollTop();
@@ -326,7 +358,6 @@ function image(id) {
             return false;  //the 160 is about the width of the right-side div
         return true;
     };
-    
     
 }
 

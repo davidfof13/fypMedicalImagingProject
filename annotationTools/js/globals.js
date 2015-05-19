@@ -1,4 +1,4 @@
-// This file contains global variables used in LabelMe.
+/** @file Contains the global variables used in LabelMe. */
 
 // Parsed LabelMe XML file. Manipulate this variable with jquery.
 var LM_xml;
@@ -28,10 +28,6 @@ var editedControlPoints = 0;
 // Scalar indicating which polygon is selected; -1 means no polygon is selected
 var selected_poly = -1;
 
-// Array storing all of the annotation structures.  Eventually this will be 
-// removed since we should read directly from LM_xml.
-var AllAnnotations = Array(0);
-
 // Class with functions to handle actions/events.
 var main_handler;
 
@@ -47,6 +43,46 @@ var xhtmlNS = 'http://www.w3.org/1999/xhtml';
 // Website that refers to LabelMe:
 var ref;
 
+// Indicates whether we are in segmentation or polygon mode
+var drawing_mode = 0;
+
+
+// Scribble mode:
 var scribble_mode = true;
 
 var video_mode = false;
+var bounding_box = false;
+var bbox_mode = false;
+
+
+var wait_for_input;
+var edit_popup_open = 0;
+var num_orig_anno;
+var global_count = 0;
+var req_submit;
+
+// Indicates if polygon has been edited.
+var submission_edited = 0;
+
+// Allowable user actions:
+var action_CreatePolygon = 1;
+var action_RenameExistingObjects = 0;
+var action_ModifyControlExistingObjects = 0;
+var action_DeleteExistingObjects = 0;
+
+// Which polygons are visible:
+var view_Existing = 1;
+var view_Deleted = 0;
+
+// Flag for right-hand object list:
+var view_ObjList = true;
+
+// Mechanical Turk variables:
+var LMbaseurl = 'http://' + window.location.host + window.location.pathname;
+var MThelpPage = 'annotationTools/html/mt_instructions.html';
+var externalSubmitURL = 'https://mturk.com/mturk/externalSubmit';
+var externalSubmitURLsandbox = 'https://workersandbox.mturk.com/mturk/externalSubmit';
+var mt_N = 'inf';
+
+var object_choices = '...';
+

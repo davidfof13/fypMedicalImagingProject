@@ -1,13 +1,17 @@
-// THIS CODE TAKES CARE OF THE BUBBLE THAT APPEARS ON THE ANNOTATION TOOL
-// WHEN EDITING OBJECT PROPERTIES
+/** @file This file contains functions that draw the popup bubble during labeling or editing an object. */
+
 
 // *******************************************
 // Public methods:
 // *******************************************
 
-// This function creates the popup bubble.  Takes as input (x,y) location,
-// the html to include inside the popup bubble, and the dom element to 
-// attach to. Returns the dom element name for the popup bubble.
+/** This function creates the popup bubble.  
+ * @param {float} left - xlocation of the bubble
+ * @param {float} top - ylocation of the bubble
+ * @param {string} innerhtml - extra html content for the bubble
+ * @param {string} dom_attach - id of the html element where it should be attached
+ * @returns {string} bubble_name - dom element name for the popup bubble
+*/
 function CreatePopupBubble(left,top,innerHTML,dom_attach) {
   var html_str;
   var bubble_name = 'myPopup';
@@ -45,10 +49,10 @@ function CreatePopupBubble(left,top,innerHTML,dom_attach) {
   return bubble_name;
 }
 
-// This function creates the close button at the top-right corner of the 
-// popup bubble. Inputs are the dom_bubble name (returned from 
-// CreatePopupBubble()) and (optionally) a function to run when the close
-// button is pressed.
+/** This function creates the close button at the top-right corner of the popup bubble
+ * @param {string} dom_bubble - dom_bubble name
+ * @param {function} close_button - function to run when the close button is pressed
+*/
 function CreatePopupBubbleCloseButton(dom_bubble,close_function) {
   if(arguments.length==1) {
     close_function = function() {return;};
@@ -112,26 +116,41 @@ function CloseEditPopup() {
 // ****************************
 
 function GetPopupFormDraw() {
-  html_str = "<b>Enter object name</b><br />";
-  html_str += HTMLobjectBox("");
+
+
+  var lmode = main_media.GetFileInfo().GetMode();
+
+
+  // In MTurk mode, we don't want user to provide 
+  // a name. We'll name the objects ourselves
+  if(lmode != "mt"){
+    html_str = "<b>Enter object name</b><br />";
+    html_str += HTMLobjectBox("");
+
+  } else{ 
+    html_str = "";
+  }
+
+  
   
   if(use_attributes) {
     html_str += HTMLoccludedBox("");
     html_str += "<b>Enter attributes</b><br />";
     html_str += HTMLattributesBox("");
   }
-  
   if(use_parts) {
     html_str += HTMLpartsBox("");
   }
-  
+  console.log(html_str);
   html_str += "<br />";
   
   // Done button:
   html_str += '<input type="button" value="Done" title="Press this button after you have provided all the information you want about the object." onclick="main_handler.SubmitQuery();" tabindex="0" />';
   
   // Undo close button:
-  html_str += '<input type="button" value="Undo close" title="Press this button if you accidentally closed the polygon. You can continue adding control points." onclick="UndoCloseButton();" tabindex="0" />';
+
+  if(lmode != "mt")
+    html_str += '<input type="button" value="Undo close" title="Press this button if you accidentally closed the polygon. You can continue adding control points." onclick="UndoCloseButton();" tabindex="0" />';
   
   // Delete button:
   html_str += '<input type="button" value="Delete" title="Press this button if you wish to delete the polygon." onclick="main_handler.WhatIsThisObjectDeleteButton();" tabindex="0" />';
@@ -140,15 +159,28 @@ function GetPopupFormDraw() {
 }
 
 function GetPopupFormEdit(anno) {
+
+
+  var lmode = main_media.GetFileInfo().GetMode();
+
   // get object name and attributes from 'anno'
   var obj_name = LMgetObjectField(LM_xml,anno.anno_id,'name');
   if(obj_name=="") obj_name = "?";
   var attributes = LMgetObjectField(LM_xml,anno.anno_id,'attributes');
   var occluded = LMgetObjectField(LM_xml,anno.anno_id,'occluded');
-  var parts = anno.GetParts();
+  var parts = LMgetObjectField(LM_xml, anno.anno_id, 'parts');
   
-  html_str = "<b>Enter object name</b><br />";
-  html_str += HTMLobjectBox(obj_name);
+
+
+  if(lmode != "mt"){
+    html_str = "<b>Enter object name</b><br />";
+    html_str += HTMLobjectBox(obj_name);
+  
+  } else {
+    html_str = "";
+  }
+    
+  //}
   
   if(use_attributes) {
     html_str += HTMLoccludedBox(occluded);
@@ -163,18 +195,30 @@ function GetPopupFormEdit(anno) {
   html_str += "<br />";
   
   // Done button:
-  html_str += '<input type="button" value="Done" title="Press this button when you are done editing." onclick="main_handler.SubmitEditLabel();" tabindex="0" />';
+
+  if(lmode != "mt"){
+
+     if (video_mode) html_str += '<input type="button" value="Done" title="Press this button when you are done editing." onclick="main_media.SubmitEditObject();" tabindex="0" />';
+  
+    else html_str += '<input type="button" value="Done" title="Press this button when you are done editing." onclick="main_handler.SubmitEditLabel();" tabindex="0" />';
+
+    html_str += '<input type="button" value="Done" title="Press this button when you are done editing." onclick="main_handler.SubmitEditLabel();" tabindex="0" />';
+  
   
   /*************************************************************/
   /*************************************************************/
   // Scribble: if anno.GetType() != 0 then scribble mode:
 
-  // Adjust polygon button:
-  if (anno.GetType() == 0) {
-    html_str += '<input type="button" value="Adjust polygon" title="Press this button if you wish to update the polygon\'s control points." onclick="javascript:AdjustPolygonButton();" />';
-  }
-  else {
-    html_str += '<input type="button" value="Edit Scribbles" title="Press this button if you wish to update the segmentation." onclick="javascript:EditBubbleEditScribble();" />';  
+    // Adjust polygon button:
+    if (anno.GetType() == 0) 
+      html_str += '<input type="button" value="Adjust polygon" title="Press this button if you wish to update the polygon\'s control points." onclick="javascript:AdjustPolygonButton();" />';
+    
+    else 
+      html_str += '<input type="button" value="Edit Scribbles" title="Press this button if you wish to update the segmentation." onclick="javascript:EditBubbleEditScribble();" />';  
+    
+
+  } else{
+    html_str += '<input type="button" value="Resize" title="Press this button if you wish to resize the rectangle" />';
   }
   /*************************************************************/
   /*************************************************************/
@@ -200,11 +244,13 @@ function HTMLobjectBox(obj_name) {
   // if obj_name is empty it means that the box is being created
   if (obj_name=='') {
     // If press enter, then submit; if press ESC, then delete:
-    html_str += 'main_handler.SubmitQuery();if(c==27)main_handler.WhatIsThisObjectDeleteButton();" ';
+    if (video_mode) html_str += 'main_media.SubmitObject();if(c==27) main_handler.WhatIsThisObjectDeleteButton();" ';
+    else html_str += 'main_handler.SubmitQuery();if(c==27)main_handler.WhatIsThisObjectDeleteButton();" ';
   }
   else {
     // If press enter, then submit:
-    html_str += 'main_handler.SubmitEditLabel();" ';
+    if (video_mode) html_str += 'main_media.SubmitEditObject();" ';
+    else html_str += 'main_handler.SubmitEditLabel();" ';
   }
   
   // if there is a list of objects, we need to habilitate the list

@@ -12,19 +12,56 @@
           <p></p>
           
           
-          <div  id="hit-menu" style="min-width:124px; min-height: 200px;"> 
+          <div  class="hit-menu" style="min-width:124px; min-height: 200px;"> 
+
             <div class="panel panel-primary">
-              <div class="panel-heading">Menu</div>
-              <div class="panel-body nav-collapse navbar-responsive container navbar-inverse">
-                <ul class= "nav nav-pills nav-stacked">
-                  <li role="presentation"><a href="#"> Draw box</a></li>
-                  <li role="presentation"><a href="#"> Scribble</a></li>
-                  <li role="presentation"><a href="#">delete</a></li>
+              <div class="panel-heading">Draw</div>
+              <div class="menu-content nav-collapse navbar-responsive container navbar-inverse">
+                <ul class= "menu-ul nav nav-pills nav-stacked">
+                  <!--<li role="presentation" class="active"><a class="li-base" href="#/"> Original Image </a></li> -->
+                  <li role="presentation"><a onclick="SetDrawingMode(0)" class="li-base" href="#/" > Box </a></li>
+                  <li role="presentation" class="dropdown">
+                    <a id="dropdownMenu" onclick="scribble_canvas.setCurrentDraw(OBJECT_DRAWING)" class="li-base" href="#/">Scribble <span class="caret-right"></span></a>
+                    <ul class="nav  nav-stacked hit-submenu" role="menu">
+                      <li><a id="foreground" onclick="scribble_canvas.setCurrentDraw(OBJECT_DRAWING)" href='#/'>Foreground</a></li>
+                      <li><a onclick="scribble_canvas.setCurrentDraw(BG_DRAWING)" href='#/'>Background</a></li>
+                    </ul>
+                  </li>
+                  <li role="presentation"><a onclick="scribble_canvas.segmentImage(1)" class="li-base" href="#/"> Segment</a></li>  
                 </ul>
               </div>
             </div>
-          
+
+
+                  <!-- Edit menu -->
+                  <div class="panel" style="background-color: #943F3F; color: #FFF;">
+                    <div class="panel-heading">Edit</div>
+                    <div  class="menu-content nav-collapse navbar-responsive container navbar-inverse">
+                      <ul class= "menu-ul nav nav-pills nav-stacked">
+                          <!--<li role="presentation"><a class="li-base" href="#/"> Rectangle </a></li> -->
+                          <li role="presentation"><a class="li-base" onclick="scribble_canvas.setCurrentDraw(RUBBER_DRAWING)" href="#/"> erase scribble</a></li>
+                          <li role="presentation" >
+                              <a class="li-base" data-toggle="modal" data-target=".bs-example-modal-sm"  href="#/"> delete scribbles</a>
+                        
+
+                              <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+                              
+                                  <div class="modal-dialog modal-sm">
+                                    <div class="modal-content"></div>
+                                      ...
+                                  </div>
+                              </div>
+
+
+                          </li>
+                            <!--onclick="scribble_canvas.DeleteAllScribbles()"-->
+                      </ul>
+                    </div>
+                  </div>
           </div>
+
+            
+
           <div  id="hit-image"></div>
 
 
@@ -33,13 +70,16 @@
      
             <strong> Do you wish to provide any feedback on this task? (Optional) </strong>
             <p></p>
+
             <form action="{{extURL}}" method="post">
               <div class="form-group">
                 <textarea id="hit-feedback" class="form-control" rows="5" cols="35" name="textform">Please enter your message here
                 </textarea>
               </div>
               <div>
-		<input type="hidden" id="assignmentId" name="assignmentId" value="{{aId}}"/>
+
+                  <input type="hidden" id="assignmentId" name="assignmentId" value="{{aId}}"/>
+
                   <input type="hidden" id="number_objects" name="number_objects" value="" />
                   <input type="hidden" id="object_name" name="object_name" value="" />
                   <input type="hidden" id="LMurl" name="LMurl" value="" />
@@ -55,5 +95,5 @@
 
 </div>
 
-
 </script> 
+

@@ -1,7 +1,5 @@
-// This file contains global variables and functions.  This file
-// should be minimized and abstracted whenever possible.  It is 
-// best to refrain from adding new variables/functions to this
-// file.
+// This file should be minimized and abstracted whenever possible.  
+// It is best to refrain from adding new variables/functions to this file.
 
 var wait_for_input;
 var edit_popup_open = 0;
@@ -24,7 +22,7 @@ var view_Deleted = 0;
 var view_ObjList = true;
 
 // MT variables:
-var LMbaseurl = 'http://' + window.location.host + window.location.pathname;
+var LMbaseurl = 'https://' + window.location.host + window.location.pathname;
 var MThelpPage = 'annotationTools/html/mt_instructions.html';
 var externalSubmitURL = 'https://mturk.com/mturk/externalSubmit';
 var externalSubmitURLsandbox = 'https://workersandbox.mturk.com/mturk/externalSubmit';
@@ -129,7 +127,8 @@ function InsertServerLogData(modifiedControlPoints) {
   for(ii=0;ii<old_pri.length;ii++) {
     old_pri[ii].parentNode.removeChild(old_pri[ii]);
   }
-  
+  var video_mode_num = 0;
+  if (video_mode) video_mode_num = 1;
   // Add information to go into the log:
   var elt_pri = LM_xml.createElement("private");
   var elt_gct = LM_xml.createElement("global_count");
@@ -138,7 +137,7 @@ function InsertServerLogData(modifiedControlPoints) {
   var elt_onm = LM_xml.createElement("old_name");
   var elt_nnm = LM_xml.createElement("new_name");
   var elt_mcp = LM_xml.createElement("modified_cpts");
-  
+  var elt_vid = LM_xml.createElement("video");
   var txt_gct = LM_xml.createTextNode(global_count);
   var txt_user = LM_xml.createTextNode(username);
   var txt_edt = LM_xml.createTextNode(submission_edited);
@@ -146,7 +145,9 @@ function InsertServerLogData(modifiedControlPoints) {
   var txt_nnm = LM_xml.createTextNode(new_name);
   var txt_mcp = LM_xml.createTextNode(modifiedControlPoints);
   var txt_pri = LM_xml.createTextNode(ref);
-  
+  var txt_vid = LM_xml.createTextNode(video_mode_num);
+
+
   LM_xml.documentElement.appendChild(elt_pri);
   elt_pri.appendChild(elt_gct);
   elt_pri.appendChild(elt_user);
@@ -154,6 +155,7 @@ function InsertServerLogData(modifiedControlPoints) {
   elt_pri.appendChild(elt_onm);
   elt_pri.appendChild(elt_nnm);
   elt_pri.appendChild(elt_mcp);
+  elt_pri.appendChild(elt_vid);
   elt_pri.appendChild(txt_pri);
   
   elt_gct.appendChild(txt_gct);
@@ -162,6 +164,7 @@ function InsertServerLogData(modifiedControlPoints) {
   elt_onm.appendChild(txt_onm);
   elt_nnm.appendChild(txt_nnm);
   elt_mcp.appendChild(txt_mcp);
+  elt_vid.appendChild(txt_vid);
 }
 
 function PermissionError() {
@@ -223,7 +226,8 @@ function IsNearPolygon(x,y,p) {
   var sx = x / main_media.GetImRatio();
   var sy = y / main_media.GetImRatio();
   
-  var pt = AllAnnotations[p].ClosestPoint(sx,sy);
+  var anid = main_canvas.GetAnnoIndex(p);
+  var pt = main_canvas.annotations[anid].ClosestPoint(sx,sy);
   var minDist = pt[2];
   
   // This is the sensitivity area around the outline of the polygon.
@@ -239,35 +243,42 @@ function IsNearPolygon(x,y,p) {
     
 // Render filled polygons for selected objects:
 function selectObject(idx) {
+  var anid = main_canvas.GetAnnoIndex(idx);
   if(selected_poly==idx) return;
   unselectObjects();
   selected_poly = idx;
   if(view_ObjList) ChangeLinkColorFG(idx);
-  AllAnnotations[selected_poly].FillPolygon();
+  main_canvas.annotations[anid].FillPolygon();
   
   // Select object parts:
   var selected_poly_parts = getPartChildrens(idx);
   for (var i=0; i<selected_poly_parts.length; i++) {
-    if((selected_poly_parts[i]!=selected_poly) && AllAnnotations[selected_poly_parts[i]].hidden) {
-      AllAnnotations[selected_poly_parts[i]].DrawPolygon(main_media.GetImRatio());
+    var anid = main_canvas.GetAnnoIndex(selected_poly_parts[i]);
+    if((selected_poly_parts[i]!=selected_poly) && main_canvas.annotations[anid].hidden) {
+      main_canvas.annotations[anid].DrawPolygon(main_media.GetImRatio(), LMgetObjectField(LM_xml,selected_poly_parts[i],'x'), LMgetObjectField(LM_xml,selected_poly_parts[i],'y'));
     }
-    AllAnnotations[selected_poly_parts[i]].FillPolygon();
+    main_canvas.annotations[anid].FillPolygon();
   }
 }
 
 // Stop fill polygon rendering for selected objects:
 function unselectObjects() {
   if(selected_poly == -1) return;
+  var anid;
+
+  var anid = main_canvas.GetAnnoIndex(selected_poly);
   if(view_ObjList) ChangeLinkColorBG(selected_poly);
-  AllAnnotations[selected_poly].UnfillPolygon();
+  main_canvas.annotations[anid].UnfillPolygon();
   
   // Unselect object parts:
   var selected_poly_parts = getPartChildrens(selected_poly);
   for (var i=0; i<selected_poly_parts.length; i++) {
-    if((selected_poly_parts[i]!=selected_poly) && AllAnnotations[selected_poly_parts[i]].hidden) {
-      AllAnnotations[selected_poly_parts[i]].DeletePolygon();
+
+    var anid = main_canvas.GetAnnoIndex(selected_poly_parts[i]);
+    if((selected_poly_parts[i]!=selected_poly) && main_canvas.annotations[anid].hidden) {
+      main_canvas.annotations[anid].DeletePolygon();
     }
-    AllAnnotations[selected_poly_parts[i]].UnfillPolygon();
+    main_canvas.annotations[anid].UnfillPolygon();
   }
   
   // Reset selected_poly variable:
@@ -278,18 +289,18 @@ function unselectObjects() {
 function DeleteSelectedPolygon() {
   if(selected_poly == -1) return;
   
-  if((IsUserAnonymous() || (!IsCreator(AllAnnotations[selected_poly].GetUsername()))) && (!IsUserAdmin()) && (selected_poly<num_orig_anno) && !action_DeleteExistingObjects) {
+  if((IsUserAnonymous() || (!IsCreator(LMgetObjectField(LM_xml, selected_poly, 'username')))) && (!IsUserAdmin()) && (selected_poly<num_orig_anno) && !action_DeleteExistingObjects) {
     alert('You do not have permission to delete this polygon');
     return;
   }
   
-  if(AllAnnotations[selected_poly].GetVerified()) {
+  if(LMgetObjectField(LM_xml, selected_poly, 'verified')) {
     StartEditEvent(selected_poly,null);
     return;
   }
   
   submission_edited = 0;
-  old_name = LMgetObjectField(LM_xml,AllAnnotations[selected_poly].anno_id,'name');
+  old_name = LMgetObjectField(LM_xml,main_canvas.annotations[selected_poly].anno_id,'name');
   new_name = old_name;
   
   // Write to logfile:
@@ -313,7 +324,7 @@ function DeleteSelectedPolygon() {
   if(view_ObjList) RenderObjectList();
   
   // Delete the polygon from the canvas:
-  AllAnnotations[ndx].DeletePolygon();
+  main_canvas.annotations[ndx].DeletePolygon();
 }
 
 

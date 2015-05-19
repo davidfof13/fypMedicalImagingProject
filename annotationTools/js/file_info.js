@@ -1,6 +1,13 @@
-// file_info class
-// Keeps track of the information for the currently displayed image
-// and fetches the information via dirlists or from the URL.
+/** @file Contains the file_info class, which parses the URL and
+ * sets global variables based on the URL.  */
+
+// file_info class - only works for still images at the moment
+
+/**
+ * Keeps track of the information for the currently displayed image
+ * and fetches the information via dirlists or from the URL.
+ * @constructor
+*/
 function file_info() {
     
     // *******************************************
@@ -21,9 +28,10 @@ function file_info() {
     // Public methods:
     // *******************************************
     
-    // Parses the URL and gets the collection, directory, and filename
-    // information of the image to be annotated.  Returns true if the
-    // URL has collection, directory, and filename information.
+    /** Parses the URL and gets the collection, directory, and filename
+     * information of the image to be annotated.  Returns true if the
+     * URL has collection, directory, and filename information.
+    */
     this.ParseURL = function () {
         var labelme_url = document.URL;
         var idx = labelme_url.indexOf('?');
@@ -54,7 +62,12 @@ function file_info() {
                     this.dir_name = par_value;
                 }
                 if(par_field=='image') {
-                    this.im_name = par_value;
+                    this.im_name = par_value
+
+		    // remove outliers			
+		    this.im_name.replace('#', '');
+		    this.im_name.replace('/', '');
+
                     if(this.im_name.indexOf('.jpg')==-1 && this.im_name.indexOf('.png')==-1) {
                         this.im_name = this.im_name + '.jpg';
                     }
@@ -161,6 +174,7 @@ function file_info() {
             
             if(isMT) {
 
+
                 // activate mTurk display
                 document.getElementById('mt_submit_form').style.visibility = 'visible';
 
@@ -169,6 +183,7 @@ function file_info() {
 
                 this.mode='mt'; // Ensure that we are in MT mode
                 view_ObjList = default_view_ObjList;
+
             }
             
             if((this.mode=='i') || (this.mode=='c') || (this.mode=='f')) {
@@ -195,23 +210,25 @@ function file_info() {
                 p.parentNode.removeChild(p);
             }
             
-            // display the general instructions page
+
+            // MTurk Preview Mode: display the general instructions page
             if(this.assignmentId=='ASSIGNMENT_ID_NOT_AVAILABLE') {
                 window.location = MThelpPage;
                 return false;
             }
 
+
             // display the actual hit page
             if(this.mode=='mt') {
 
                 if(!this.mt_instructions) {
-                    //if(mt_N=='inf') this.mt_instructions = 'Please label as many objects as you want in this image.';
                     if(mt_N != 'inf' ) 
                         this.mt_instructions = 'Please label at least ' + mt_N + ' object in this image.';
 
                     else 
                         this.mt_instructions = 'Please draw a rectangle where the tumour is located';
                 }
+
                 if(mt_N=='inf') mt_N = 1;
                 
                 // import external file first
@@ -236,9 +253,13 @@ function file_info() {
                 var html_str = template(context);
             
                 // add code to div element
-		        $('#mt_submit_form').append(html_str);
+                $('#mt_submit_form').append(html_str);
+
 
                 if(global_count >= mt_N) document.getElementById('mt_submit').disabled=false;
+
+                 // configure hit menu
+                main_handler.setHITMenu();
             }
         }
         else {
@@ -248,38 +269,47 @@ function file_info() {
         return 1;
     };
     
+    /** Gets mode */
     this.GetMode = function() {
         return this.mode;
     };
     
+    /** Gets collection name */
     this.GetCollection = function () {
         return this.collection;
     };
     
+    /** Gets directory name */
     this.GetDirName = function () {
         return this.dir_name;
     };
     
+    /** Gets image name */
     this.GetImName = function () {
         return this.im_name;
     };
     
+    /** Sets image name */
     this.SetImName = function (newImName){
         this.im_name = newImName;
     };
     
+    /** Gets image path */
     this.GetImagePath = function () {
         if((this.mode=='i') || (this.mode=='c') || (this.mode=='f') || (this.mode=='im') || (this.mode=='mt')) return 'Images/' + this.dir_name + '/' + this.im_name;
     };
     
+    /** Gets annotation path */
     this.GetAnnotationPath = function () {
         if((this.mode=='i') || (this.mode=='c') || (this.mode=='f') || (this.mode=='im') || (this.mode=='mt')) return 'Annotations/' + this.dir_name + '/' + this.im_name.substr(0,this.im_name.length-4) + '.xml';
     };
     
+    /** Gets full image name */
     this.GetFullName = function () {
         if((this.mode=='i') || (this.mode=='c') || (this.mode=='f') || (this.mode=='im') || (this.mode=='mt')) return this.dir_name + '/' + this.im_name;
     };
     
+    /** Gets template path */
     this.GetTemplatePath = function () {
         if(!this.dir_name) return 'annotationCache/XMLTemplates/labelme.xml';
         return 'annotationCache/XMLTemplates/' + this.dir_name + '.xml';
@@ -289,22 +319,22 @@ function file_info() {
     // Private methods:
     // *******************************************
     
-    // String is assumed to have field=value form.  Parses string to
-    // return the field.
+    /** String is assumed to have field=value form.  Parses string to
+    return the field. */
     this.GetURLField = function (str) {
         var idx = str.indexOf('=');
         return str.substring(0,idx);
     };
     
-    // String is assumed to have field=value form.  Parses string to
-    // return the value.
+    /** String is assumed to have field=value form.  Parses string to
+     return the value. */
     this.GetURLValue = function (str) {
         var idx = str.indexOf('=');
         return str.substring(idx+1,str.length);
     };
     
-    // Changes current URL to include collection, directory, and image
-    // name information.  Returns false.
+    /** Changes current URL to include collection, directory, and image
+    name information.  Returns false. */
     this.SetURL = function (url) {
         this.FetchImage();
 
@@ -326,7 +356,7 @@ function file_info() {
         return false;
     };
     
-    // Fetch next image.
+    /** Fetch next image. */
     this.FetchImage = function () {
         var url = 'annotationTools/perl/fetch_image.cgi?mode=' + this.mode + '&username=' + username + '&collection=' + this.collection.toLowerCase() + '&folder=' + this.dir_name + '&image=' + this.im_name;
         var im_req;

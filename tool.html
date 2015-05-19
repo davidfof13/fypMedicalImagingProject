@@ -18,31 +18,32 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
       xmlns:xlink="http://www.w3.org/1999/xlink">
 
 <head>
-<title>LabelMe: The open annotation tool</title>
-<META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE,NO-STORE,MUST-REVALIDATE" />
-<META HTTP-EQUIV="imagetoolbar" CONTENT="no" />
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-<link rel="shortcut icon" href="Icons/favicon16.ico" />
-<link rel="stylesheet" href="//code.jquery.com/ui/1.10.0/themes/base/jquery-ui.css" type="text/css"/> 
-<link rel="import" href="annotationTools/html/mTurkUI.html"/>
 
-<!--Courtesy of http://www.hongkiat.com/blog/html-import/-->
-  <!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css"/>
+  <title>LabelMe: The open annotation tool</title>
+  <META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE,NO-STORE,MUST-REVALIDATE" />
+  <META HTTP-EQUIV="imagetoolbar" CONTENT="no" />
+  <!--<meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/> -->
 
-<!-- Optional theme -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css"/>
-    
-<style type="text/css">
-    
-      #hit-menu {
+  <link rel="shortcut icon" href="Icons/favicon16.ico" />
+  <link rel="import" href="annotationTools/html/mTurkUI.html"/>
+
+  <!-- Courtesy of http://www.hongkiat.com/blog/html-import
+  Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css"/>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css"/>
+
+
+  <style type="text/css">
+
+
+      .hit-menu {
         width: 15%;
         height: 200px; 
-      //  background-color: #000000;
         float: left;
         margin-right: 35px;
+        display: block;
         
       }
   
@@ -59,51 +60,54 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
       #hit-container {
         margin-left:20px; 
-        //background-color: red; 
         margin-right: 20px; 
         width: 96%;
       }
-    
-</style>
-<script type="text/javascript">
-// <![CDATA[
-<!--#include virtual="./annotationTools/js/jquery-1.9.1.js" -->
-<!--#include virtual="./annotationTools/js/jquery-ui.js" -->
-<!--#include virtual="./annotationTools/js/browser.js" -->  
-<!--#include virtual="./annotationTools/js/globals.js" -->
-<!--#include virtual="./annotationTools/js/io.js" -->
-<!--#include virtual="./annotationTools/js/plot.js" -->
-<!--#include virtual="./annotationTools/js/my_scripts.js" -->
-<!--#include virtual="./annotationTools/js/object_list.js" -->
-<!--#include virtual="./annotationTools/js/object_parts.js" -->
-<!--#include virtual="./annotationTools/js/bubble.js" -->
-<!--#include virtual="./annotationTools/js/image.js" -->
-<!--#include virtual="./annotationTools/js/file_info.js" -->
-<!--#include virtual="./annotationTools/js/annotation.js" -->
-<!--#include virtual="./annotationTools/js/canvas.js" -->
-<!--#include virtual="./annotationTools/js/handler.js" -->
-<!--#include virtual="./annotationTools/js/sign_in.js" -->
-<!--#include virtual="./annotationTools/js/startup.js" -->
-<!--#include virtual="./annotationTools/js/draw_event.js" -->
-<!--#include virtual="./annotationTools/js/edit_event.js" -->
-<!--#include virtual="./annotationTools/js/adjust_event.js" -->
-<!--#include virtual="./annotationTools/js/scribble.js" -->
-<!--#include virtual="./annotationTools/js/video.js" -->
-<!--#include virtual="./annotationTools/js/player.js" -->
-<!--#include virtual="handlebars.js" -->
-// ]]>
-</script>
+  </style>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 
 
-<style>
-@import url("annotationTools/css/styles.css?version=4");
-@import url("annotationTools/css/header.css?version=4");
-@import url("annotationTools/css/bubble.css?version=4");
-@import url("annotationTools/css/object_list.css?version=4");
-@import url("annotationTools/css/scribblemenu.css?version=4");
-</style>
+  <script type="text/javascript">
+    // <![CDATA[
+    <!--#include virtual="./annotationTools/js/jquery-ui.js" -->
+    <!--#include virtual="./annotationTools/js/browser.js" -->  
+    <!--#include virtual="./annotationTools/js/globals.js" -->
+    <!--#include virtual="./annotationTools/js/io.js" -->
+    <!--#include virtual="./annotationTools/js/plot.js" -->
+    <!--#include virtual="./annotationTools/js/my_scripts.js" -->
+    <!--#include virtual="./annotationTools/js/object_list.js" -->
+    <!--#include virtual="./annotationTools/js/object_parts.js" -->
+    <!--#include virtual="./annotationTools/js/bubble.js" -->
+    <!--#include virtual="./annotationTools/js/image.js" -->
+    <!--#include virtual="./annotationTools/js/file_info.js" -->
+    <!--#include virtual="./annotationTools/js/annotation.js" -->
+    <!--#include virtual="./annotationTools/js/canvas.js" -->
+    <!--#include virtual="./annotationTools/js/handler.js" -->
+    <!--#include virtual="./annotationTools/js/sign_in.js" -->
+    <!--#include virtual="./annotationTools/js/startup.js" -->
+    <!--#include virtual="./annotationTools/js/draw_event.js" -->
+    <!--#include virtual="./annotationTools/js/edit_event.js" -->
+    <!--#include virtual="./annotationTools/js/adjust_event.js" -->
+    <!--#include virtual="./annotationTools/js/scribble.js" -->
+    <!--#include virtual="./annotationTools/js/video.js" -->
+    <!--#include virtual="./annotationTools/js/player.js" -->
+    <!--#include virtual="./annotationTools/js/xml_accessors.js" -->
+    <!--#include virtual="handlebars.js" -->
+    // ]]>
+  </script>
 
-<!--<script type="text/javascript" src="handlebars.js"></script> -->
+  <style>
+    @import url("annotationTools/css/styles.css?version=4");
+    @import url("annotationTools/css/header.css?version=4");
+    @import url("annotationTools/css/bubble.css?version=4");
+    @import url("annotationTools/css/object_list.css?version=4");
+    @import url("annotationTools/css/scribblemenu.css?version=4");
+    @import url("annotationTools/css/jquery-ui.css");
+  </style>
+
+
 
 <!-- mTurk user interface code -->
 
@@ -202,7 +206,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
            width="100%"
            height="100%"
            style="position:absolute;left:0px;top:0px;z-index:-2;" />
-      </div>	      
+      </div>        
       
       <div id="draw_canvas_div" style="position:absolute;left:0px;top:0px;z-index:-2;cursor:crosshair;width:100%;height:100%;background-color:rgba(128,64,0,0);">
         <svg:svg 
@@ -225,7 +229,5 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
   <!-- DIV that will contain the object list -->
   <div id="anno_anchor"></div>
   
-  <!-- Latest compiled and minified JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 </body>
 </html>
