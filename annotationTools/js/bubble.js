@@ -128,7 +128,7 @@ function GetPopupFormDraw() {
     html_str += HTMLobjectBox("");
 
   } else{ 
-    html_str = "";
+    html_str = "rect_" + $(LM_xml).children('annotation').children('object').length;
   }
 
   

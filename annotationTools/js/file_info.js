@@ -260,6 +260,13 @@ function file_info() {
 
                  // configure hit menu
                 main_handler.setHITMenu();
+	
+		// Prevent click of <a> tag from  resetting the screen 
+                // position and adding random characters to the URL
+                $('a').click(function(e)
+                {    
+                    e.preventDefault();
+                });
             }
         }
         else {

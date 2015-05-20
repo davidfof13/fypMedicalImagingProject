@@ -217,16 +217,24 @@ function handler() {
          }
       }  else {
 
-          if(lmode != "mt" || drawing_mode == 1)
-           nn = RemoveSpecialChars(document.getElementById('objEnter').value);
+         // if(lmode != "mt" || drawing_mode == 1)
+	   if(lmode != "mt")
+           	nn = RemoveSpecialChars(document.getElementById('objEnter').value);
 
            anno = this.QueryToRest();
       }
 
-      if(lmode == "mt" && drawing_mode != 1)  // rec + id
-        nn = "rect" + $(LM_xml).children('annotation').children('object').length; 
+     // if(lmode == "mt" && drawing_mode != 1)  // rec + id
+	if(lmode == "mt"){
+         
+	      // for rectangles
+	      if (drawing_mode == 0)
+	      	nn = "rect_" + $(LM_xml).children('annotation').children('object').length; 
 
+	     else
+		nn = "mask_" + $(LM_xml).children('annotation').children('object').length;
 
+	}
 
       var re = /[a-zA-Z0-9]/;
 

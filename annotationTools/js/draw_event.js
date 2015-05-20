@@ -4,7 +4,7 @@ var draw_anno = null;
 var query_anno = null;
 //var allowed;
 
-
+var draw_canv = null;
 //var allowed;
 
 
@@ -73,6 +73,7 @@ function StartDrawEvent(event) {
   else {
 
     $('#draw_canvas_div').css('cursor', 'default');
+    draw_canv = $('#draw_canvas').clone(true);
     $('#draw_canvas_div').empty();
 
     // Handles when user moves mouse
@@ -255,7 +256,8 @@ function DrawCanvasCloseRectangle(){
     // prompt user to save annotation
     DrawCanvasClosePolygon();
 
-
+  // put back draw_canvas
+    draw_canv.appendTo($('#draw_canvas_div'));
 }
 
 /** Handles when the user presses the mouse button down on the drawing

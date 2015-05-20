@@ -99,7 +99,7 @@ function LoadAnnotationSuccess(xml) {
 
   console.time('load success');
 
-  if (main_media.GetFileInfo().GetMode() != "mt"){ 
+  //if (main_media.GetFileInfo().GetMode() != "mt"){ 
 
     // Set global variable:
     LM_xml = xml;
@@ -128,7 +128,7 @@ function LoadAnnotationSuccess(xml) {
     console.timeEnd('RenderAnnotations()');
 
     console.timeEnd('load success');
-  }
+  //}
 
     // Finish the startup scripts:
     FinishStartup();

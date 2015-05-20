@@ -282,9 +282,11 @@ function scribble_canvas(tag) {
 
     CreatePopupBubble(pt[0],pt[1],innerHTML,'main_section');
 
-    // Focus the cursor inside the box
-    document.getElementById('objEnter').focus();
-    document.getElementById('objEnter').select();
+    if (main_media.GetFileInfo().GetMode() != "mt"){
+   	 // Focus the cursor inside the box
+   	 document.getElementById('objEnter').focus();
+    	document.getElementById('objEnter').select();
+    }
   
     // If annotation is point or line, then 
     if(doReset) object_choices = '...';
@@ -305,8 +307,17 @@ function scribble_canvas(tag) {
   };
   
   this.GetPopupFormDraw = function() {
-    html_str = "<b>Enter object name</b><br />";
-    html_str += this.HTMLobjectBox("");
+    
+    var lmode = main_media.GetFileInfo().GetMode();
+
+    if(lmode != "mt"){
+    	html_str = "<b>Enter object name</b><br />";
+    	html_str += this.HTMLobjectBox("");
+
+    } else {
+
+	html_str = "mask_" + $(LM_xml).children('annotation').children('object').length;
+    }
     
     if(use_attributes) {
       html_str += HTMLoccludedBox("");
