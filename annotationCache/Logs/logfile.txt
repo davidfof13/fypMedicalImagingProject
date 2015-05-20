@@ -2233,3 +2233,9 @@
 20-May-2015 16:50:36 129.31.215.84 *start_loading
 20-May-2015 16:50:36 129.31.215.84 *Browser_Information Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.152 Safari/537.36
 20-May-2015 16:50:37 129.31.215.84 *done_loading_Images/samples/img2.jpg
+20-May-2015 17:55:09 127.0.0.1 *start_loading
+20-May-2015 17:55:09 127.0.0.1 *Browser_Information Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.65 Safari/537.36
+20-May-2015 17:55:09 127.0.0.1 *done_loading_Images/samples/img1.jpg
+20-May-2015 17:57:36 127.0.0.1 *Browser_Information Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/600.5.17 (KHTML, like Gecko) Version/8.0.5 Safari/600.5.17
+20-May-2015 17:57:36 127.0.0.1 *start_loading
+20-May-2015 17:57:36 127.0.0.1 *done_loading_Images/samples/img2.jpg

@@ -6,8 +6,8 @@ if (!$username){
    $username = $_COOKIE["username"];
 }
 
-$TOOLHOME = "/home/ubuntu/fypMedicalImagingProject/";
-$URLHOME = "http://ip-172-31-3-77//home/ubuntu/fypMedicalImagingProject/";
+$TOOLHOME = "/Users/David/Documents/Imperial/4thYear/fyp/fypMedicalImagingProject/";
+$URLHOME = "http://dyn1209-131.wlan.ic.ac.uk//Users/David/Documents/Imperial/4thYear/fyp/fypMedicalImagingProject/";
 
 if (!$public==true) {
    $HOMEIMAGES = $TOOLHOME."Images/users/$username/";
