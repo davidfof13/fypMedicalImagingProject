@@ -223,7 +223,7 @@ function scribble_canvas(tag) {
   // General function to synchronously create a directory from a given url
   this.createDir = function(url){
     $.ajax({
-      async: false,
+      async: true,
       type: "POST",
       url: "annotationTools/php/createdir.php",
       data: { 
@@ -311,18 +311,19 @@ function scribble_canvas(tag) {
     var lmode = main_media.GetFileInfo().GetMode();
 
     if(lmode != "mt"){
-    	html_str = "<b>Enter object name</b><br />";
+    	html_str = "<b>Enter object name</b><br/>";
     	html_str += this.HTMLobjectBox("");
 
     } else {
 
-	html_str = "mask_" + $(LM_xml).children('annotation').children('object').length;
+	html_str = "<b>Object name: </b>" + "mask_" + $(LM_xml).children('annotation').children('object').length + "<br/>";
     }
     
     if(use_attributes) {
       html_str += HTMLoccludedBox("");
       html_str += "<b>Enter attributes</b><br />";
       html_str += HTMLattributesBox("");
+      html_str += "<br/>";
     }
     
     if(use_parts) {
@@ -344,11 +345,11 @@ function scribble_canvas(tag) {
   }
 
   this.WhatIsThisObjectDeleteButton = function (){
-    /*submission_edited = 0;
+    submission_edited = 0;
     main_handler.QueryToRest();
     this.cleanscribbles();
-    ClearMask('aux_mask');*/
-    DeleteAllScribbles();
+    ClearMask('aux_mask');
+    //DeleteAllScribbles();
 
   }
 

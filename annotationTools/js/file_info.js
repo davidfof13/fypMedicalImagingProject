@@ -267,6 +267,17 @@ function file_info() {
                 {    
                     e.preventDefault();
                 });
+
+		// Set dimension of elements in MTUrk interface
+		var h = $('.jumbotron').innerHeight();
+		var w = $('#hit-container').innerWidth();
+			
+		// Set the height of hit-image to 70% that of the jumbotron
+		$('#hit-image').height(Math.round(0.7*h));
+
+		$('.hit-menu').css('margin-right', Math.round(0.039*w) + 'px');
+		$('#hit-image').css('margin-right', Math.round(0.03*w) + 'px');
+		
             }
         }
         else {
