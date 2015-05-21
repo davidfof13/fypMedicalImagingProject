@@ -326,6 +326,11 @@ function image(id) {
     
     /** gets available width (6.14.06) */
     this.GetAvailWidth = function() {
+	
+	var m = main_media.GetFileInfo().GetMode();
+	if(m=='mt'){
+		return $('#hit-image').width();
+	}
         return $(window).width() - $("#main_media").offset().left -10 - 200;
         // we could include information about the size of the object box using $("#anno_list").offset().left
     };
@@ -334,7 +339,8 @@ function image(id) {
     this.GetAvailHeight = function() {
         var m = main_media.GetFileInfo().GetMode();
         if(m=='mt') {
-            return $(window).height() - $("#main_media").offset().top -75;
+            //return $(window).height() - $("#main_media").offset().top -75;
+	   return $('#hit-image').height();
         }
         return $(window).height() - $("#main_media").offset().top -10;
     };

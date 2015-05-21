@@ -128,7 +128,7 @@ function GetPopupFormDraw() {
     html_str += HTMLobjectBox("");
 
   } else{ 
-    html_str = "rect_" + $(LM_xml).children('annotation').children('object').length;
+    html_str = "<b>Object name: </b>" + "rect_" + $(LM_xml).children('annotation').children('object').length + "<br/>";
   }
 
   
@@ -137,6 +137,7 @@ function GetPopupFormDraw() {
     html_str += HTMLoccludedBox("");
     html_str += "<b>Enter attributes</b><br />";
     html_str += HTMLattributesBox("");
+    html_str += "<br/>";
   }
   if(use_parts) {
     html_str += HTMLpartsBox("");
@@ -177,10 +178,9 @@ function GetPopupFormEdit(anno) {
     html_str += HTMLobjectBox(obj_name);
   
   } else {
-    html_str = "";
+       html_str = '<input name="objEnter" id="objEnter" type="hidden" value="'+obj_name+'"/>';
   }
     
-  //}
   
   if(use_attributes) {
     html_str += HTMLoccludedBox(occluded);
@@ -188,45 +188,48 @@ function GetPopupFormEdit(anno) {
     html_str += HTMLattributesBox(attributes);
   }
   
+  html_str += "<br/>"
   if(use_parts) {
     html_str += HTMLpartsBox(parts);
   }
   
   html_str += "<br />";
-  
-  // Done button:
 
+  if (video_mode) html_str += '<input type="button" value="Done" title="Press this button when you are done editing." onclick="main_media.SubmitEditObject();" tabindex="0" />';
+
+  else html_str += '<input type="button" value="Done" title="Press this button when you are done editing." onclick="main_handler.SubmitEditLabel();" tabindex="0" />';  
+  // Done button:
   if(lmode != "mt"){
 
-     if (video_mode) html_str += '<input type="button" value="Done" title="Press this button when you are done editing." onclick="main_media.SubmitEditObject();" tabindex="0" />';
-  
-    else html_str += '<input type="button" value="Done" title="Press this button when you are done editing." onclick="main_handler.SubmitEditLabel();" tabindex="0" />';
 
-    html_str += '<input type="button" value="Done" title="Press this button when you are done editing." onclick="main_handler.SubmitEditLabel();" tabindex="0" />';
-  
-  
-  /*************************************************************/
-  /*************************************************************/
-  // Scribble: if anno.GetType() != 0 then scribble mode:
+     /*************************************************************/
+     /*************************************************************/
+     // Scribble: if anno.GetType() != 0 then scribble mode:
 
-    // Adjust polygon button:
-    if (anno.GetType() == 0) 
-      html_str += '<input type="button" value="Adjust polygon" title="Press this button if you wish to update the polygon\'s control points." onclick="javascript:AdjustPolygonButton();" />';
-    
-    else 
-      html_str += '<input type="button" value="Edit Scribbles" title="Press this button if you wish to update the segmentation." onclick="javascript:EditBubbleEditScribble();" />';  
-    
+     // Adjust polygon button:
+     if (anno.GetType() == 0)
+       html_str += '<input type="button" value="Adjust polygon" title="Press this button if you wish to update the polygon\'s control points." onclick="javascript:AdjustPolygonButton();" />';
 
-  } else{
-    html_str += '<input type="button" value="Resize" title="Press this button if you wish to resize the rectangle" />';
-  }
-  /*************************************************************/
-  /*************************************************************/
-
-  // Delete button:
-  html_str += '<input type="button" value="Delete" title="Press this button if you wish to delete the polygon." onclick="main_handler.EditBubbleDeleteButton();" tabindex="0" />';
+     //  else 
+     //  html_str += '<input type="button" value="Edit Scribbles" title="Press this button if you wish to update the segmentation." onclick="javascript:EditBubbleEditScribble();" />';  
+  }  
   
-  return html_str;
+  // for scribbles
+  if (anno.GetType())
+        html_str += '<input type="button" value="Edit Scribbles" title="Press this button if you wish to update the segmentation." onclick="javascript:EditBubbleEditScribble();" />';
+
+
+    //  if(lmode == "mt")
+    //  html_str += '<input type="button" value="Resize" title="Press this button if you wish to resize the rectangle" />';
+  
+    /*************************************************************/
+    /*************************************************************/
+
+    // Delete button:
+    html_str += '<input type="button" value="Delete" title="Press this button if you wish to delete the polygon." onclick="main_handler.EditBubbleDeleteButton();" tabindex="0" />';
+
+    return html_str;
+
 }
 
 // ****************************

@@ -413,15 +413,29 @@ function handler() {
 
         // set current list element to active
         $('.menu-ul>li>a').click(function(){
+
+
+            if(this.id == "segmA")
+                return;
+
             var el = $('.menu-ul').find('.active');
+
             el.removeClass('active');
             this.className += ' active';
 
-            // if we click on any other button except the drop downn menu,
-            // close dropdown menu
+            // If we just clicked on the dropdown menu
+            // display segment button
+            if(this.id == "dropdownMenu"){
+              document.getElementById('segmButton').style.display = 'block';
+            }
+
+            // if we click on any other button except the drop down menu,
+            // while the dropdown menu is active close dropdown menu and
+            // hide segment button
             if (el.attr("id") =="dropdownMenu" && this.id != "dropdownMenu" && $('.caret').length){
               $('.hit-submenu').slideToggle();
               $('.caret').attr('class', 'caret-right');
+              document.getElementById('segmButton').style.display = 'none';
             }
 
 
@@ -450,7 +464,8 @@ function handler() {
           // slide up
           if($('.caret').length){
 
-              $('.caret').attr('class', 'caret-right')
+              $('.caret').attr('class', 'caret-right');
+              document.getElementById('segmButton').style.display = 'none';
           }
 
           // slide down

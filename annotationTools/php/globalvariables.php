@@ -7,7 +7,7 @@ if (!$username){
 }
 
 $TOOLHOME = "/Users/David/Documents/Imperial/4thYear/fyp/fypMedicalImagingProject/";
-$URLHOME = "http://dyn1209-131.wlan.ic.ac.uk//Users/David/Documents/Imperial/4thYear/fyp/fypMedicalImagingProject/";
+$URLHOME = "http://dyn1215-48.wlan.ic.ac.uk//Users/David/Documents/Imperial/4thYear/fyp/fypMedicalImagingProject/";
 
 if (!$public==true) {
    $HOMEIMAGES = $TOOLHOME."Images/users/$username/";

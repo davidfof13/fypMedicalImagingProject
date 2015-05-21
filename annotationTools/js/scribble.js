@@ -66,6 +66,15 @@ function scribble_canvas(tag) {
     this.redraw();
   };
 
+
+  /* Checks if the image contains any scribbles. If none,
+      it returns false otherwise true */
+  this.scribblesExist = function(){
+    if (this.clickX.length == 0 && this.annotationid == -1)
+      return false;
+
+    return true;
+  }
   // This function is called once we set the scribble mode. It prepares the canvas where the scribbles
   // will be drawn and initializes the necessary data structures.
   this.startSegmentationMode = function(){
@@ -223,7 +232,7 @@ function scribble_canvas(tag) {
   // General function to synchronously create a directory from a given url
   this.createDir = function(url){
     $.ajax({
-      async: false,
+      async: true,
       type: "POST",
       url: "annotationTools/php/createdir.php",
       data: { 
@@ -311,18 +320,19 @@ function scribble_canvas(tag) {
     var lmode = main_media.GetFileInfo().GetMode();
 
     if(lmode != "mt"){
-    	html_str = "<b>Enter object name</b><br />";
+    	html_str = "<b>Enter object name</b><br/>";
     	html_str += this.HTMLobjectBox("");
 
     } else {
 
-	html_str = "mask_" + $(LM_xml).children('annotation').children('object').length;
+	html_str = "<b>Object name: </b>" + "mask_" + $(LM_xml).children('annotation').children('object').length + "<br/>";
     }
     
     if(use_attributes) {
       html_str += HTMLoccludedBox("");
       html_str += "<b>Enter attributes</b><br />";
       html_str += HTMLattributesBox("");
+      html_str += "<br/>";
     }
     
     if(use_parts) {
@@ -344,11 +354,12 @@ function scribble_canvas(tag) {
   }
 
   this.WhatIsThisObjectDeleteButton = function (){
-    /*submission_edited = 0;
+    submission_edited = 0;
     main_handler.QueryToRest();
     this.cleanscribbles();
-    ClearMask('aux_mask');*/
-    DeleteAllScribbles();
+    ClearMask('aux_mask');
+    $('#segmA').removeClass('active');
+    //DeleteAllScribbles();
 
   }
 
@@ -585,8 +596,11 @@ function scribble_canvas(tag) {
       else if (callback == 2){
         scribble_canvas.drawMask(1);
 
-	if( main_media.GetFileInfo().GetMode() != "mt")
-        	scribble_canvas.hidespinner();
+	 if( main_media.GetFileInfo().GetMode() != "mt")
+        scribble_canvas.hidespinner();
+
+    else
+        $('#loadspinner').hide();
 
         scribble_canvas.segmentation_in_progress = 0;
         scribble_canvas.flag_changed = 0;
@@ -622,7 +636,7 @@ function scribble_canvas(tag) {
       SetDrawingMode(1);
       if(draw_anno) return;
     }
-    if (this.clickX.length == 0 && this.annotationid == -1){
+    if (!this.scribblesExist()){
       alert("Can not segment: you need to scribble on the image first");
       return;
     }
@@ -630,8 +644,11 @@ function scribble_canvas(tag) {
 
       var lmode = main_media.GetFileInfo().mode;
 
-      if(lmode != "mt")
+     if(lmode != "mt")
         this.showspinner();
+
+      else
+        $('#loadspinner').show();
 
       
       this.segmentation_in_progress = 1;
@@ -747,6 +764,12 @@ function scribble_canvas(tag) {
   // Called each periodically while dragging the mouse over the screen. 
   // Saves the coordinates of the clicks introduced by the user.
   this.addClick = function(x, y, dragging){
+
+    if(this.clickX.length < 2){
+
+        $('#segmA').attr('class', 'active');
+    }
+
     this.flag_changed = 1;
     var ratio = main_media.GetImRatio();  
     x-=1; 

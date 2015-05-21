@@ -73,6 +73,8 @@ function StartDrawEvent(event) {
   else {
 
     $('#draw_canvas_div').css('cursor', 'default');
+
+    // temporarily remove the draw_canvas element
     draw_canv = $('#draw_canvas').clone(true);
     $('#draw_canvas_div').empty();
 
@@ -196,7 +198,6 @@ function DrawRectangle(event){
   if(username_flag) submit_username();
   
   // Create new annotation structure:
-
   var numItems = $(LM_xml).children('annotation').children('object').length;
   draw_anno = new annotation(numItems);
   

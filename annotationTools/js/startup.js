@@ -37,17 +37,22 @@ function StartupLabelMe() {
     else {
       // This function gets run after image is loaded:
       function main_media_onload_helper() {
-	       // Set the image dimensions:
-	       main_media.SetImageDimensions();
+	    
+	
+	    // Set the image dimensions:
+	    main_media.SetImageDimensions();
 
-         // Resize image for mTurk 
-         if(mmInfo.GetMode() == "mt"){
-            main_media.ResizeImage();
+	    /*
+            // Resize image for mTurk 
+            if(mmInfo.GetMode() == "mt"){
+            	main_media.ResizeImage();
 
 
+	    
             // Set events to resize image whenever we resize window
             // Courtesy of http://stackoverflow.com/questions/2996431/detect-when-a-window-is-resized-using-javascript
-            $(window).resize(function() {
+             
+	    $(window).resize(function() {
               if(this.resizeTO) clearTimeout(this.resizeTO);
                 this.resizeTO = setTimeout(function() {
                   $(this).trigger('resizeEnd');
@@ -63,15 +68,13 @@ function StartupLabelMe() {
               }
             });
 
-          } //else {
-            // Read the XML annotation file:
-            var anno_file = main_media.GetFileInfo().GetFullName();
-            anno_file = 'Annotations/' + anno_file.substr(0,anno_file.length-4) + '.xml' + '?' + Math.random();
-            ReadXML(anno_file,LoadAnnotationSuccess,LoadAnnotation404);
-         // }
-      
+          } */
 
-	       
+          // Read the XML annotation file:
+          var anno_file = main_media.GetFileInfo().GetFullName();
+          anno_file = 'Annotations/' + anno_file.substr(0,anno_file.length-4) + '.xml' + '?' + Math.random();
+          ReadXML(anno_file,LoadAnnotationSuccess,LoadAnnotation404);
+      
       };
 
         // Get the image:
@@ -361,6 +364,8 @@ function SetDrawingMode(mode){
     }
   }
   
+
+  // changing to scribble mode
   if (mode == 1) { 
     if(draw_anno) {
       alert("Need to close current polygon first.");
