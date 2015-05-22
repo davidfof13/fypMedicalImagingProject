@@ -230,32 +230,39 @@ function file_info() {
                 }
 
                 if(mt_N=='inf') mt_N = 1;
-                
-                $(document).ready(function(e) {
-                    $('#mt_submit_form').load('annotationTools/html/mTurkUI2.html',function(){});
 
-                    if(global_count >= mt_N) document.getElementById('mt_submit').disabled=false;
+
+                var request;
+                if (window.XMLHttpRequest) {
+                    // IE7+, Firefox, Chrome, Opera, Safari
+                    request = new XMLHttpRequest();
+                } else {
+                    // code for IE6, IE5
+                    request = new ActiveXObject('Microsoft.XMLHTTP');
+                }
+                // load external html file containing user interface
+                // this ajax call needs to be synchronous otherwise file may 
+                // not get loaded in time
+                request.open('GET', 'annotationTools/html/mTurkUI2.html', false);
+                request.send();
+
+                // append html code
+                $('#mt_submit_form').append(request.responseText);
+                
+                if(global_count >= mt_N) document.getElementById('mt_submit').disabled=false;
     
 
-                    // Set dimension of elements in MTUrk interface
-                    var h = $('.jumbotron').innerHeight();
-                    var w = $('#hit-container').innerWidth();
-                    var imH = $('#main_media').innerHeight();
-                
-            
-                    // Set the height of hit-image to 70% that of the jumbotron
-                    $('#hit-image').height(Math.round(0.7*h));
+                // Set dimension of elements in MTUrk interface
+                var h = $('.jumbotron').innerHeight();
+                var w = $('#hit-container').innerWidth();
+                var imH = $('#main_media').innerHeight();
+             
+                // Set the height of hit-image to 70% that of the jumbotron
+                $('#hit-image').height(Math.round(0.7*h));
 
-                    $('.hit-menu').css('margin-right', Math.round(0.039*w) + 'px');
-                    $('#hit-image').css('margin-right', Math.round(0.045*w) + 'px');
+                $('.hit-menu').css('margin-right', Math.round(0.039*w) + 'px');
+                $('#hit-image').css('margin-right', Math.round(0.045*w) + 'px');
 
-                    // do this again as it might not always 
-                    // occur due to document being loaded
-                    // asynchronously 
-                    //$(".image_canvas").appendTo("#hit-image");
-
-                   
-                });
             }
         }
         else {
@@ -333,7 +340,7 @@ function file_info() {
     name information.  Returns false. */
     this.SetURL = function (url) {
 
-        console.log("set url");
+
 
         this.FetchImage();
 

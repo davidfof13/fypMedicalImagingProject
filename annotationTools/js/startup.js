@@ -53,14 +53,6 @@ function StartupLabelMe() {
              // Resize image for mTurk 
             if(mmInfo.GetMode() == "mt"){
 
-          
-                // refresh page if hit-image hasn't been loaded yet
-	              /*if($(".image_canvas").parent().attr('id') != "hit-image"){
-                  window.location = document.URL;
-                  return;
-                }*/
-          
-    
                 // configure actions for hit menu
                 main_handler.setHITMenu();
 
@@ -297,7 +289,6 @@ function FinishStartup() {
     if (document.getElementById('mt_submit_form').style.visibility == 'visible'){
         $(".image_canvas").css({position: 'relative'});  
 
-  
     }
 
      // For firefox
