@@ -106,6 +106,9 @@ function WriteLogMsg(msg) {
 
 // This function gets called when the user clicks on the "Next image" button.
 function ShowNextImage() {
+
+  
+
   if(wait_for_input) return WaitForInput();
   if(draw_anno) {
     alert("Need to close current polygon first.");

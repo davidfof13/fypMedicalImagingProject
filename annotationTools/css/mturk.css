@@ -1,0 +1,161 @@
+/* Menu panel */
+.menu-content {
+  padding: 4px;
+}
+
+/* Menu */
+.menu-ul>li>a:not(#segmA) /*,.menu-ul>li>div */{
+  background-color: #4D3D3C;
+
+}
+
+/*on user click */
+.menu-ul>li>a.active:not(#segmA){
+  background-color: #773E3A; 
+}
+
+/* on hover*/
+.menu-ul>li>a:hover:not(#segmA) /*, .menu-ul>li>div:hover*/{
+  background-color: #773E3A;
+  color: #FFFFFF;
+
+}
+
+
+/*dropdown menu right arrow*/
+.caret-right{
+    display: inline-block;   
+    width: 0;
+    height: 0;
+    margin-left: 2px;
+    vertical-align: middle;
+    border-bottom: 4px solid transparent;
+    border-top: 4px solid transparent;
+    border-left: 4px dashed;    
+   
+}
+
+/* Submenu */
+.hit-submenu>li>a:hover{
+
+  color: #FFFFFF;
+  background-color: #7a7a7a;
+
+}
+
+.hit-submenu li:hover{
+  background-color: #7a7a7a;
+}
+
+.hit-submenu>li.active{
+  background-color: #7a7a7a;
+}
+
+.hit-submenu>li>a.active{
+  background-color: #7a7a7a;
+}
+  
+.hit-submenu{
+
+  color: #FFFFFF;
+  display: none;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+/*For the segmentation button */
+#segmA, #segmA div {
+  background-color: #3D6609;
+}
+
+#segmA:hover {
+
+    background-color: #3D6609;
+    color: #FFFFFF;
+}
+
+#segmA.active, #segmA.active div {
+  background-color: #66A615;
+}
+
+#segmA.active:hover, #segmA.active:hover div{
+  background-color: #77C01C;
+  color: #FFFFFF;
+}
+
+.nav-stacked>li+li {
+  margin-top: 3px;
+  margin-left: 0;
+}
+
+.rectangle {
+    border: 3px solid #FF0000;
+    position: inherit;
+}
+
+
+#arrowMsg {
+    padding-top: 40px;
+    margin-left:90px; 
+    overflow: hidden;
+    float:right;
+    font-size: 200%;
+}
+
+.arrow {
+  position: relative;
+  /*float: left;*/
+  float:left;
+}
+
+/* arrow body */
+.arrow:before {
+    content:'×';
+    display:inline-block;
+    position: absolute;
+    font-size: 138px;
+    font-weight: bold;
+    font-family: verdana;
+    width: 58px;
+    height: 190px;
+    overflow: hidden;
+    line-height: 90px; /* vertical positioning */
+}
+
+/*arrow tip*/
+.arrow:after {
+    content:'';
+    display:inline-block;
+    position: absolute;
+    left:57px;
+    top:40px; /* vertical positioning */
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 15px 0 15px 15px;
+    border-color: transparent transparent transparent black;
+}
+
+/* arrow container */
+#arrowCont {
+
+  cursor: pointer; cursor: hand;
+  float: left; margin-bottom: 70px;
+}
+
+#arrowCont:hover .arrow, #arrowCont:hover #arrowMsg{
+  color: red;
+
+}
+
+#arrowCont:hover .arrow::after {
+  border-color: transparent transparent transparent red; 
+}
+
+
+#hit-bottom {
+  float:left; 
+  width:22%; 
+  min-width: 244px; 
+  min-height:  258px;
+}

@@ -231,55 +231,31 @@ function file_info() {
 
                 if(mt_N=='inf') mt_N = 1;
                 
-                // import external file first
-                var getImport = document.querySelector('link[rel=import]');
+                $(document).ready(function(e) {
+                    $('#mt_submit_form').load('annotationTools/html/mTurkUI2.html',function(){});
 
-                // select the content that will be appended to tool.html
-                var content = getImport.import.querySelector('#template');
+                    if(global_count >= mt_N) document.getElementById('mt_submit').disabled=false;
+    
 
-                // convert content to string
-                var source = document.importNode(content, true).innerText;
-               
-               
-                // template values to be passed to code
-                var context = {
-                    mt_instr: this.mt_instructions,
-                    extURL: externalSubmitURL,
-                    aId: this.assignmentId
-                };
-
-                // compile code
-                var template = Handlebars.compile(source);
-                var html_str = template(context);
-            
-                // add code to div element
-                $('#mt_submit_form').append(html_str);
-
-
-                if(global_count >= mt_N) document.getElementById('mt_submit').disabled=false;
-
-                 // configure hit menu
-                main_handler.setHITMenu();
-	
-		        // Prevent click of <a> tag from  resetting the screen 
-                // position and adding random characters to the URL
-                $('a').click(function(e)
-                {    
-                    e.preventDefault();
-                });
-
-		        // Set dimension of elements in MTUrk interface
-	           	var h = $('.jumbotron').innerHeight();
-	           	var w = $('#hit-container').innerWidth();
-			
-	           	// Set the height of hit-image to 70% that of the jumbotron
-	           	$('#hit-image').height(Math.round(0.7*h));
-
-	           	$('.hit-menu').css('margin-right', Math.round(0.039*w) + 'px');
-	           	$('#hit-image').css('margin-right', Math.round(0.03*w) + 'px');
-
+                    // Set dimension of elements in MTUrk interface
+                    var h = $('.jumbotron').innerHeight();
+                    var w = $('#hit-container').innerWidth();
+                    var imH = $('#main_media').innerHeight();
                 
-		
+            
+                    // Set the height of hit-image to 70% that of the jumbotron
+                    $('#hit-image').height(Math.round(0.7*h));
+
+                    $('.hit-menu').css('margin-right', Math.round(0.039*w) + 'px');
+                    $('#hit-image').css('margin-right', Math.round(0.045*w) + 'px');
+
+                    // do this again as it might not always 
+                    // occur due to document being loaded
+                    // asynchronously 
+                    //$(".image_canvas").appendTo("#hit-image");
+
+                   
+                });
             }
         }
         else {
@@ -356,6 +332,9 @@ function file_info() {
     /** Changes current URL to include collection, directory, and image
     name information.  Returns false. */
     this.SetURL = function (url) {
+
+        console.log("set url");
+
         this.FetchImage();
 
 	   // Get base LabelMe URL:
