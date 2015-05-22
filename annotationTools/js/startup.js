@@ -23,7 +23,10 @@ function StartupLabelMe() {
     // annotation folder or image filename.  If false is returned, the 
     // function fetches a new image and sets the URL to reflect the 
     // fetched image.
-    if(!mmInfo.ParseURL()) return;
+    if(!mmInfo.ParseURL()){
+
+      return;
+    }
 
     if(video_mode) {
       main_media = new video('videoplayer');
@@ -38,48 +41,48 @@ function StartupLabelMe() {
       // This function gets run after image is loaded:
       function main_media_onload_helper() {
 	    
-            // Give time for elements to render
-           // setTimeout(function(){}, 50);
 
-           /*while(!$("#hit-image").length){
-              setTimeout(function(){}, 50);
-           }*/
+           // Display Image
+           main_media.SetImageDimensions();
+           $(".image_canvas").appendTo("#hit-image");
+
 
            $(document).ready(function() {
 
-	          // The MTurk UI will be loaded at this point
-            if(mmInfo.GetMode() == "mt")  
-              $(".image_canvas").appendTo("#hit-image");
 
-	          // Set the image dimensions:
-	          main_media.SetImageDimensions();
-
-	  
-            // Resize image for mTurk 
+             // Resize image for mTurk 
             if(mmInfo.GetMode() == "mt"){
+
+          
+                // refresh page if hit-image hasn't been loaded yet
+	              /*if($(".image_canvas").parent().attr('id') != "hit-image"){
+                  window.location = document.URL;
+                  return;
+                }*/
+          
     
-              // configure actions for hit menu
-              main_handler.setHITMenu();
+                // configure actions for hit menu
+                main_handler.setHITMenu();
 
-              // Prevent click of <a> tag from  resetting the screen 
-              // position and adding random characters to the URL
-               $('a').click(function(e)
-               {    
+                // Prevent click of <a> tag from  resetting the screen 
+                // position and adding random characters to the URL
+                $('a').click(function(e)
+                {    
                    e.preventDefault();
-               });
+                });
 
 
-              var imH = $('#main_media').innerHeight();
-              //$('#hit-bottom').css('height', imH);
-              //$('#arrow').css('margin-bottom', Math.round(0.12*imH));
-              //$('#arrow').css('margin-top', Math.round(0.08*imH));
+                var imH = $('#main_media').innerHeight();
+                //$('#hit-bottom').css('height', imH);
+                //$('#arrow').css('margin-bottom', Math.round(0.12*imH));
+                //$('#arrow').css('margin-top', Math.round(0.08*imH));
 
             } 
 
-              // Read the XML annotation file:
-              var anno_file = main_media.GetFileInfo().GetFullName();
-              anno_file = 'Annotations/' + anno_file.substr(0,anno_file.length-4) + '.xml' + '?' + Math.random();
-              ReadXML(anno_file,LoadAnnotationSuccess,LoadAnnotation404);
+            // Read the XML annotation file:
+            var anno_file = main_media.GetFileInfo().GetFullName();
+            anno_file = 'Annotations/' + anno_file.substr(0,anno_file.length-4) + '.xml' + '?' + Math.random();
+            ReadXML(anno_file,LoadAnnotationSuccess,LoadAnnotation404);
 
           });
       
@@ -245,6 +248,10 @@ function FinishStartup() {
   if (main_media.GetFileInfo().GetMode() != "mt")
     $('#nextImage').attr("onclick","javascript:ShowNextImage()");
 
+  else
+    $('#arrowCont').attr("onclick","javascript:ShowNextImage()");
+
+
 
   $('#zoomin').attr("onclick","javascript:main_media.Zoom(1.15)");
   $('#zoomout').attr("onclick","javascript:main_media.Zoom(1.0/1.15)");
@@ -257,6 +264,8 @@ function FinishStartup() {
   $('#query_canvas_div').attr("onmousedown","javascript:event.preventDefault();WaitForInput();return false;");
   $('#query_canvas_div').attr("onmouseup","javascript:event.preventDefault();");
   $('#query_canvas_div').attr("oncontextmenu","javascript:return false;");
+
+
 
   // Initialize the username:
   initUserName();
@@ -276,9 +285,29 @@ function FinishStartup() {
 
   console.timeEnd('startup');
 
-  // if the mTurk div element has been activated then move the image
-  if (document.getElementById('mt_submit_form').style.visibility == 'visible')
+  if(main_media.GetFileInfo().GetMode() == "mt"){
+
+
+    // Refresh page
+    if($(".image_canvas").parent().attr('id') != "hit-image"){
+        window.location = document.URL;
+        return;
+    }
+    // if the mTurk div element has been activated then move the image
+    if (document.getElementById('mt_submit_form').style.visibility == 'visible'){
         $(".image_canvas").css({position: 'relative'});  
+
+  
+    }
+
+     // For firefox
+    if (IsNetscape()){
+          document.getElementById("mtComments").remove();
+         document.getElementById("feedBackTxt").remove();
+    }
+
+  }
+  
 
 }
 

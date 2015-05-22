@@ -136,8 +136,16 @@
     border-color: transparent transparent transparent black;
 }
 
+/* arrow container */
+#arrowCont {
+
+  cursor: pointer; cursor: hand;
+  float: left; margin-bottom: 70px;
+}
+
 #arrowCont:hover .arrow, #arrowCont:hover #arrowMsg{
   color: red;
+
 }
 
 #arrowCont:hover .arrow::after {
