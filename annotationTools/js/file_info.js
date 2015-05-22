@@ -231,7 +231,7 @@ function file_info() {
 
                 if(mt_N=='inf') mt_N = 1;
                 
-                // import external file first
+                /*// import external file first
                 var getImport = document.querySelector('link[rel=import]');
 
                 // select the content that will be appended to tool.html
@@ -253,33 +253,41 @@ function file_info() {
                 var html_str = template(context);
             
                 // add code to div element
-                $('#mt_submit_form').append(html_str);
+                $('#mt_submit_form').append(html_str); */
 
 
-                if(global_count >= mt_N) document.getElementById('mt_submit').disabled=false;
 
-                 // configure hit menu
-                main_handler.setHITMenu();
-	
-		        // Prevent click of <a> tag from  resetting the screen 
-                // position and adding random characters to the URL
-                $('a').click(function(e)
-                {    
-                    e.preventDefault();
-                });
+                $(document).ready(function(e) {
+                    $('#mt_submit_form').load('annotationTools/html/mTurkUI2.html',function(){});
 
-		        // Set dimension of elements in MTUrk interface
-	           	var h = $('.jumbotron').innerHeight();
-	           	var w = $('#hit-container').innerWidth();
-			
-	           	// Set the height of hit-image to 70% that of the jumbotron
-	           	$('#hit-image').height(Math.round(0.7*h));
+                    if(global_count >= mt_N) document.getElementById('mt_submit').disabled=false;
+    
 
-	           	$('.hit-menu').css('margin-right', Math.round(0.039*w) + 'px');
-	           	$('#hit-image').css('margin-right', Math.round(0.03*w) + 'px');
-
+                    // Set dimension of elements in MTUrk interface
+                    var h = $('.jumbotron').innerHeight();
+                    var w = $('#hit-container').innerWidth();
+                    var imH = $('#main_media').innerHeight();
                 
-		
+            
+                    // Set the height of hit-image to 70% that of the jumbotron
+                    $('#hit-image').height(Math.round(0.7*h));
+
+                    $('.hit-menu').css('margin-right', Math.round(0.039*w) + 'px');
+                    $('#hit-image').css('margin-right', Math.round(0.045*w) + 'px');
+
+                    /*$('#hit-bottom').css('height', imH);
+                    $('#arrow').css('margin-bottom', Math.round(0.12*imH));
+                    $('#arrow').css('margin-top', Math.round(0.08*imH));*/
+
+                    /*$('#arrow').click(function(e){
+                        if (e.button > 1) return;
+
+                        ShowNextImage();
+
+                    });*/
+                    $('#arrow').attr("onclick","javascript:ShowNextImage()");
+
+                });
             }
         }
         else {
