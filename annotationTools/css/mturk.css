@@ -136,7 +136,9 @@
     border-color: transparent transparent transparent black;
 }
 
-/* arrow container */
+/* arrow container 
+http://stackoverflow.com/questions/27492191/how-to-make-a-fancy-arrow-using-css
+*/
 #arrowCont {
 
   cursor: pointer; cursor: hand;

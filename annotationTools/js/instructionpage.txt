@@ -1,0 +1,7 @@
+When user goes to home page:
+
+1. We ask him to enter a user name that will identify him for the entire session. The prompt will occur if user name is 'anonymous'
+
+2. We give him a preview of what the tasks are. We tell him the different tasks that he will be doing and show some examples.
+
+3.

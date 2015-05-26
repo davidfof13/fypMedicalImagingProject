@@ -338,7 +338,6 @@ main(int argc, char **argv)
     int m;
     
     // Convert the input to properly read the image
-    
     string imagename = imageURL;
     
     imagename = imagename.substr(0, imagename.find("."));

@@ -374,6 +374,7 @@ function SetDrawingMode(mode){
 
   // Changing to polygon mode
   if (mode == 0){ 
+
     if (scribble_canvas.annotationid != -1){
       alert("You can't change drawing mode while editting scribbles.");
       return;
@@ -391,8 +392,8 @@ function SetDrawingMode(mode){
     } else {
 
         // put scribble canvas underneath
-        $('#myCanvas_bg_div').append($('#canvasDiv'));
-        $('#canvasDiv').css('z-index', '-2');
+        $('#myCanvas_bg_div').append($('#scribbleDiv'));
+        $('#scribbleDiv').css('z-index', '-2');
     }
   }
   
@@ -413,7 +414,80 @@ function SetDrawingMode(mode){
 
     scribble_canvas.startSegmentationMode();
   }
+
+  // changing to region selection
+  if(mode == 2){
+
+      // check polygon
+      if(draw_anno) {
+        alert("Need to close current polygon first.");
+        return;
+      }
+
+      // check scribble
+      if (scribble_canvas.annotationid != -1){
+        alert("You can't change drawing mode while editting scribbles.");
+        return;
+      }
+
+        
+      // put scribble canvas underneath
+      $('#myCanvas_bg_div').append($('#scribbleDiv'));
+      $('#scribbleDiv').css('z-index', '-2');
+
+      // put new div on top
+      setUpRegionSelection();
+  }
+
   drawing_mode = mode;
+}
+
+
+function setUpRegionSelection(){
+
+  // create new div
+  html_str = '<div id="regionDiv" ';
+  html_str+='style="position:absolute;left:0px;top:0px;z-index:1;width:100%;height:100%;background-color:rgba(128,64,0,0);">';
+  html_str+='</div>';
+
+  // add to main media
+  $('#'+ scribble_canvas.tagscribbleDiv).append(html_str);
+
+  //$(document).ready(function(){
+
+      new SLICSegmentAnnotator(main_media.file_info.GetImagePath(), {
+        regionSize: 40,
+        container: document.getElementById('regionDiv'),
+        // annotation: 'annotation.png' // optional existing annotation data.
+        labels: [
+          {name: 'background', color: [255, 255, 255]},
+          'skin',
+          'skirt',
+          'belt'
+          ],
+        /*onload: function() {
+          initializeLegend(this);
+          initializeLegendAdd(this);
+          initializeButtons(this);
+        }*/
+      });
+
+      /*
+        new SLICSegmentAnnotator(main_media.file_info.GetImagePath(), {
+        regionSize: 40,
+        container: document.getElementById('regionDiv'),
+        // annotation: 'annotation.png' // optional existing annotation data.
+        labels: [
+          {name: 'background', color: [255, 255, 255]},
+          'skin',
+          'skirt',
+          'belt'
+          ]
+        });*/
+
+
+ // });
+
 }
 function SetPolygonDrawingMode(bounding){
   if (active_canvas == QUERY_CANVAS) return;

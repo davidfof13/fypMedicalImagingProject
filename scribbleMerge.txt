@@ -1,0 +1,16 @@
+Plan
+
+1. Run split and merge program on the current image by sending an XMLHttp request to the server to interface with a program in the backend.
+
+2. Collect the result, read them into the javascript code. Display the lines of the grid as we read the data.
+
+- the resulting data can be encoded by the backend program as such : (R1&R2&R3)&R4 where R denotes a region and & separates each region. The parenthesis means that we must now draw lines with respect to that region
+
+- Split-and-merge methods usually store the adjacency information in region adjacency graphs (or similar data structures). The leaf nodes in those graphs will be homogeneous regions but we don't need to actually store the data in each node, we just want to know if a node is a leaf node.
+
+-------
+
+Q1 Is there a standard format in which the resulting data from a split and merge of an image is saved in, that can be easily decoded by javascript to a draw a corresponding grid on the screen
+
+Q2 Do you have a fast implementation of split and merge? The ones I've tested so far are slow
+

@@ -10,7 +10,7 @@ drawing_mode = 0;
 
 
 function scribble_canvas(tag) {
-  this.tagcanvasDiv = tag; 
+  this.tagscribbleDiv = tag; 
   this.colorseg = Math.floor(Math.random()*14);
   this.cache_random_number = Math.random();
 
@@ -84,9 +84,9 @@ function scribble_canvas(tag) {
     
 
     // if the scribble canvas already exist, we move it back on  top
-    if($('#canvasDiv').length){
-        $('#canvasDiv').css('z-index', 1);
-        $('#' + this.tagcanvasDiv).append($('#canvasDiv'));
+    if($('#scribbleDiv').length){
+        $('#scribbleDiv').css('z-index', 1);
+        $('#' + this.tagscribbleDiv).append($('#scribbleDiv'));
     }
     else {
       this.clickX = new Array();
@@ -99,7 +99,7 @@ function scribble_canvas(tag) {
 
   // Close the canvas where the scribbles will be drawn.
   this.CloseCanvas = function()  {
-    var p = document.getElementById('canvasDiv');
+    var p = document.getElementById('scribbleDiv');
     p.parentNode.removeChild(p);
   };
 
@@ -155,8 +155,9 @@ function scribble_canvas(tag) {
   // called when creating the segmentation to create save an image with 
   // the scribbles 
   this.redraw2 = function(ratio){
-    this.scribblecanvas.setAttribute('width', main_media.width_orig);
-    this.scribblecanvas.setAttribute('height',main_media.height_orig);
+    
+
+    
     var context = this.scribblecanvas.getContext("2d");
     context.clearRect(0, 0, context.canvas.width, context.canvas.height); // Clears the canvas
     context.lineJoin = "miter"; 
@@ -704,22 +705,22 @@ function scribble_canvas(tag) {
 
   // Creates the div elements to insert the scribble_canvas in the html
   this.prepareHTMLtoDraw = function(){  
-    html_str = '<div id="canvasDiv" ';
+    html_str = '<div id="scribbleDiv" ';
     html_str+='style="position:absolute;left:0px;top:0px;z-index:1;width:100%;height:100%;background-color:rgba(128,64,0,0);">';
     html_str+='</div>';
-    $('#'+this.tagcanvasDiv).append(html_str);
+    $('#'+this.tagscribbleDiv).append(html_str);
     $(document).ready(function() {scribble_canvas.prepareDrawingCanvas();});
   };
 
   // Creates the canvas where the scribbles will be drawn.  
   this.prepareDrawingCanvas = function(){
-    this.canvasDiv = document.getElementById('canvasDiv'); 
+    this.scribbleDiv = document.getElementById('scribbleDiv'); 
     this.scribblecanvas = document.createElement('canvas');
     this.scribblecanvas.setAttribute('width', main_media.width_curr);
     this.scribblecanvas.setAttribute('height', main_media.height_curr);
     this.scribblecanvas.setAttribute('id', 'scribble_canvas');
     this.scribblecanvas.setAttribute('style','cursor:url(Icons/red_pointer.cur), default');
-    this.canvasDiv.appendChild(this.scribblecanvas);
+    this.scribbleDiv.appendChild(this.scribblecanvas);
     if(typeof G_vmlCanvasManager != 'undefined') {
       this.scribblecanvas = G_vmlCanvasManager.initElement(this.scribblecanvas);
     }
