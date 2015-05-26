@@ -406,8 +406,7 @@ function handler() {
     };
     
 
-  // handles when the user clicks on a dropdown menu of the 
-
+    // handles when the user clicks on a dropdown menu of the 
     // hit menu of the MTurk user interface
     this.setHITMenu = function () {  
 
@@ -425,21 +424,30 @@ function handler() {
 
             // If we just clicked on the dropdown menu
             // display segment button
-            if(this.id == "dropdownMenu"){
+            if(this.id == "scribbleDropdown"){
               document.getElementById('segmButton').style.display = 'block';
             }
 
             // if we click on any other button except the drop down menu,
-            // while the dropdown menu is active close dropdown menu and
+            // while the dropdown menu is opened, close dropdown menu and
             // hide segment button
-            if (el.attr("id") =="dropdownMenu" && this.id != "dropdownMenu" && $('.caret').length){
-              $('.hit-submenu').slideToggle();
-              $('.caret').attr('class', 'caret-right');
+
+
+            //this.parentElement.classList.contains("dropdown");
+
+            /* ((el.attr("id") =="scribbleDropdown" && this.id != "scribbleDropdown") ||
+                 (el.attr("id") =="regionDropdown" && this.id != "regionDropdown"))*/
+            if ( el.parent().hasClass("dropdown") && !this.parentElement.classList.contains("dropdown")
+                  && $('.caret').length){
+
+              el.parent().find('.hit-submenu').slideToggle();
+              el.parent().find('.caret').attr('class', 'caret-right');
               document.getElementById('segmButton').style.display = 'none';
             }
 
 
         });
+
 
          // set current sublist element to active
         $('.hit-submenu>li>a').click(function(){
@@ -458,25 +466,37 @@ function handler() {
 
 
         // configure dropdown menu
-        $('#dropdownMenu').click(function(){
-          $('.hit-submenu').slideToggle();
+        $('.dropdown>a').click(function(){
+          
+          
+          //$('.hit-submenu').slideToggle();
+
+          var parent = $("#" + this.id).parent();
+          parent.find(".hit-submenu").slideToggle();
+
 
           // slide up
-          if($('.caret').length){
+          if (parent.find(".caret").length){
 
-              $('.caret').attr('class', 'caret-right');
-              document.getElementById('segmButton').style.display = 'none';
+              parent.find(".caret").attr('class', 'caret-right');
+
+              if(this.id == "scribbleDropdown")
+                document.getElementById('segmButton').style.display = 'none';
           }
 
           // slide down
           else{
 
-            $('#foreground').addClass('active');
+               if(this.id == "scribbleDropdown"){
+                $('#foreground').addClass('active');
+                $('#foreground').parent().addClass('active');
+               } else {
+                $('#clear').addClass('active');
+                $('#clear').parent().addClass('active');
+               }
 
-           $('#foreground').parent().addClass('active');
-
-            // caret right
-            $('.caret-right').attr('class', 'caret');
+               // caret right
+               parent.find(".caret-right").attr('class', 'caret');
           }
 
 
