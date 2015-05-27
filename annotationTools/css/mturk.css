@@ -154,10 +154,35 @@ http://stackoverflow.com/questions/27492191/how-to-make-a-fancy-arrow-using-css
   border-color: transparent transparent transparent red; 
 }
 
+/* hit menu */
+.hit-menu {
+  width: 15%;
+  height: 200px; 
+  float: left;
+  margin-right: 60px;
+  display: block;
+        
+}
+  
+#hit-image {
+      
+  width: 55%; 
+  height: 600px; 
+  float: left;
+  margin-right: 53px; 
+      
+}
 
-#hit-bottom {
+#hit-container {
+    margin-left: 20px; 
+    margin-right: 10px; 
+    width: 98%;
+}
+
+
+#hit-rmenu {
   float:left; 
-  width:22%; 
-  min-width: 220px; 
+  width:20%; 
+  min-width: 200px; 
   min-height:  258px;
 }

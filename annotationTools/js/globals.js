@@ -46,6 +46,7 @@ var ref;
 // Indicates whether we are in segmentation or polygon mode
 var drawing_mode = 0;
 
+var segmentAnnotator = null;
 
 // Scribble mode:
 var scribble_mode = true;

@@ -428,8 +428,6 @@ function handler() {
             if(this.id != "regionDropdown" || (el.first().find(".legend-selected").length == 0)
             || $("#regionDropdown").hasClass("caret")){
 
-             // if(this.id == "regionDropdown") el.first().removeClass('active');
-             // else el.removeClass('active');
              el.first().removeClass('active');
 
             }
@@ -446,10 +444,7 @@ function handler() {
             // while the dropdown menu is opened, close dropdown menu and
             // hide segment button
 
-            if ( /*el.parent().hasClass("dropdown") &&  el.first() != this*/
-              jQuery.inArray(this, el) == -1  
-              /*!this.parentElement.classList.contains("dropdown")*/
-                  && $('.caret').length){
+            if (jQuery.inArray(this, el) == -1 && $('.caret').length){
 
               el.parent().find('.hit-submenu').slideToggle();
               el.parent().find('.caret').attr('class', 'caret-right');
@@ -479,9 +474,6 @@ function handler() {
         // configure dropdown menu
         $('.dropdown>a').click(function(){
           
-          
-          //$('.hit-submenu').slideToggle();
-
           var parent = $("#" + this.id).parent();
           parent.find(".hit-submenu").slideToggle();
 
@@ -501,15 +493,11 @@ function handler() {
                if(this.id == "scribbleDropdown"){
                 $('#foreground').addClass('active');
                 $('#foreground').parent().addClass('active');
-               } /*else {
-                $('#clear').addClass('active');
-                $('#clear').parent().addClass('active');
-               }*/
+               } 
 
                // caret right
                parent.find(".caret-right").attr('class', 'caret');
           }
-
 
         });
     };

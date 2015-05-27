@@ -37,6 +37,7 @@ function StartupLabelMe() {
       anno_file = 'VLMAnnotations/' + anno_file + '.xml' + '?' + Math.random();
       ReadXML(anno_file,LoadAnnotationSuccess,LoadAnnotation404);
     }
+
     else {
       // This function gets run after image is loaded:
       function main_media_onload_helper() {
@@ -58,8 +59,7 @@ function StartupLabelMe() {
 
                 // Prevent click of <a> tag from  resetting the screen 
                 // position and adding random characters to the URL
-                $('a').click(function(e)
-                {    
+                $('a').click(function(e){    
                    e.preventDefault();
                 });
 
@@ -82,10 +82,6 @@ function StartupLabelMe() {
 
         // Get the image:
         main_media.GetNewImage(main_media_onload_helper);
-
-       
-        //if(mmInfo.GetMode() == "mt")
-          //$(".image_canvas").appendTo("#hit-image");
 
     }
   }
@@ -363,8 +359,8 @@ function InitializeAnnotationTools(tag_button, tag_canvas){
     }
 }
 
-// Switch between polygon and scribble mode. If a polygon is open or the user 
-// is in the middle of the segmentation an alert appears to indicate so.
+// Switch between polygon scribble and region selection mode. If a polygon is open 
+// or the user  is in the middle of the segmentation an alert appears to indicate so.
 function SetDrawingMode(mode){
   if (drawing_mode == mode || active_canvas == QUERY_CANVAS) return;
 
@@ -389,11 +385,14 @@ function SetDrawingMode(mode){
         scribble_canvas.scribble_image = "";
         scribble_canvas.cleanscribbles();
         scribble_canvas.CloseCanvas();
+
     } else {
 
         // put scribble canvas underneath
         $('#myCanvas_bg_div').append($('#scribbleDiv'));
         $('#scribbleDiv').css('z-index', '-2');
+
+        hideRegionDiv();
     }
   }
   
@@ -412,6 +411,7 @@ function SetDrawingMode(mode){
       document.getElementById("polygonDiv").setAttribute('style', 'border-color: #000');
     }
 
+    hideRegionDiv();
     scribble_canvas.startSegmentationMode();
   }
 
@@ -442,21 +442,43 @@ function SetDrawingMode(mode){
   drawing_mode = mode;
 }
 
+function hideRegionDiv(){
+
+    if(!segmentAnnotator) return;
+
+    // display the original image
+    segmentAnnotator.setFillAlpha(0);
+    segmentAnnotator.setBoundaryAlpha(0);
+
+    // put region selection canvas underneath
+    $('#myCanvas_bg_div').append($('#regionDiv'));
+    $('#regionDiv').css('z-index', '-3');
+}
 
 function setUpRegionSelection(){
 
-  // create new div
-  html_str = '<div id="regionDiv" ';
-  html_str+='style="position:absolute;left:0px;top:0px;z-index:1;width:100%;height:100%;background-color:rgba(128,64,0,0);">';
-  html_str+='</div>';
+  // if the region canvas already exists, move it back on top
+  if($('#regionDiv').length){
 
-  // add to main media
-  $('#'+ scribble_canvas.tagscribbleDiv).append(html_str);
+        // restore bounded image setting
+        segmentAnnotator.setFillAlpha(128);
+        segmentAnnotator.setBoundaryAlpha(192);
+        $('#regionDiv').css('z-index', 1);
+        $('#' + scribble_canvas.tagscribbleDiv).append($('#regionDiv'));
 
-  //$(document).ready(function(){
+  } else{
 
-      new SLICSegmentAnnotator(main_media.file_info.GetImagePath(), {
-        regionSize: 40,
+    // create new div
+    html_str = '<div id="regionDiv" ';
+    html_str+='style="position:absolute;left:0px;top:0px;z-index:1;width:100%;height:100%;background-color:rgba(128,64,0,0);">';
+    html_str+='</div>';
+
+    // add to main media
+    $('#'+ scribble_canvas.tagscribbleDiv).append(html_str);
+
+
+    segmentAnnotator =  new SLICSegmentAnnotator(main_media.file_info.GetImagePath(), {
+        regionSize: 20,
         container: document.getElementById('regionDiv'),
         // annotation: 'annotation.png' // optional existing annotation data.
         labels: [
@@ -468,8 +490,9 @@ function setUpRegionSelection(){
           //initializeLegendAdd(this);
           //initializeButtons(this);
         }
-      });
- // });
+    });
+
+  }
 
 }
 function SetPolygonDrawingMode(bounding){

@@ -794,7 +794,7 @@ function scribble_canvas(tag) {
   this.setCurrentDraw = function(val){
 
 
-    if (drawing_mode == 0){ 
+    if (drawing_mode != 1){ 
       SetDrawingMode(1);
       if(draw_anno) return;
     }
