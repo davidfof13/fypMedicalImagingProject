@@ -224,17 +224,17 @@ function handler() {
            anno = this.QueryToRest();
       }
 
-     // if(lmode == "mt" && drawing_mode != 1)  // rec + id
-	if(lmode == "mt"){
+      // if(lmode == "mt" && drawing_mode != 1)  // rec + id
+	     if(lmode == "mt"){
          
 	      // for rectangles
 	      if (drawing_mode == 0)
 	      	nn = "rect_" + $(LM_xml).children('annotation').children('object').length; 
 
 	     else
-		nn = "mask_" + $(LM_xml).children('annotation').children('object').length;
+		      nn = "mask_" + $(LM_xml).children('annotation').children('object').length;
 
-	}
+	    }
 
       var re = /[a-zA-Z0-9]/;
 
@@ -410,6 +410,8 @@ function handler() {
     // hit menu of the MTurk user interface
     this.setHITMenu = function () {  
 
+
+        
         // set current list element to active
         $('.menu-ul>li>a').click(function(){
 
@@ -419,7 +421,19 @@ function handler() {
 
             var el = $('.menu-ul').find('.active');
 
-            el.removeClass('active');
+            /* if the user clicked on the region selection button, the default command in its menu 
+            would've already been set active elsewhere in the codebase, so we don't want to remove 
+            its active class */
+
+            if(this.id != "regionDropdown" || (el.first().find(".legend-selected").length == 0)
+            || $("#regionDropdown").hasClass("caret")){
+
+             // if(this.id == "regionDropdown") el.first().removeClass('active');
+             // else el.removeClass('active');
+             el.first().removeClass('active');
+
+            }
+
             this.className += ' active';
 
             // If we just clicked on the dropdown menu
@@ -432,12 +446,9 @@ function handler() {
             // while the dropdown menu is opened, close dropdown menu and
             // hide segment button
 
-
-            //this.parentElement.classList.contains("dropdown");
-
-            /* ((el.attr("id") =="scribbleDropdown" && this.id != "scribbleDropdown") ||
-                 (el.attr("id") =="regionDropdown" && this.id != "regionDropdown"))*/
-            if ( el.parent().hasClass("dropdown") && !this.parentElement.classList.contains("dropdown")
+            if ( /*el.parent().hasClass("dropdown") &&  el.first() != this*/
+              jQuery.inArray(this, el) == -1  
+              /*!this.parentElement.classList.contains("dropdown")*/
                   && $('.caret').length){
 
               el.parent().find('.hit-submenu').slideToggle();
@@ -490,10 +501,10 @@ function handler() {
                if(this.id == "scribbleDropdown"){
                 $('#foreground').addClass('active');
                 $('#foreground').parent().addClass('active');
-               } else {
+               } /*else {
                 $('#clear').addClass('active');
                 $('#clear').parent().addClass('active');
-               }
+               }*/
 
                // caret right
                parent.find(".caret-right").attr('class', 'caret');

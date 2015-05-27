@@ -461,31 +461,14 @@ function setUpRegionSelection(){
         // annotation: 'annotation.png' // optional existing annotation data.
         labels: [
           {name: 'background', color: [255, 255, 255]},
-          'skin',
-          'skirt',
-          'belt'
+          'object'
           ],
-        /*onload: function() {
+        onload: function() {
           initializeLegend(this);
-          initializeLegendAdd(this);
-          initializeButtons(this);
-        }*/
+          //initializeLegendAdd(this);
+          //initializeButtons(this);
+        }
       });
-
-      /*
-        new SLICSegmentAnnotator(main_media.file_info.GetImagePath(), {
-        regionSize: 40,
-        container: document.getElementById('regionDiv'),
-        // annotation: 'annotation.png' // optional existing annotation data.
-        labels: [
-          {name: 'background', color: [255, 255, 255]},
-          'skin',
-          'skirt',
-          'belt'
-          ]
-        });*/
-
-
  // });
 
 }
