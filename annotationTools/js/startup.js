@@ -478,7 +478,7 @@ function setUpRegionSelection(){
 
 
     segmentAnnotator =  new SLICSegmentAnnotator(main_media.file_info.GetImagePath(), {
-        regionSize: 20,
+        regionSize: 70,
         container: document.getElementById('regionDiv'),
         // annotation: 'annotation.png' // optional existing annotation data.
         labels: [

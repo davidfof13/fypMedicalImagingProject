@@ -425,43 +425,66 @@ function handler() {
             would've already been set active elsewhere in the codebase, so we don't want to remove 
             its active class */
 
+
+            /*
             if(this.id != "regionDropdown" || (el.first().find(".legend-selected").length == 0)
             || $("#regionDropdown").hasClass("caret")){
 
              el.first().removeClass('active');
 
-            }
 
+              if(el.length > 0){
+                // we want to de-activate only the submenu elements in el, not everything
+                var subEl = $.grep($('.hit-submenu>li>a'), function(element) {
+                      return $.inArray(element, el ) !== -1;
+                });
+
+                if(subEl.length > 0){
+                  (subEl[0]).classList.remove("active") ;
+                  (subEl[0].parentElement).classList.remove("active") ;
+                }
+              }
+
+            }*/
+
+            el.removeClass('active');
             this.className += ' active';
 
             // If we just clicked on the dropdown menu
             // display segment button
             if(this.id == "scribbleDropdown"){
               document.getElementById('segmButton').style.display = 'block';
+
+              // if scribbles have already been drawn, light up the segment button
+              if(scribble_canvas.clickX.length > 0) {
+
+                $("#segmA").addClass('active');
+                $("#segmbutton").addClass('active');
+              }
             }
 
             // if we click on any other button except the drop down menu,
             // while the dropdown menu is opened, close dropdown menu and
             // hide segment button
-
-            if (jQuery.inArray(this, el) == -1 && $('.caret').length){
+            if (el.parent().hasClass("dropdown") && el.attr("id") != this.id
+                && $('.caret').length){
 
               el.parent().find('.hit-submenu').slideToggle();
               el.parent().find('.caret').attr('class', 'caret-right');
-              document.getElementById('segmButton').style.display = 'none';
+
+              if(el.attr("id") == "scribbleDropdown")
+                document.getElementById('segmButton').style.display = 'none';
             }
 
 
         });
 
 
-         // set current sublist element to active
-        $('.hit-submenu>li>a').click(function(){
+         // Submenu commands: set current sublist element to active
+        $('.hit-submenu>li>a:not(#segmA)').click(function(){
          
 
          $('.hit-submenu').find(".active").removeClass('active');
-
-
          this.className += ' active';
 
          // also set it to the li encompassing it
@@ -471,7 +494,7 @@ function handler() {
         });
 
 
-        // configure dropdown menu
+        // Dropdown menus slide action
         $('.dropdown>a').click(function(){
           
           var parent = $("#" + this.id).parent();
@@ -490,10 +513,17 @@ function handler() {
           // slide down
           else{
 
+                // set default command
                if(this.id == "scribbleDropdown"){
                 $('#foreground').addClass('active');
                 $('#foreground').parent().addClass('active');
-               } 
+               }  else{
+
+                  var el = $('#regionDropdown').parent().find('.hit-submenu>li>a');
+                  el[segmentAnnotator.currentLabel].className += " active";
+                  el[segmentAnnotator.currentLabel].parentNode.className += " active";
+                }
+               
 
                // caret right
                parent.find(".caret-right").attr('class', 'caret');
