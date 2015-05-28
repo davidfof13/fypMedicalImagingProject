@@ -336,7 +336,7 @@ function scribble_canvas(tag) {
       }
 
     } else {
-	     html_str = "<b>Object name: </b>" + "mask_" + $(LM_xml).children('annotation').children('object').length + "<br/>";
+	     html_str = "<b>Object name: </b>" + "anno_" + $(LM_xml).children('annotation').children('object').length + "<br/>";
     }
     
 

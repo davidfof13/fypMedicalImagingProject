@@ -228,11 +228,12 @@ function handler() {
 	     if(lmode == "mt"){
          
 	      // for rectangles
-	      if (drawing_mode == 0)
-	      	nn = "rect_" + $(LM_xml).children('annotation').children('object').length; 
+	     // if (drawing_mode == 0)
+	      	nn = "anno_" + $(LM_xml).children('annotation').children('object').length; 
 
-	     else
-		      nn = "mask_" + $(LM_xml).children('annotation').children('object').length;
+	    // else
+        //  nn  = "mask" + $(LM_xml).children("annotation").children("object").children("segm").length;
+		      //nn = "mask_" + $(LM_xml).children('annotation').children('object').length;
 
 	    }
 

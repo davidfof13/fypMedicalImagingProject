@@ -139,7 +139,7 @@ function GetPopupFormDraw() {
     }
 
   } else{ 
-    html_str = "<b>Object name: </b>" + "rect_" + $(LM_xml).children('annotation').children('object').length + "<br/>";
+    html_str = "<b>Object name: </b>" + "anno_" + $(LM_xml).children('annotation').children('object').length + "<br/>";
   }
 
   
@@ -190,7 +190,7 @@ function GetPopupFormEdit(anno) {
     }
   
   } else {
-       html_str = '<input name="objEnter" id="objEnter" type="hidden" value="'+obj_name+'"/>';
+       html_str = "<b>Object name: </b>" + obj_name  + "<br/>";
   }
     
   
