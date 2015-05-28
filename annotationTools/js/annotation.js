@@ -161,24 +161,48 @@ function annotation(anno_id) {
         // Determine if an angle has been labeled:
         var strtok = obj_name.split(/ /);
         var isAngle = 0;
-        for(var i = 0; i < strtok.length; i++) if(strtok[i]=='angle') isAngle = 1;
+
+
+        if(main_media.GetFileInfo().GetMode() != "mt"){
+            for(var i = 0; i < strtok.length; i++) if(strtok[i]=='angle') isAngle = 1;
       
-        if(xp.length==1) {
-            this.polygon_id = DrawFlag(this.div_attach,xp[0],yp[0],obj_name,im_ratio);
-        }
-        else if((xp.length==3) && isAngle) {
-            var attr = 'fill="none" stroke="' + HashObjectColor(obj_name) + '" stroke-width="4"';
-            this.polygon_id = DrawPolyLine(this.div_attach,xp,yp,obj_name,attr,im_ratio);
-        }
-        else if(this.GetAutomatic()==1) {
-            // Draw a dashed polygon:
-            var attr = 'fill="none" stroke="' + HashObjectColor(obj_name) + '" stroke-width="4" stroke-dasharray="9,5"';
-            this.polygon_id = DrawPolygon(this.div_attach,xp,yp,obj_name,attr,im_ratio);
-        }
-        else {
+            if(xp.length==1) {
+                this.polygon_id = DrawFlag(this.div_attach,xp[0],yp[0],obj_name,im_ratio);
+            }
+
+            else if((xp.length==3) && isAngle) {
+             var attr = 'fill="none" stroke="' + HashObjectColor(obj_name) + '" stroke-width="4"';
+             this.polygon_id = DrawPolyLine(this.div_attach,xp,yp,obj_name,attr,im_ratio);
+            }
+
+            else if(this.GetAutomatic()==1) {
+                // Draw a dashed polygon:
+                var attr = 'fill="none" stroke="' + HashObjectColor(obj_name) + '" stroke-width="4" stroke-dasharray="9,5"';
+                this.polygon_id = DrawPolygon(this.div_attach,xp,yp,obj_name,attr,im_ratio);
+            }
+
+            else {
+             
+             // Draw a polygon:
+             var attr = 'fill="none" stroke="' + HashObjectColor(obj_name) + '" stroke-width="4"';
+              this.polygon_id = DrawPolygon(this.div_attach,xp,yp,obj_name,attr,im_ratio);
+            }
+
+        } else{
+
+
             // Draw a polygon:
-            var attr = 'fill="none" stroke="' + HashObjectColor(obj_name) + '" stroke-width="4"';
-            this.polygon_id = DrawPolygon(this.div_attach,xp,yp,obj_name,attr,im_ratio);
+             var attr;
+
+             if(drawing_mode == 0)
+                attr = 'fill=\"none\" stroke=\"#009900\" stroke-width=\"4\"';
+
+             else
+                attr = 'fill=\"none\" stroke=\"#ff9999\" stroke-width="4"';
+
+
+              this.polygon_id = DrawPolygon(this.div_attach,xp,yp,obj_name,attr,im_ratio);
+
         }
         return this.polygon_id;
 

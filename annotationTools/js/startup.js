@@ -450,6 +450,9 @@ function hideRegionDiv(){
     segmentAnnotator.setFillAlpha(0);
     segmentAnnotator.setBoundaryAlpha(0);
 
+    // want to display the whole image clearly
+    document.getElementById("regionDiv").style.display = "none";
+
     // put region selection canvas underneath
     $('#myCanvas_bg_div').append($('#regionDiv'));
     $('#regionDiv').css('z-index', '-3');
@@ -460,9 +463,12 @@ function setUpRegionSelection(){
   // if the region canvas already exists, move it back on top
   if($('#regionDiv').length){
 
-        // restore bounded image setting
+        // restore SLIC segmentation on image
         segmentAnnotator.setFillAlpha(128);
         segmentAnnotator.setBoundaryAlpha(192);
+
+        document.getElementById("regionDiv").style.display = "block";
+        
         $('#regionDiv').css('z-index', 1);
         $('#' + scribble_canvas.tagscribbleDiv).append($('#regionDiv'));
 
