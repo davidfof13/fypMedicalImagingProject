@@ -1,0 +1,41 @@
+<annotation>
+	<filename>img1.jpg</filename>
+	<folder>samples</folder>
+	<source>
+		<sourceImage>The MIT-CSAIL database of objects and scenes</sourceImage>
+		<sourceAnnotation>LabelMe Webtool</sourceAnnotation>
+	</source>
+		<object>
+			<name>mask_0</name>
+			<deleted>0</deleted>
+			<verified>0</verified>
+			<occluded>no</occluded>
+			<attributes></attributes>
+			<parts>
+				<hasparts></hasparts>
+				<ispartof></ispartof>
+			</parts>
+			<id>0</id>
+			<segm>
+				<username>anonymous</username>
+				<box>
+					<xmin>1213.0248112465433</xmin>
+					<ymin>1410.8564149049726</ymin>
+					<xmax>1699.3728289961791</xmax>
+					<ymax>1880.5105647684654</ymax>
+				</box>
+				<mask>img1_mask_0.png</mask>
+				<scribbles>
+					<xmin>1180.75</xmin>
+					<ymin>1328.5</ymin>
+					<xmax>1704.25</xmax>
+					<ymax>1920</ymax>
+					<scribble_name>img1_scribble_0.png</scribble_name>
+				</scribbles>
+			</segm>
+		</object>
+		<imagesize>
+			<nrows></nrows>
+			<ncols></ncols>
+		</imagesize>
+</annotation>

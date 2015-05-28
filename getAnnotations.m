@@ -15,7 +15,6 @@ addpath(genpath('.'));
 %HOMEANNOTATIONS = 'http://fypmed.com/Annotations';
 %HOMEIMAGES = 'http://fypmed.com/Images';
 
-
 HOMEANNOTATIONS = strcat(server, '/Annotations');
 HOMEIMAGES = strcat(server, '/Images');
 

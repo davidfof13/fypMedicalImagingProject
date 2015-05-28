@@ -61,7 +61,15 @@ function RemoveSpecialChars(str) {
 }
 
 function WaitForInput() {
-  alert("Need to enter object name.");
+
+  if(main_media.GetFileInfo().GetMode() == "mt"){
+
+    alert("Select Done or Delete");
+  } else{
+    alert("Need to enter object name.");
+  }
+
+  
 }
 
 // Return true if the username is "anonymous".

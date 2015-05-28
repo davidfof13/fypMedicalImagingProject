@@ -243,7 +243,7 @@ function file_info() {
                 // load external html file containing user interface
                 // this ajax call needs to be synchronous otherwise file may 
                 // not get loaded in time
-                request.open('GET', 'annotationTools/html/mTurkUI2.html', false);
+                request.open('GET', 'annotationTools/html/mTurkUI.html', false);
                 request.send();
 
                 // append html code

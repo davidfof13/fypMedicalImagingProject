@@ -354,10 +354,16 @@ function DrawCanvasClosePolygon() {
   // Get location where popup bubble will appear:
   var pt = main_media.SlideWindow(Math.round(draw_x[0]*main_media.GetImRatio()),Math.round(draw_y[0]*main_media.GetImRatio()));
 
+  var lmode = main_media.GetFileInfo().GetMode();
+
   // Make query popup appear.
   main_media.ScrollbarsOff();
   WriteLogMsg('*What_is_this_object_query');
-  if (video_mode){
+
+  var html_str = "";
+
+  if (video_mode && lmode != "mt"){
+
     var html_str = "<b>Enter object name</b><br />";
     html_str += HTMLobjectBox("");
     
@@ -375,14 +381,14 @@ function DrawCanvasClosePolygon() {
     html_str += '<input type="button" value="Done" title="Press this button after you have provided all the information you want about the object." onclick="main_media.SubmitObject();" tabindex="0" />';
   
     // Undo close button:
-    html_str += '<input type="button" value="Undo close" title="Press this button if you accidentally closed the polygon. You can continue adding control points." onclick="UndoCloseButton();" tabindex="0" />';
+    if (!bounding_box) html_str += '<input type="button" value="Undo close" title="Press this button if you accidentally closed the polygon. You can continue adding control points." onclick="UndoCloseButton();" tabindex="0" />';
   
     // Delete button:
-    html_str += '<input type="button" value="Delete" title="Press this button if you wish to delete the polygon." onclick="scribble_canvas.WhatIsThisObjectDeleteButton();" tabindex="0" />';
+    html_str += '<input type="button" value="Delete" title="Press this button if you wish to delete the polygon." onclick="main_handler.WhatIsThisObjectDeleteButton();" tabindex="0" />';
     
 
 
-
+    wait_for_input = 1;
     CreatePopupBubble(pt[0],pt[1], html_str, 'main_section');
   } 
   else mkPopup(pt[0],pt[1]);

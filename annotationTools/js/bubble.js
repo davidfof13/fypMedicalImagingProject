@@ -127,22 +127,23 @@ function GetPopupFormDraw() {
     html_str = "<b>Enter object name</b><br />";
     html_str += HTMLobjectBox("");
 
+    if(use_attributes) {
+      html_str += HTMLoccludedBox("");
+      html_str += "<b>Enter attributes</b><br />";
+      html_str += HTMLattributesBox("");
+      html_str += "<br/>";
+    }
+
+    if(use_parts) {
+      html_str += HTMLpartsBox("");
+    }
+
   } else{ 
     html_str = "<b>Object name: </b>" + "rect_" + $(LM_xml).children('annotation').children('object').length + "<br/>";
   }
 
   
   
-  if(use_attributes) {
-    html_str += HTMLoccludedBox("");
-    html_str += "<b>Enter attributes</b><br />";
-    html_str += HTMLattributesBox("");
-    html_str += "<br/>";
-  }
-  if(use_parts) {
-    html_str += HTMLpartsBox("");
-  }
-  console.log(html_str);
   html_str += "<br />";
   
   // Done button:
@@ -176,22 +177,23 @@ function GetPopupFormEdit(anno) {
   if(lmode != "mt"){
     html_str = "<b>Enter object name</b><br />";
     html_str += HTMLobjectBox(obj_name);
+
+    if(use_attributes) {
+      html_str += HTMLoccludedBox(occluded);
+      html_str += "<b>Enter attributes</b><br />";
+      html_str += HTMLattributesBox(attributes);
+    }
+
+    html_str += "<br/>"
+    if(use_parts) {
+      html_str += HTMLpartsBox(parts);
+    }
   
   } else {
        html_str = '<input name="objEnter" id="objEnter" type="hidden" value="'+obj_name+'"/>';
   }
     
   
-  if(use_attributes) {
-    html_str += HTMLoccludedBox(occluded);
-    html_str += "<b>Enter attributes</b><br />";
-    html_str += HTMLattributesBox(attributes);
-  }
-  
-  html_str += "<br/>"
-  if(use_parts) {
-    html_str += HTMLpartsBox(parts);
-  }
   
   html_str += "<br />";
 
@@ -209,18 +211,11 @@ function GetPopupFormEdit(anno) {
      // Adjust polygon button:
      if (anno.GetType() == 0)
        html_str += '<input type="button" value="Adjust polygon" title="Press this button if you wish to update the polygon\'s control points." onclick="javascript:AdjustPolygonButton();" />';
-
-     //  else 
-     //  html_str += '<input type="button" value="Edit Scribbles" title="Press this button if you wish to update the segmentation." onclick="javascript:EditBubbleEditScribble();" />';  
   }  
   
   // for scribbles
   if (anno.GetType())
         html_str += '<input type="button" value="Edit Scribbles" title="Press this button if you wish to update the segmentation." onclick="javascript:EditBubbleEditScribble();" />';
-
-
-    //  if(lmode == "mt")
-    //  html_str += '<input type="button" value="Resize" title="Press this button if you wish to resize the rectangle" />';
   
     /*************************************************************/
     /*************************************************************/

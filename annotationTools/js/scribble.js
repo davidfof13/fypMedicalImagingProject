@@ -324,21 +324,22 @@ function scribble_canvas(tag) {
     	html_str = "<b>Enter object name</b><br/>";
     	html_str += this.HTMLobjectBox("");
 
-    } else {
+      if(use_attributes) {
+        html_str += HTMLoccludedBox("");
+        html_str += "<b>Enter attributes</b><br />";
+        html_str += HTMLattributesBox("");
+        html_str += "<br/>";
+     }
+    
+      if(use_parts) {
+        html_str += HTMLpartsBox("");
+      }
 
-	html_str = "<b>Object name: </b>" + "mask_" + $(LM_xml).children('annotation').children('object').length + "<br/>";
+    } else {
+	     html_str = "<b>Object name: </b>" + "mask_" + $(LM_xml).children('annotation').children('object').length + "<br/>";
     }
     
-    if(use_attributes) {
-      html_str += HTMLoccludedBox("");
-      html_str += "<b>Enter attributes</b><br />";
-      html_str += HTMLattributesBox("");
-      html_str += "<br/>";
-    }
-    
-    if(use_parts) {
-      html_str += HTMLpartsBox("");
-    }
+
     
     html_str += "<br />";
   
