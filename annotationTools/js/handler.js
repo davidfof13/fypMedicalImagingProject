@@ -188,8 +188,6 @@ function handler() {
 
       // If the attributes are active, read the fields.
       if (use_attributes) {
-
-
        // get attributes (is the field exists)
        if(document.getElementById('attributes')) new_attributes = RemoveSpecialChars(document.getElementById('attributes').value);
        else new_attributes = "";
@@ -218,22 +216,16 @@ function handler() {
       }  else {
 
          // if(lmode != "mt" || drawing_mode == 1)
-	   if(lmode != "mt")
+	       if(lmode != "mt")
            	nn = RemoveSpecialChars(document.getElementById('objEnter').value);
 
-           anno = this.QueryToRest();
+            anno = this.QueryToRest();
       }
 
-      // if(lmode == "mt" && drawing_mode != 1)  // rec + id
-	     if(lmode == "mt"){
-         
-	      // for rectangles
-	     // if (drawing_mode == 0)
-	      	nn = "anno_" + $(LM_xml).children('annotation').children('object').length; 
 
-	    // else
-        //  nn  = "mask" + $(LM_xml).children("annotation").children("object").children("segm").length;
-		      //nn = "mask_" + $(LM_xml).children('annotation').children('object').length;
+	   if(lmode == "mt"){
+         
+	      	nn = "anno_" + $(LM_xml).children('annotation').children('object').length; 
 
 	    }
 
@@ -309,7 +301,25 @@ function handler() {
         /*************************************************************/
         /*************************************************************/
       }   
-      else {
+
+      else if (anno.GetType() == 2){
+
+            //third annotation
+            
+      
+            html_str += '<slicsegm>';
+            html_str += '<username>' + username + '</username>';
+            html_str += '<data>' + exportSLICdata() + '</data>';
+            html_str += '</slicsegm>';
+            html_str += '</object>';
+            $(LM_xml).children("annotation").append($(html_str));
+            
+
+            console.log("WOOOOOO");
+      }
+
+
+      else  {
          html_str += '<polygon>';
          html_str += '<username>' + username + '</username>';
         
@@ -323,13 +333,15 @@ function handler() {
         html_str += '</polygon>';
         html_str += '</object>';
         $(LM_xml).children("annotation").append($(html_str));
-      }      
+    }      
       
 
-      if(!LMgetObjectField(LM_xml, LMnumberOfObjects(LM_xml)-1, 'deleted') ||view_Deleted) {
-        main_canvas.AttachAnnotation(anno);
-        anno.RenderAnnotation('rest');
-
+      
+      if(anno.GetType() != 2){
+        if(!LMgetObjectField(LM_xml, LMnumberOfObjects(LM_xml)-1, 'deleted') ||view_Deleted) {
+          main_canvas.AttachAnnotation(anno);
+          anno.RenderAnnotation('rest');
+        }
       }
       
       /*************************************************************/
@@ -364,24 +376,31 @@ function handler() {
     
       // Handles when we wish to change from "query" to "rest".
       this.QueryToRest = function () {
-      active_canvas = REST_CANVAS;
 
-	   
-      // Move query canvas to the back:
+        var anno;
+        if(drawing_mode == 2){ // for the region selection mode
+            anno = new annotation(LMnumberOfObjects(LM_xml));
+            anno.SetType(2);
+            return anno;
+        }
+           
+       active_canvas = REST_CANVAS;
+
+       // Move query canvas to the back:
 	     document.getElementById('query_canvas').style.zIndex = -2;
 	     document.getElementById('query_canvas_div').style.zIndex = -2;
 
 
-	// Remove polygon from the query canvas:
-	if(query_anno) query_anno.DeletePolygon();
-	var anno = query_anno;
-	query_anno = null;
+	     // Remove polygon from the query canvas:
+	     if(query_anno) query_anno.DeletePolygon();
+	    
+       anno = query_anno;
+	     query_anno = null;
   
-	CloseQueryPopup();
-	main_media.ScrollbarsOn();
+	     CloseQueryPopup();
+	     main_media.ScrollbarsOn();
 
-
-        return anno;
+       return anno;
     };
     
     // Handles when the user presses a key while interacting with the tool.

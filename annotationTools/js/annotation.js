@@ -15,7 +15,7 @@ function annotation(anno_id) {
     /*************************************************************/
     // Scribble: Private variables that have been added.
 
-    // 0 means that it is a polygon. 1 means it is a mask.
+    // 0 means that it is a polygon, 1 means it is a mask and 2 a slic segmentaiton
     // mask URL indicates, in case we have a mask, the URL of its image
     this.anno_type = 0;
     this.bounding_box = false;

@@ -237,7 +237,7 @@ function FinishStartup() {
     $('#nextImage').attr("onclick","javascript:ShowNextImage()");
 
   else
-    $('#arrowCont').attr("onclick","javascript:ShowNextImage()");
+    $('#arrowCont').attr("onclick","drawing_mode = 2; main_handler.SubmitQuery(); javascript:ShowNextImage()");
 
 
 
@@ -473,7 +473,7 @@ function setUpRegionSelection(){
   // if the region canvas already exists, move it back on top
   if($('#regionDiv').length){
 
-        // restore SLIC segmentation on image
+        // restore SLIC segmentation of image
         segmentAnnotator.setFillAlpha(128);
         segmentAnnotator.setBoundaryAlpha(192);
 
@@ -497,15 +497,8 @@ function setUpRegionSelection(){
         regionSize: 70,
         container: document.getElementById('regionDiv'),
         // annotation: 'annotation.png' // optional existing annotation data.
-        labels: [
-          {name: 'background', color: [255, 255, 255]},
-          'object'
-          ],
-        onload: function() {
-          initializeLegend(this);
-          //initializeLegendAdd(this);
-          //initializeButtons(this);
-        }
+        labels: [{name: 'background', color: [255, 255, 255]},'object'],
+        onload: function() {initializeLegend(this);}
     });
 
   }

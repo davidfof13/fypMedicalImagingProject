@@ -23,6 +23,9 @@ SegmentAnnotator = function(segmentation, options) {
   };
   this.currentSegment = null;
   this.currentLabel = null;
+  this.boundaryEnabled = false;
+  this.colorMaskEnabled = false;
+
   // Initialize internal variables.
   this._initializeContainer(options.container);
   this._initializePixelsIndex();
@@ -174,8 +177,10 @@ SegmentAnnotator.prototype.getAnnotation = function() {
 
 // Given mouse coordinates, get an index of the segment.
 SegmentAnnotator.prototype._getSegmentIndex = function(event) {
-  var x = event.pageX - this.container.offsetLeft + this.container.scrollLeft,
-      y = event.pageY - this.container.offsetTop + this.container.scrollTop;
+
+  var x = GetEventPosX(event);
+  var y = GetEventPosY(event);
+
   x = Math.max(Math.min(x, this.layers.highlight.canvas.width - 1), 0);
   y = Math.max(Math.min(y, this.layers.highlight.canvas.height - 1), 0);
   return this.indexMap[y * this.layers.highlight.canvas.width + x];
@@ -197,9 +202,7 @@ SegmentAnnotator.prototype._updateHighlight = function(index) {
     for (i = 0; i < pixels.length; ++i)
       data[4 * pixels[i] + 3] = this.highlightAlpha;
   }
-  this.layers.highlight.canvas
-    .getContext('2d')
-    .putImageData(this.layers.highlight.image, 0, 0);
+  this.layers.highlight.canvas.getContext('2d').putImageData(this.layers.highlight.image, 0, 0);
   return this;
 };
 
@@ -503,10 +506,10 @@ SegmentAnnotator.prototype._initializeContainer = function(container) {
     document.body.appendChild(this.container);
   }
   this.container.innerHTML = '';
-  this.container.style.position = 'relative';
-  this.container.style.width = this.width;
-  this.container.style.height = this.height;
-  this.container.style.display = 'inline-block';
+  //this.container.style.position = 'relative';
+  //this.container.style.width = this.width;
+  //this.container.style.height = this.height;
+  //this.container.style.display = 'inline-block';
   return this;
 };
 

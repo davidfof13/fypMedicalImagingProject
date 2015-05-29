@@ -467,21 +467,21 @@ function scribble_canvas(tag) {
       
       if (scribble_canvas.clickX.length > 0){
   
-    var lx = Math.max(0, scribble_canvas.minclicX-(scribble_canvas.maxclicX - scribble_canvas.minclicX)*0.25);
-    var ly = Math.max(0, scribble_canvas.minclicY -  (scribble_canvas.maxclicY - scribble_canvas.minclicY)*0.25);
-    var rx = Math.min(main_media.width_orig, scribble_canvas.maxclicX+(scribble_canvas.maxclicX - scribble_canvas.minclicX)*0.25);
-    var ry = Math.min(main_media.height_orig, scribble_canvas.maxclicY+(scribble_canvas.maxclicY - scribble_canvas.minclicY)*0.25);
-    scribble_canvas.image_corners = new Array();
-    scribble_canvas.image_corners.push(Math.min(lx, scribble_canvas.editborderlx));
-    scribble_canvas.image_corners.push(Math.min(ly, scribble_canvas.editborderly));
-    scribble_canvas.image_corners.push(Math.max(rx, scribble_canvas.editborderrx));
-    scribble_canvas.image_corners.push(Math.max(ry, scribble_canvas.editborderry));
-    console.log(anno.scribble);
-    anno.scribble.SetRandomCache(scribble_canvas.cache_random_number);
+        var lx = Math.max(0, scribble_canvas.minclicX-(scribble_canvas.maxclicX - scribble_canvas.minclicX)*0.25);
+        var ly = Math.max(0, scribble_canvas.minclicY -  (scribble_canvas.maxclicY - scribble_canvas.minclicY)*0.25);
+        var rx = Math.min(main_media.width_orig, scribble_canvas.maxclicX+(scribble_canvas.maxclicX - scribble_canvas.minclicX)*0.25);
+        var ry = Math.min(main_media.height_orig, scribble_canvas.maxclicY+(scribble_canvas.maxclicY - scribble_canvas.minclicY)*0.25);
+        scribble_canvas.image_corners = new Array();
+        scribble_canvas.image_corners.push(Math.min(lx, scribble_canvas.editborderlx));
+        scribble_canvas.image_corners.push(Math.min(ly, scribble_canvas.editborderly));
+        scribble_canvas.image_corners.push(Math.max(rx, scribble_canvas.editborderrx));
+        scribble_canvas.image_corners.push(Math.max(ry, scribble_canvas.editborderry));
+        console.log(anno.scribble);
+        anno.scribble.SetRandomCache(scribble_canvas.cache_random_number);
 
-    main_canvas.AttachAnnotation(anno);
+        main_canvas.AttachAnnotation(anno);
     
-    scribble_canvas.UpdateMaskXML(idx);
+        scribble_canvas.UpdateMaskXML(idx);
 
       }
       main_canvas.AttachAnnotation(anno);

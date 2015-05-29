@@ -32,7 +32,7 @@
  *
  * LongLong Yu 2014.
  */
-(function() {
+//(function() {
   // Convert RGBA into XYZ color space. rgba: Red Green Blue Alpha.
   function rgb2xyz(rgba, w, h) {
     var xyz = new Float32Array(3*w*h),
@@ -459,13 +459,18 @@
   }
 
   // When image is loaded.
-  function onSuccessImageLoad(image, options) {
+  function onSuccessImageLoad(options) {
     var canvas = document.createElement('canvas');
-    canvas.width = image.width;
-    canvas.height = image.height;
+
+    canvas.setAttribute('width', main_media.width_curr);
+    canvas.setAttribute('height', main_media.height_curr);
     var context = canvas.getContext('2d');
-    context.drawImage(image, 0, 0);
-    var imageData = context.getImageData(0, 0, image.width, image.height),
+
+    // Clears the canvas
+    context.clearRect(0, 0, context.canvas.width, context.canvas.height); 
+    
+    context.drawImage(main_media.im, 0, 0, main_media.width_curr, main_media.height_curr);
+    var imageData = context.getImageData(0, 0, main_media.width_curr, main_media.height_curr),
         segmentation = computeSegmentation(imageData, options);
   }
 
@@ -475,17 +480,16 @@
   }
 
   // Public API.
-  window.SLICSegmentation = function(imageURL, options) {
+   window.SLICSegmentation = function(imageURL, options) {
     if (typeof options === 'undefined') options = {};
     // the lateral side of a rectangle superpixel in pixels.
     if (options.regionSize === undefined) options.regionSize = 40;
     // width or high should be larger than 20 pixels
     if (options.minRegionSize === undefined)
       options.minRegionSize = options.regionSize * options.regionSize / 4;
-    var image = new Image();
-    image.src = imageURL;
-    image.crossOrigin = null;
-    image.onerror = function() { onErrorImageLoad(image); };
-    image.onload = function() { onSuccessImageLoad(image, options); };
+
+     main_media.im.crossOrigin = null;
+
+     onSuccessImageLoad(options);
   };
-}).call(this);
+//}).call(this);
