@@ -422,32 +422,6 @@ function handler() {
 
             var el = $('.menu-ul').find('.active');
 
-            /* if the user clicked on the region selection button, the default command in its menu 
-            would've already been set active elsewhere in the codebase, so we don't want to remove 
-            its active class */
-
-
-            /*
-            if(this.id != "regionDropdown" || (el.first().find(".legend-selected").length == 0)
-            || $("#regionDropdown").hasClass("caret")){
-
-             el.first().removeClass('active');
-
-
-              if(el.length > 0){
-                // we want to de-activate only the submenu elements in el, not everything
-                var subEl = $.grep($('.hit-submenu>li>a'), function(element) {
-                      return $.inArray(element, el ) !== -1;
-                });
-
-                if(subEl.length > 0){
-                  (subEl[0]).classList.remove("active") ;
-                  (subEl[0].parentElement).classList.remove("active") ;
-                }
-              }
-
-            }*/
-
             el.removeClass('active');
             this.className += ' active';
 

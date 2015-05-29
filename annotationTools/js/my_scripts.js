@@ -391,6 +391,11 @@ function changeToRegionMenu(){
     html_str += '<a class="li-base" href="#/"> resolution </a>';
     html_str += '</li>';
 
+
+    html_str += '<li role="presentation">';
+    html_str += '<a class="li-base" onclick="exportSLICdata();" href="#/"> export </a>';
+    html_str += '</li>';
+
     html_str +='</ul></div>';
 
     document.getElementById("edit-menu").innerHTML = html_str;

@@ -6338,3 +6338,22 @@
 29-May-2015 13:46:59 127.0.0.1 *start_loading
 29-May-2015 13:46:59 127.0.0.1 *Browser_Information Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.81 Safari/537.36
 29-May-2015 13:46:59 127.0.0.1 *done_loading_Images/samples/img2.jpg#/
+29-May-2015 14:36:28 127.0.0.1 *Browser_Information Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.81 Safari/537.36
+29-May-2015 14:36:28 127.0.0.1 *start_loading
+29-May-2015 14:36:32 127.0.0.1 *Browser_Information Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.81 Safari/537.36
+29-May-2015 14:36:32 127.0.0.1 *start_loading
+29-May-2015 14:36:32 127.0.0.1 *done_loading_Images/samples/img2.jpg
+29-May-2015 14:37:20 127.0.0.1 *start_loading
+29-May-2015 14:37:20 127.0.0.1 *Browser_Information Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.81 Safari/537.36
+29-May-2015 14:37:23 127.0.0.1 *Browser_Information Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.81 Safari/537.36
+29-May-2015 14:37:23 127.0.0.1 *start_loading
+29-May-2015 14:37:23 127.0.0.1 *done_loading_Images/samples/img2.jpg
+29-May-2015 14:58:32 127.0.0.1 *Browser_Information Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.81 Safari/537.36
+29-May-2015 14:58:32 127.0.0.1 *start_loading
+29-May-2015 14:58:32 127.0.0.1 *done_loading_Images/samples/img2.jpg#/
+29-May-2015 14:59:35 127.0.0.1 *start_loading
+29-May-2015 14:59:35 127.0.0.1 *Browser_Information Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.81 Safari/537.36
+29-May-2015 14:59:35 127.0.0.1 *done_loading_Images/samples/img2.jpg#/
+29-May-2015 14:59:38 127.0.0.1 *start_loading
+29-May-2015 14:59:38 127.0.0.1 *Browser_Information Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.81 Safari/537.36
+29-May-2015 14:59:38 127.0.0.1 *done_loading_Images/samples/img2.jpg
