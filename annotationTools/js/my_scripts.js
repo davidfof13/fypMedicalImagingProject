@@ -371,3 +371,55 @@ function GetXMLFile() {
   }
 }
 
+function changeToRegionMenu(){
+
+
+    //var html_str = '<div  id="edit-menu" class="panel" style="background-color: #943F3F; color: #FFF;">';
+    var html_str = '<div class="panel-heading">Effects</div>';
+    html_str += '<div  class="menu-content nav-collapse navbar-responsive container navbar-inverse">';
+    html_str += '<ul class= "menu-ul nav nav-pills nav-stacked">';
+
+    html_str += '<li role="presentation">';
+    html_str += '<a class="li-base" onclick="boundaryView();" href="#/"> unbounded</a>';
+    html_str += '</li>';
+
+    html_str += '<li role="presentation" >';
+    html_str += '<a class="li-base" onclick="colorMaskView();" href="#/"> color mask</a>';                 
+    html_str += '</li>';
+
+    html_str += '<li role="presentation">';
+    html_str += '<a class="li-base" href="#/"> resolution </a>';
+    html_str += '</li>';
+
+    html_str +='</ul></div>';
+
+    document.getElementById("edit-menu").innerHTML = html_str;
+        
+}
+
+function changeToScrbbleMenu(){
+
+
+    var html_str = '<div class="panel-heading">Edit</div>';
+    html_str += '<div  class="menu-content nav-collapse navbar-responsive container navbar-inverse">';
+    html_str += '<ul class= "menu-ul nav nav-pills nav-stacked">';
+
+    html_str += '<li role="presentation">';
+    html_str += '<a class="li-base" href="#/"> rubber</a>';
+    html_str += '</li>';
+
+    html_str += '<li role="presentation" >';
+    html_str += '<a class="li-base" data-toggle="modal" data-target=".bs-example-modal-sm"  href="#/"> restart</a>';                 
+    html_str += '<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">';
+                             
+    html_str += '<div class="modal-dialog modal-sm">';
+    html_str += '<div class="modal-content"></div>';
+    html_str += '...</div>';
+    html_str += '</div></li>';
+
+
+    html_str +='</ul></div>';
+
+    document.getElementById("edit-menu").innerHTML = html_str;
+        
+}

@@ -392,6 +392,8 @@ function SetDrawingMode(mode){
         $('#myCanvas_bg_div').append($('#scribbleDiv'));
         $('#scribbleDiv').css('z-index', '-2');
 
+
+        document.getElementById("edit-menu").style.visibility = 'hidden';
         hideRegionDiv();
     }
   }
@@ -409,9 +411,11 @@ function SetDrawingMode(mode){
     
       document.getElementById("segmDiv").setAttribute('style', 'border-color: #f00');
       document.getElementById("polygonDiv").setAttribute('style', 'border-color: #000');
+    }  else {
+        hideRegionDiv();
+        changeToScrbbleMenu();
+        document.getElementById("edit-menu").style.visibility = 'visible';
     }
-
-    hideRegionDiv();
     scribble_canvas.startSegmentationMode();
   }
 
@@ -430,13 +434,19 @@ function SetDrawingMode(mode){
         return;
       }
 
-        
+      //document.getElementById("edit-menu").style.visibility = 'visible';
+
       // put scribble canvas underneath
       $('#myCanvas_bg_div').append($('#scribbleDiv'));
       $('#scribbleDiv').css('z-index', '-2');
 
+
       // put new div on top
       setUpRegionSelection();
+
+      changeToRegionMenu();
+
+      document.getElementById("edit-menu").style.visibility = 'visible';
   }
 
   drawing_mode = mode;
@@ -468,7 +478,7 @@ function setUpRegionSelection(){
         segmentAnnotator.setBoundaryAlpha(192);
 
         document.getElementById("regionDiv").style.display = "block";
-        
+
         $('#regionDiv').css('z-index', 1);
         $('#' + scribble_canvas.tagscribbleDiv).append($('#regionDiv'));
 
