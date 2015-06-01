@@ -1,21 +1,32 @@
 <div id="container" style="margin-left:20px; margin-top:20px; margin-right:20px;"> 
 
 
-      <div class="modal fade" id="myModal">
+      <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="Login" >
         <div class="modal-dialog">
         <div class="modal-content">
 
           <div class="modal-header">
-            <h4 class="modal-title">Modal title</h4>
+            <h4 class="modal-title">Please enter your username for this session:</h4>
           </div>
 
           <div class="modal-body">
-            <p>One fine body</p>
-          </div>
+            <form id="mtLoginForm" class="form-horizontal">
+               
+              <div class="form-group" >
+                  <label class="col-xs-3 control-label">Username</label>
+                  <div class="col-xs-5">
+                      <input type="text" class="form-control" name="username" />
+                  </div>
+              </div>
 
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
+              <div class="form-group">
+                        <div class="col-xs-5 col-xs-offset-3">
+                            <button type="submit" class="btn btn-primary">Login</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        </div>
+              </div>
+            </form>
+            
           </div>
         </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->

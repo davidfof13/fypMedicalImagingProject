@@ -98,7 +98,6 @@ function StartupLabelMe() {
 function LoadAnnotationSuccess(xml) {
   
 
-
   console.time('load success');
 
   //if (main_media.GetFileInfo().GetMode() != "mt"){ 
