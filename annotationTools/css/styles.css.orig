@@ -1,0 +1,196 @@
+body {font-family:Arial;  color:black; overflow:scroll; 
+margin-top:0px; margin-left:0px; margin-right:0px; margin-bottom: 0px;}
+a:link {color: #FFFFFF;}
+a:visited {color: #FFFFFF; text-decoration: blink;}
+a:hover {color: #0000FF; text-decoration: underline;}
+
+table, div {border-collapse:collapse;}
+div#header {margin-top:0px; position:relative; width:100%;}
+#top_mid {margin-left:4em; font-size:small;}
+td {padding:0;}
+.top {vertical-align:top;}
+.center {text-align:center;}
+img {border:0; border-top:0;}
+
+#username_form {font-size:small;}
+
+#counter_anchor {position:absolute; 
+top:8px; right:8px; width:16em;}
+#counter_text {font-size:small;}
+
+#show_new_image {position:absolute; right:0px; top:-2em;}
+
+#loading {position:absolute; font-size:large; left:1em;
+top:2em;}
+#main_media {position:absolute; left:0; top:0; border: 1px solid #979797;}
+
+#framebar{
+height:80px;
+position:relative;
+overflow-x:scroll;
+overflow-y:hidden;
+}
+
+#objectbar{
+position:relative;
+
+}
+
+.box {
+  background-color: #eeeeee;
+  border: 2px solid #dddddd;
+  color: #000000;
+  padding: 0px;
+  position: absolute;
+}
+
+.bar {
+  background-color: #aaaaff;
+  border: 1px solid #8888ff;
+  color: #000000;
+  font-weight: normal;  
+  font-family: arial;
+  position: relative;
+  left:0px;top:0px;
+  padding: 0px 0.2em 2px 0.2em;
+}
+
+.lowerbar {
+  background-color: #aaaaff;
+  border: 1px solid #8888ff;
+  color: #000000;
+  font-weight: normal;  
+  font-family: arial;
+  padding: 0px 0.2em 6px 0.2em;
+}
+
+.close {
+  background-color: #8888ff;
+  border: 0px;
+  color: #ffffff;
+  font-weight: bold;  
+  font-family: arial;
+  height:16px;
+  width:14px;
+  position: absolute;
+  right:0px;top:0px;
+}
+
+.resize {
+  background-color: #4444ff;
+  border: 0px;
+  color: #ffffff;
+  font-weight: bold;  
+  font-family: arial;
+  padding: 0px 0em 6px 5px;
+  position: absolute;
+  right:0px;bottom:0px;
+}
+
+
+.content {
+  border: 1px solid #ffffff;
+  padding: 0.2em;
+  overflow: scroll;
+}
+
+#right_side {position:absolute; top:0px; right:0px; width:20em;
+height:100%; z-index:0;}
+#examples {width:100%; font-size:small;}
+#anno_list {font-size:small;}
+
+
+<<<<<<< HEAD
+.menu-content {
+  padding: 4px;
+}
+
+.menu-ul>li>a:not(#segmA) /*,.menu-ul>li>div */{
+  background-color: #4D3D3C;
+
+}
+
+/*on user click */
+.menu-ul>li>a.active:not(#segmA){
+  background-color: #773E3A; 
+}
+
+/* on hover*/
+.menu-ul>li>a:hover:not(#segmA) /*, .menu-ul>li>div:hover*/{
+  background-color: #773E3A;
+  color: #FFFFFF;
+
+}
+
+
+/*dropdown menu right arrow*/
+.caret-right{
+    display: inline-block;   
+    width: 0;
+    height: 0;
+    margin-left: 2px;
+    vertical-align: middle;
+    border-bottom: 4px solid transparent;
+    border-top: 4px solid transparent;
+    border-left: 4px dashed;    
+   
+}
+
+
+.hit-submenu>li>a:hover{
+
+  color: #FFFFFF;
+  background-color: #7a7a7a;
+
+}
+
+.hit-submenu li:hover{
+  background-color: #7a7a7a;
+}
+
+
+/*For the segmentation button */
+#segmA, #segmA div {
+  background-color: #3D6609;
+}
+
+#segmA:hover {
+    color: #FFFFFF;
+}
+
+#segmA.active, #segmA.active div {
+  background-color: #66A615;
+}
+
+#segmA.active:hover, #segmA.active:hover div{
+  background-color: #77C01C;
+  color: #FFFFFF;
+}
+
+.hit-submenu>li.active{
+  background-color: #7a7a7a;
+}
+
+.hit-submenu>li>a.active{
+  background-color: #7a7a7a;
+}
+  
+.hit-submenu{
+
+  color: #FFFFFF;
+  display: none;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.nav-stacked>li+li {
+  margin-top: 3px;
+  margin-left: 0;
+}
+
+.rectangle {
+    border: 3px solid #FF0000;
+    position: inherit;
+}
+=======
+>>>>>>> 533e3834535b063dc5bd698973f5530c188c62f1
