@@ -263,6 +263,21 @@ function file_info() {
                 $('.hit-menu').css('margin-right', Math.round(0.039*w) + 'px');
                 $('#hit-image').css('margin-right', Math.round(0.045*w) + 'px');
 
+
+
+
+                $(document).ready(function(){
+
+                    // prevent outside click or esc key from closing modal
+                    $('#myModal').modal({
+                        backdrop: 'static',
+                        keyboard: false
+                    });
+
+                    $('#myModal').modal('show');
+                });
+
+
             }
         }
         else {

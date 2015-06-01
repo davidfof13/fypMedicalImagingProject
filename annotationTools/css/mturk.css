@@ -113,7 +113,7 @@
     content:'×';
     display:inline-block;
     position: absolute;
-    font-size: 138px;
+    font-size: 136px;
     font-weight: bold;
     font-family: verdana;
     width: 58px;
@@ -127,12 +127,12 @@
     content:'';
     display:inline-block;
     position: absolute;
-    left:57px;
-    top:40px; /* vertical positioning */
+    left:56px;
+    top:39px; /* vertical positioning */
     width: 0;
     height: 0;
     border-style: solid;
-    border-width: 15px 0 15px 15px;
+    border-width: 16px 0 15px 15px;
     border-color: transparent transparent transparent black;
 }
 
