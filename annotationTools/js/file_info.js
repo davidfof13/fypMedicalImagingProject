@@ -276,8 +276,7 @@ function file_info() {
 
 
                     $('#mtLoginForm').on('submit', function () {
-
-                        //console.log('hey');
+                        
                         // get username
                         var login_name = $('#mtLoginForm').serializeArray()[0].value;
 
@@ -288,19 +287,13 @@ function file_info() {
                         // go through the list of names
                         for(var i = 0; i < names.length; i++) {
                             if(login_name == names[i].innerHTML){
-                                alert("this name has already been used. Please enter a different one");
+                                alert("This name has already been used. Please enter a different one");
                                 return false;
-                            }
-                            
+                            } 
                         }
-
                         
-                        main_media.GetFileInfo().changeModalContent(login_name);
+                        changeModalContent(login_name);
                         return false;
-
-
-                        //alert('Form submitted!');
-                        
 
                     });
                 });
@@ -315,24 +308,7 @@ function file_info() {
         return 1;
     };
 
-    this.changeModalContent = function(name){
-
-        var modal = document.getElementById("myModal");
-
-
-        var html_str = '<div class="modal-dialog">';
-        html_str += '<div class="modal-content">';
-        html_str += '<div class="modal-header">';
-        html_str += '<h4 class="modal-title">Instructions</h4>';
-        html_str += '</div>';
-        html_str += '<div class="modal-body">';
-        html_str += '<p>Welcome ' + name + '. Please follow the instructions below</p>';
-        html_str +='</div>';
-        html_str += '</div>';
-        html_str += '</div>';
-
-        modal.innerHTML = html_str;
-    };
+    
     
     /** Gets mode */
     this.GetMode = function() {
