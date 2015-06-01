@@ -537,7 +537,7 @@ function changeModalContent(name) {
         just means that you have to mark specific areas of the image that are of interest to us. In this case, \
         we\'re interested in locating small objects such as brain tumours and we want you to annotate the part of \
         the image that you feel correspond the most to these features while avoiding the irrelevant parts as much \
-        as possible. The example below shows what w\'re looking for: \(Insert Images here\)</p>';
+        as possible. The example below shows what we\'re looking for: \(Insert Images here\)</p>';
 
         html_str += '<p>Don\'t worry about getting your labels wrong. Any annotation that you make provides additional information \
         that will contribute to our research.  You will be given a set of two images to label and you \
@@ -554,14 +554,22 @@ function changeModalContent(name) {
         html_str += 'The \'Draw\' menu which is seen on the left hand side will allow you to select and switch between \
         the different labelling commands.'
 
+        html_str += '<h4>Editing</h4>';
+
+        html_str += '<p> Each labelling command will have their own editing commands. For some of them (\'Box\' and \'Scribble\'), editing is done \
+        on the spot. When you draw an object , you will be immediatly asked if you want to delete , edit or save (accept) the object. </p>';
+
+        html_str += '<p> For the \'Regions\' command, you can click on a region to select it and click on it again to unselect it. \
+        The \'Effects\' panel allows you to visualize the image using different effects making it sometimes easier to label.</p>';
+
         html_str += '<h4>Submitting result</h4>';
 
         html_str += '<p>As previously mentionned, you have two images to label. When you\'re finished with \
         one, click on the \'Next Image\' button on the right hand side to proceed to the next image. The \
-        Submit button will be enabled when you\'ve labelled all images and you can click on it to submit your \
+        submit button will be enabled when you\'ve labelled all images and you can click on it to submit your \
         results. That\'s it!</p>';
 
-        html_str += '<p>Press start button below to begin the task</p><p></p>';
+        html_str += '<p>Press the Start button below to begin the task</p><p></p>';
 
 
         html_str += '<div class="modal-footer"> \
