@@ -237,7 +237,7 @@ function FinishStartup() {
     $('#nextImage').attr("onclick","javascript:ShowNextImage()");
 
   else
-    $('#arrowCont').attr("onclick","drawing_mode = 2; main_handler.SubmitQuery(); javascript:ShowNextImage()");
+    $('#arrowCont').attr("onclick","drawing_mode = 2; if (segmentAnnotator != null) main_handler.SubmitQuery(); javascript:ShowNextImage()");
 
 
 

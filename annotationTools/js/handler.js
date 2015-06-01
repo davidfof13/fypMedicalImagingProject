@@ -215,7 +215,6 @@ function handler() {
          }
       }  else {
 
-         // if(lmode != "mt" || drawing_mode == 1)
 	       if(lmode != "mt")
            	nn = RemoveSpecialChars(document.getElementById('objEnter').value);
 
@@ -305,17 +304,12 @@ function handler() {
       else if (anno.GetType() == 2){
 
             //third annotation
-            
-      
             html_str += '<slicsegm>';
             html_str += '<username>' + username + '</username>';
             html_str += '<data>' + exportSLICdata() + '</data>';
             html_str += '</slicsegm>';
             html_str += '</object>';
             $(LM_xml).children("annotation").append($(html_str));
-            
-
-            console.log("WOOOOOO");
       }
 
 
