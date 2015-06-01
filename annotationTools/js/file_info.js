@@ -299,6 +299,7 @@ function file_info() {
                                 }
                             }
                         
+                        username = login_name;
                         changeModalContent(login_name);
                         return false;
 

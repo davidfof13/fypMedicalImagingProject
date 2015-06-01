@@ -7042,3 +7042,28 @@
 01-Jun-2015 15:34:00 127.0.0.1 *Browser_Information Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.81 Safari/537.36
 01-Jun-2015 15:34:00 127.0.0.1 *start_loading
 01-Jun-2015 15:34:00 127.0.0.1 *done_loading_Images/samples/img3.jpg
+01-Jun-2015 15:40:01 127.0.0.1 *Browser_Information Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.81 Safari/537.36
+01-Jun-2015 15:40:01 127.0.0.1 *start_loading
+01-Jun-2015 15:40:01 127.0.0.1 *done_loading_Images/samples/img2.jpg
+01-Jun-2015 15:40:05 127.0.0.1 *Browser_Information Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.81 Safari/537.36
+01-Jun-2015 15:40:05 127.0.0.1 *start_loading
+01-Jun-2015 15:40:05 127.0.0.1 *done_loading_Images/samples/img2.jpg
+01-Jun-2015 15:47:31 127.0.0.1 *Browser_Information Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.81 Safari/537.36
+01-Jun-2015 15:47:31 127.0.0.1 *start_loading
+01-Jun-2015 15:47:31 127.0.0.1 *done_loading_Images/samples/img2.jpg
+01-Jun-2015 15:47:38 127.0.0.1 *What_is_this_object_query
+01-Jun-2015 15:47:39 samples img2 0 1 127.0.0.1  anno_0 1 davidfof13 cpts_not_modified 0 0
+01-Jun-2015 15:47:42 127.0.0.1 *Browser_Information Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.81 Safari/537.36
+01-Jun-2015 15:47:42 127.0.0.1 *start_loading
+01-Jun-2015 15:47:42 127.0.0.1 *done_loading_Images/samples/img2.jpg
+01-Jun-2015 15:47:47 127.0.0.1 *Browser_Information Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.81 Safari/537.36
+01-Jun-2015 15:47:47 127.0.0.1 *start_loading
+01-Jun-2015 15:47:48 127.0.0.1 *done_loading_Images/samples/img2.jpg
+01-Jun-2015 15:49:20 127.0.0.1 *start_loading
+01-Jun-2015 15:49:20 127.0.0.1 *Browser_Information Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.81 Safari/537.36
+01-Jun-2015 15:49:20 127.0.0.1 *done_loading_Images/samples/img2.jpg
+01-Jun-2015 15:49:26 127.0.0.1 *What_is_this_object_query
+01-Jun-2015 15:49:26 samples img2 1 2 127.0.0.1  anno_1 1 marc cpts_not_modified 0 0
+01-Jun-2015 15:49:28 127.0.0.1 *Browser_Information Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.81 Safari/537.36
+01-Jun-2015 15:49:28 127.0.0.1 *start_loading
+01-Jun-2015 15:49:29 127.0.0.1 *done_loading_Images/samples/img2.jpg
