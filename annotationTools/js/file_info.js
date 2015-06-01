@@ -264,6 +264,8 @@ function file_info() {
                 $('#hit-image').css('margin-right', Math.round(0.045*w) + 'px');
 
 
+
+
                 $(document).ready(function(){
 
                     // prevent outside click or esc key from closing modal
@@ -272,30 +274,41 @@ function file_info() {
                         keyboard: false
                     });
 
-                    $('#myModal').modal('show');
+                    // Prompt user for login if the username is invalid
+                    if (username == "anonymous" || username.length == 0){
+                        $('#myModal').modal('show');
+
+                        $('#mtLoginForm').on('submit', function () {
+
+                            // get username
+                            var login_name = $('#mtLoginForm').serializeArray()[0].value;
+
+                            // get list of usernames of all objects of the current image
+                            var names = $(LM_xml).children("annotation").children("object").find("username");
 
 
-                    $('#mtLoginForm').on('submit', function () {
-                        
-                        // get username
-                        var login_name = $('#mtLoginForm').serializeArray()[0].value;
+                            // go through the list of names
+                            for(var i = 0; i < names.length; i++) {
+                                if(login_name == names[i].innerHTML){
+                                    alert("This name has already been used. Please enter a different one");
+                                    return false;
 
-                        // get list of usernames of all objects of the current image
-                        var names = $(LM_xml).children("annotation").children("object").find("username");
-
-
-                        // go through the list of names
-                        for(var i = 0; i < names.length; i++) {
-                            if(login_name == names[i].innerHTML){
-                                alert("This name has already been used. Please enter a different one");
-                                return false;
-                            } 
-                        }
+                                }  else if(login_name == "anonymous"){
+                                  alert("This name isn't allowed. Please enter a different one");  
+                                  return false; 
+                                }
+                            }
                         
                         changeModalContent(login_name);
                         return false;
 
-                    });
+                        });
+                    } else{
+                        changeModalContent(username);
+                    }
+
+
+                    
                 });
 
 
