@@ -22,6 +22,8 @@ var use_parts = 1; // if this is 0 disapears the message from the bubble
   //  use_parts = 0;
 //}
 
+var noModal = false; // Indicates if we should show the instruction window in mechanical turk mode
+
 // Boolean indicating whether the control points were edited:
 var editedControlPoints = 0;
 

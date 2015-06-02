@@ -49,6 +49,13 @@ function file_info() {
                 var par_value = this.GetURLValue(par_tag);
                 if(par_field=='mode'){
                     this.mode = par_value;
+
+                    if(this.mode=='mtn'){
+                        noModal = true;
+                        this.mode ='mt';
+                        par_value = 'mt';
+                    }
+
                     if(this.mode=='im' || this.mode=='mt') view_ObjList = false;
                     if(this.mode=='mt') isMT = true;
                 }
@@ -170,6 +177,7 @@ function file_info() {
 
             } while(idx != -1);
 
+            // if there is no file name nor folder name provided, re set url
             if((!this.dir_name) || (!this.im_name)) return this.SetURL(labelme_url);
             
             if(isMT) {
@@ -268,17 +276,21 @@ function file_info() {
 
                 $(document).ready(function(){
 
-                    // prevent outside click or esc key from closing modal
-                    $('#myModal').modal({
-                        backdrop: 'static',
-                        keyboard: false
-                    });
 
-                    // Prompt user for login if the username is invalid
-                    if (username == "anonymous" || username.length == 0){
-                        $('#myModal').modal('show');
+                    if (!noModal){
 
-                        $('#mtLoginForm').on('submit', function () {
+
+                        // prevent outside click or esc key from closing modal
+                        $('#myModal').modal({
+                            backdrop: 'static',
+                            keyboard: false
+                        });
+
+                        // Prompt user for login if the username is invalid
+                        if (username == "anonymous" || username.length == 0){
+                          $('#myModal').modal('show');
+
+                          $('#mtLoginForm').on('submit', function () {
 
                             // get username
                             var login_name = $('#mtLoginForm').serializeArray()[0].value;
@@ -299,17 +311,19 @@ function file_info() {
                                 }
                             }
                         
-                        username = login_name;
-                        changeModalContent(login_name);
-                        return false;
-
-                        });
-                    } else{
-                        changeModalContent(username);
+                            username = login_name;
+                            changeModalContent(login_name);
+                            return false;
+                            
+                            });
+                        
+                        } else{
+                            changeModalContent(username);
+                        }
+                        // Note: on the second image of the collection,  the username should already
+                        // be set so no need to do it again
                     }
-
-
-                    
+ 
                 });
 
 
@@ -408,8 +422,8 @@ function file_info() {
         
         if(this.mode=='i') window.location = url + '?collection=' + this.collection + '&mode=' + this.mode + '&folder=' + this.dir_name + '&image=' + this.im_name + extra_field;
         else if(this.mode=='im') window.location = url + '?collection=' + this.collection + '&mode=' + this.mode + '&folder=' + this.dir_name + '&image=' + this.im_name + extra_field;
-        else if(this.mode=='mt') window.location = url + '?collection=' + this.collection + '&mode=' + this.mode + '&folder=' + this.dir_name + '&image=' + this.im_name + extra_field;
-        else if(this.mode=='c') window.location = url + '?mode=' + this.mode + '&username=' + username + '&collection=' + this.collection + '&folder=' + this.dir_name + '&image=' + this.im_name + extra_field;
+        else if(this.mode=='mt') window.location = url + '?collection=' + this.collection + '&mode=mtn&folder=' + this.dir_name + '&image=' + this.im_name + extra_field;
+        else if(this.mode=='c') window.location = url + '?mode=' + this.mode + '&username=' + username + '&collection=' + this.collection + '&folder=' + this.dir_name + '£' + this.im_name + extra_field;
         else if(this.mode=='f') window.location = url + '?mode=' + this.mode + '&folder=' + this.dir_name + '&image=' + this.im_name + extra_field;
         return false;
     };
@@ -431,10 +445,11 @@ function file_info() {
                 im_req.send('');
             }
         }
-        
+
         if(im_req.status==200) {
-           this.dir_name = im_req.responseXML.getElementsByTagName("dir")[0].firstChild.nodeValue;
-           this.im_name = im_req.responseXML.getElementsByTagName("file")[0].firstChild.nodeValue;
+
+            this.dir_name = im_req.responseXML.getElementsByTagName("dir")[0].firstChild.nodeValue;
+            this.im_name = im_req.responseXML.getElementsByTagName("file")[0].firstChild.nodeValue;
         }
         else {
             alert('Fatal: there are problems with fetch_image.cgi');
