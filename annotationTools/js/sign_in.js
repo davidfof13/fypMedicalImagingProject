@@ -12,7 +12,12 @@ function initUserName() {
     username = getQueryVariable("username");
 
     if (!username || (username.length==0)) {
-        username = getCookie("username");
+
+        var lmode = main_media.GetFileInfo().GetMode();
+
+        if(lmode != "mt" && lmode != "mtn")
+            username = getCookie("username");
+        
         if (!username || (username.length==0)) {
             username = "anonymous";
         }

@@ -51,7 +51,10 @@ function file_info() {
                     this.mode = par_value;
 
                     if(this.mode=='mtn'){
-                        noModal = true;
+
+                        if(username != "anonymous")
+                            noModal = true;
+
                         this.mode ='mt';
                         par_value = 'mt';
                     }
@@ -177,8 +180,16 @@ function file_info() {
 
             } while(idx != -1);
 
+
+
             // if there is no file name nor folder name provided, re set url
             if((!this.dir_name) || (!this.im_name)) return this.SetURL(labelme_url);
+
+            // if the username hasn't been set or has been intentionally set to anonymous
+            if(username != "anonymous")
+                noModal = true;
+
+
             
             if(isMT) {
 
