@@ -270,9 +270,7 @@ function handler() {
 
       if(anno.GetType() == 1) {
         
-        
-
-
+      
         /*************************************************************/
         /*************************************************************/
         // Scribble: Add annotation to LM_xml:
@@ -300,10 +298,11 @@ function handler() {
         html_str += '</object>';
         $(LM_xml).children("annotation").append($(html_str));
 
-        // Disable segmentation preview button
-        $('#segmA').removeClass('active');
-        $('#segmA').parent().removeClass('active');
-
+        if(lmode == "mt"){
+          // Disable segmentation preview button
+          $('#segmA').removeClass('active');
+          $('#segmA').parent().removeClass('active');
+        }
 
         /*************************************************************/
         /*************************************************************/
@@ -372,7 +371,7 @@ function handler() {
         document.getElementById('object_name').value=new_name;
         document.getElementById('number_objects').value=global_count;
         document.getElementById('LMurl').value = LMbaseurl + '?collection=LabelMe&mode=i&folder=' + main_media.GetFileInfo().GetDirName() + '&image=' + main_media.GetFileInfo().GetImName();
-        if(global_count >= mt_N) document.getElementById('mt_submit').disabled=false;
+        if(global_count >= mt_N && (MTimCounter == 0)) document.getElementById('mt_submit').disabled=false;
 
       }
 

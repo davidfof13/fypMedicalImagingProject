@@ -8,6 +8,8 @@
  * and fetches the information via dirlists or from the URL.
  * @constructor
 */
+
+
 function file_info() {
     
     // *******************************************
@@ -71,12 +73,17 @@ function file_info() {
                 if(par_field=='folder') {
                     this.dir_name = par_value;
                 }
+
+                if(par_field=='imCount'){
+                    MTimCounter = parseInt(par_value) - 1;
+                }
+
                 if(par_field=='image') {
                     this.im_name = par_value
-
-		        // remove outliers			
-		        this.im_name.replace('#', '');
-		        this.im_name.replace('/', '');
+                
+		            // remove outliers			
+		            this.im_name.replace('#', '');
+		            this.im_name.replace('/', '');
 
                     if(this.im_name.indexOf('.jpg')==-1 && this.im_name.indexOf('.png')==-1) {
                         this.im_name = this.im_name + '.jpg';
@@ -283,13 +290,14 @@ function file_info() {
                 $('#hit-image').css('margin-right', Math.round(0.045*w) + 'px');
 
 
-
-
                 $(document).ready(function(){
 
-
+                    // After loading the MTurk interface
+                    // remove next image arrow on the last image
+                    if ((MTimCounter) == 0 ){
+                        $("#arrowCont").remove();
+                    
                     if (!noModal){
-
 
                         // prevent outside click or esc key from closing modal
                         $('#myModal').modal({
@@ -308,7 +316,6 @@ function file_info() {
 
                             // get list of usernames of all objects of the current image
                             var names = $(LM_xml).children("annotation").children("object").find("username");
-
 
                             // go through the list of names
                             for(var i = 0; i < names.length; i++) {
@@ -433,7 +440,7 @@ function file_info() {
         
         if(this.mode=='i') window.location = url + '?collection=' + this.collection + '&mode=' + this.mode + '&folder=' + this.dir_name + '&image=' + this.im_name + extra_field;
         else if(this.mode=='im') window.location = url + '?collection=' + this.collection + '&mode=' + this.mode + '&folder=' + this.dir_name + '&image=' + this.im_name + extra_field;
-        else if(this.mode=='mt') window.location = url + '?collection=' + this.collection + '&mode=mtn&folder=' + this.dir_name + '&image=' + this.im_name + extra_field;
+        else if(this.mode=='mt') window.location = url + '?collection=' + this.collection + '&mode=mtn&folder=' + this.dir_name + '&image=' + this.im_name + '&imCount=' + MTimCounter  + extra_field;
         else if(this.mode=='c') window.location = url + '?mode=' + this.mode + '&username=' + username + '&collection=' + this.collection + '&folder=' + this.dir_name + '£' + this.im_name + extra_field;
         else if(this.mode=='f') window.location = url + '?mode=' + this.mode + '&folder=' + this.dir_name + '&image=' + this.im_name + extra_field;
         return false;

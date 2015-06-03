@@ -40,7 +40,12 @@
         
       }
 
+
+      /* Show the orginal SLIC segmented image, Disables any effects that is 
+         active
+       */
       function originalView(){
+
 
         if(segmentAnnotator.colorMaskEnabled)
           colorMaskView();
@@ -49,7 +54,7 @@
           boundaryView();
 
       }
-      
+
       function boundaryView(){
 
         // make sure to disable any other views first

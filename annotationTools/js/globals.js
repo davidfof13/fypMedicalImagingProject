@@ -9,6 +9,9 @@ var SubmitXmlUrl = 'annotationTools/perl/submit.cgi';
 // LabelMe username:
 var username = 'anonymous';
 
+// counter of images to annotate in MTurk mode
+var MTimCounter =  4;
+
 // Boolean indicating whether user is currently signing in (this should be abstracted into class):
 var username_flag = 0;
 
@@ -22,7 +25,8 @@ var use_parts = 1; // if this is 0 disapears the message from the bubble
   //  use_parts = 0;
 //}
 
-var noModal = false; // Indicates if we should show the instruction window in mechanical turk mode
+// Indicates if we should show the instruction window in mechanical turk mode
+var noModal = false; 
 
 // Boolean indicating whether the control points were edited:
 var editedControlPoints = 0;

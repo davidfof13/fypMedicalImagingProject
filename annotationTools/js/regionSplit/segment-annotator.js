@@ -472,8 +472,10 @@ SegmentAnnotator.prototype._initializeHighlightLayer = function() {
 
     // indicates that we clicked on the canvas
     mousestate.down = true;
-    //var label = segmentAnnotator.currentLabel;
-    //segmentAnnotator.setCurrentLabel(label ^ 1)
+
+    // if we label anything on the last image, user can submit results
+    if(MTimCounter == 0) document.getElementById('mt_submit').disabled=false;
+
 
     mousestate.button = event.button;
   });
@@ -521,10 +523,6 @@ SegmentAnnotator.prototype._initializeContainer = function(container) {
     document.body.appendChild(this.container);
   }
   this.container.innerHTML = '';
-  //this.container.style.position = 'relative';
-  //this.container.style.width = this.width;
-  //this.container.style.height = this.height;
-  //this.container.style.display = 'inline-block';
   return this;
 };
 
