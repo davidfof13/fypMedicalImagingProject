@@ -360,7 +360,10 @@ function scribble_canvas(tag) {
     main_handler.QueryToRest();
     this.cleanscribbles();
     ClearMask('aux_mask');
+    
+    // Deactivate preview/segment button
     $('#segmA').removeClass('active');
+    $('#segmA').parent().removeClass('active');
     //DeleteAllScribbles();
 
   }
@@ -598,20 +601,20 @@ function scribble_canvas(tag) {
       else if (callback == 2){
         scribble_canvas.drawMask(1);
 
-	 if( main_media.GetFileInfo().GetMode() != "mt")
-        scribble_canvas.hidespinner();
-
-    else
-        $('#loadspinner').hide();
+	      if(main_media.GetFileInfo().GetMode() != "mt") scribble_canvas.hidespinner();
+        else $('#loadspinner').hide();
 
         scribble_canvas.segmentation_in_progress = 0;
         scribble_canvas.flag_changed = 0;
+
         if (annotation_ended){
           console.log("VAA"+scribble_canvas.object_corners);
           scribble_canvas.preparetoSubmit();
         }
 
-      }
+
+
+       }
     });
   }
 

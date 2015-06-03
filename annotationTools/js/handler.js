@@ -271,6 +271,8 @@ function handler() {
       if(anno.GetType() == 1) {
         
         
+
+
         /*************************************************************/
         /*************************************************************/
         // Scribble: Add annotation to LM_xml:
@@ -297,6 +299,12 @@ function handler() {
         html_str += '</segm>';
         html_str += '</object>';
         $(LM_xml).children("annotation").append($(html_str));
+
+        // Disable segmentation preview button
+        $('#segmA').removeClass('active');
+        $('#segmA').parent().removeClass('active');
+
+
         /*************************************************************/
         /*************************************************************/
       }   
@@ -310,6 +318,8 @@ function handler() {
             html_str += '</slicsegm>';
             html_str += '</object>';
             $(LM_xml).children("annotation").append($(html_str));
+
+            
       }
 
 
@@ -430,6 +440,11 @@ function handler() {
         $('.menu-ul>li>a').click(function(){
 
 
+            // user needs to click preview button befor moving to next task
+            if(this.id != "scribbleDropdown" && $('#segmA').hasClass('active'))
+                    return;
+            
+
             if(this.id == "segmA")
                 return;
 
@@ -485,6 +500,10 @@ function handler() {
         // Dropdown menus slide action
         $('.dropdown>a').click(function(){
           
+          // user needs to click preview button befor moving to next task
+            if($('#segmA').hasClass('active'))
+                    return;
+
           var parent = $("#" + this.id).parent();
           parent.find(".hit-submenu").slideToggle();
 

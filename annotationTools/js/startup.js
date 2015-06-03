@@ -375,6 +375,9 @@ function SetDrawingMode(mode){
     if (scribble_canvas.annotationid != -1){
       alert("You can't change drawing mode while editting scribbles.");
       return;
+    } else if( $('#segmA').hasClass('active') ){
+      alert("You need to preview your scribbles first (click Preview on the left) and decide if you want to save, continue editing them or delete them.");
+      return;
     }
 
 
@@ -394,7 +397,7 @@ function SetDrawingMode(mode){
         $('#scribbleDiv').css('z-index', '-2');
 
 
-        document.getElementById("edit-menu").style.visibility = 'hidden';
+        //document.getElementById("edit-menu").style.visibility = 'hidden';
         hideRegionDiv();
     }
   }
@@ -414,8 +417,6 @@ function SetDrawingMode(mode){
       document.getElementById("polygonDiv").setAttribute('style', 'border-color: #000');
     }  else {
         hideRegionDiv();
-        //changeToScrbbleMenu();
-        //document.getElementById("edit-menu").style.visibility = 'visible';
     }
     scribble_canvas.startSegmentationMode();
   }
@@ -433,10 +434,12 @@ function SetDrawingMode(mode){
       if (scribble_canvas.annotationid != -1){
         alert("You can't change drawing mode while editting scribbles.");
         return;
+      } else if( $('#segmA').hasClass('active') ){
+        alert("You need to preview your scribbles first (click Preview on the left) and decide if you want to save, continue editing them or delete them.");
+        return;
       }
 
-      //document.getElementById("edit-menu").style.visibility = 'visible';
-
+     
       // put scribble canvas underneath
       $('#myCanvas_bg_div').append($('#scribbleDiv'));
       $('#scribbleDiv').css('z-index', '-2');
@@ -444,10 +447,6 @@ function SetDrawingMode(mode){
 
       // put new div on top
       setUpRegionSelection();
-
-      //changeToRegionMenu();
-
-     // document.getElementById("edit-menu").style.visibility = 'visible';
   }
 
   drawing_mode = mode;
