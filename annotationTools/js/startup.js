@@ -414,8 +414,8 @@ function SetDrawingMode(mode){
       document.getElementById("polygonDiv").setAttribute('style', 'border-color: #000');
     }  else {
         hideRegionDiv();
-        changeToScrbbleMenu();
-        document.getElementById("edit-menu").style.visibility = 'visible';
+        //changeToScrbbleMenu();
+        //document.getElementById("edit-menu").style.visibility = 'visible';
     }
     scribble_canvas.startSegmentationMode();
   }
@@ -445,9 +445,9 @@ function SetDrawingMode(mode){
       // put new div on top
       setUpRegionSelection();
 
-      changeToRegionMenu();
+      //changeToRegionMenu();
 
-      document.getElementById("edit-menu").style.visibility = 'visible';
+     // document.getElementById("edit-menu").style.visibility = 'visible';
   }
 
   drawing_mode = mode;

@@ -40,6 +40,16 @@
         
       }
 
+      function originalView(){
+
+        if(segmentAnnotator.colorMaskEnabled)
+          colorMaskView();
+
+        if(segmentAnnotator.boundaryEnabled)
+          boundaryView();
+
+      }
+      
       function boundaryView(){
 
         // make sure to disable any other views first

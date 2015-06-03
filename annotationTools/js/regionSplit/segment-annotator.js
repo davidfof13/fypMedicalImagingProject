@@ -215,8 +215,10 @@ SegmentAnnotator.prototype._updateAnnotation = function(index, render) {
   if(!render) 
     this.annotations[index] = this.currentLabel;
 
-  else
+  else{
     this.annotations[index] = this.annotations[index] ^ 1;
+    this.currentLabel = this.annotations[index];
+  }
 
   for (var i = 0; i < pixels.length; ++i) {
     var offset = 4 * pixels[i],

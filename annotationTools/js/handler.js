@@ -505,11 +505,12 @@ function handler() {
                if(this.id == "scribbleDropdown"){
                 $('#foreground').addClass('active');
                 $('#foreground').parent().addClass('active');
+
                }  else{
 
                   var el = $('#regionDropdown').parent().find('.hit-submenu>li>a');
-                  el[segmentAnnotator.currentLabel].className += " active";
-                  el[segmentAnnotator.currentLabel].parentNode.className += " active";
+                  el[0].className += " active";
+                  el[0].parentNode.className += " active";
                 }
                
 

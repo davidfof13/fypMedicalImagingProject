@@ -387,7 +387,7 @@ function changeToRegionMenu(){
     html_str += '</li>';
 
     html_str += '<li role="presentation">';
-    html_str += '<a class="li-base" href="#/"> resolution </a>';
+    html_str += '§';
     html_str += '</li>';
 
     html_str +='</ul></div>';

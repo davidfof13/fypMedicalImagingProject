@@ -50,11 +50,14 @@
                   <li role="presentation"><a onclick="SetDrawingMode(0)" class="li-base active" href="#/" > Box </a></li>
                   <li role="presentation" class="dropdown">
                     <a id="scribbleDropdown" onclick="scribble_canvas.setCurrentDraw(OBJECT_DRAWING)" class="li-base" href="#/">Scribble <span class="caret-right"></span></a>
-                    <ul class="nav  nav-stacked hit-submenu" role="menu">
-                      <li><a id="foreground" onclick="scribble_canvas.setCurrentDraw(OBJECT_DRAWING)" href='#/'>Foreground</a></li>
-                      <li><a onclick="scribble_canvas.setCurrentDraw(BG_DRAWING)" href='#/'>Background</a></li>
+                    <ul class="nav  nav-stacked hit-submenu" style="font-size: 93%;" role="menu">
+                      <li><a id="foreground" onclick="scribble_canvas.setCurrentDraw(OBJECT_DRAWING)" href='#/'>  > foreground</a></li>
+                      <li><a onclick="scribble_canvas.setCurrentDraw(BG_DRAWING)" href='#/'>  > background</a></li>
+                      <li role="presentation"><a class="li-base" onclick="scribble_canvas.setCurrentDraw(RUBBER_DRAWING);" href="#/"> > rubber</a></li>
+                     
 
-                      <li id="segmButton" style="display: none;" role="presentation" ><a id="segmA" style="float:left; margin:auto; width: 100%;" onclick="scribble_canvas.segmentImage(1)" href="#/"> Segment
+
+                      <li id="segmButton" style="display: none;" role="presentation" ><a id="segmA" style="float:left; margin:auto; width: 100%;" onclick="scribble_canvas.segmentImage(1)" href="#/">  > Preview
                           <div class="li-base" id="loadspinner" style="display:none; float:right; margin:inherit;">
                             <img src="Icons/segment_loader.gif" style="height: 23px; width: 27px;"/> 
                           </div>
@@ -64,44 +67,18 @@
                   </li>
                   <li role="presentation" class="dropdown">
                     <a id="regionDropdown" onclick="SetDrawingMode(2)" class="li-base" href="#/" > Regions <span class="caret-right"></span></a>
-                    <ul class="nav  nav-stacked hit-submenu" role="menu">
-                      <li ><a id="clear" href='#/'>Clear</a></li>
-                      <li ><a id="object" href='#/'>Object</a></li>
+                    <ul class="nav  nav-stacked hit-submenu" style="font-size: 95%;" role="menu">
+
+                      <li ><a id="regionOriginal" class="li-base" onclick="originalView();" href="#/">  > original</a></li>
+                      <li ><a class="li-base" onclick="boundaryView();" href="#/">  > unbounded</a></li>
+                      <li ><a class="li-base" onclick="colorMaskView();" href="#/"> > color mask</a></li>
+                      <li><a class="li-base" href="#/"> > resolution </a></li>
                     </ul>
                   </li>
                 </ul>
               </div>
             </div>
 
-              <!-- Edit menu -->
-              <div  id="edit-menu" class="panel" style="background-color: #943F3F; color: #FFF; visibility: hidden;">
-                    <div class="panel-heading">Edit</div>
-                    <div  class="menu-content nav-collapse navbar-responsive container navbar-inverse">
-                      <ul class= "menu-ul nav nav-pills nav-stacked">
-                          <!--<li role="presentation"><a class="li-base" href="#/"> Rectangle </a></li> -->
-                          <li role="presentation"><a class="li-base" onclick="scribble_canvas.setCurrentDraw(RUBBER_DRAWING)" href="#/"> erase scribble</a></li>
-                          <li role="presentation" >
-                              <a class="li-base" data-toggle="modal" data-target=".bs-example-modal-sm"  href="#/"> delete scribbles</a>
-                        
-
-                              <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-                              
-                                  <div class="modal-dialog modal-sm">
-                                    <div class="modal-content"></div>
-                                      ...
-                                  </div>
-                              </div>
-
-
-                          </li>
-                            <!--onclick="scribble_canvas.DeleteAllScribbles()"-->
-                      </ul>
-                    </div>
-              </div>
-
-              <!-- View menu -->
-              <div id="edit-menu" class="panel" style="background-color: #943F3F; visibility:hidden; color: #FFF;">
-              </div>
           </div>
 
           <div id="hit-image"></div>
