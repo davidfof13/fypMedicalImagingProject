@@ -208,14 +208,19 @@ SegmentAnnotator.prototype._updateHighlight = function(index) {
 
 // Update label.
 SegmentAnnotator.prototype._updateAnnotation = function(index, render) {
-  if (render && this.annotations[index] === this.currentLabel)
-    return;
+
   var data = this.layers.annotation.image.data,
       pixels = this.pixelsMap[index];
-  this.annotations[index] = this.currentLabel;
+  
+  if(!render) 
+    this.annotations[index] = this.currentLabel;
+
+  else
+    this.annotations[index] = this.annotations[index] ^ 1;
+
   for (var i = 0; i < pixels.length; ++i) {
     var offset = 4 * pixels[i],
-        color = this.labels[this.currentLabel].color;
+        color = this.labels[this.annotations[index]].color;
     data[offset + 0] = color[0];
     data[offset + 1] = color[1];
     data[offset + 2] = color[2];
@@ -442,11 +447,14 @@ SegmentAnnotator.prototype._initializeHighlightLayer = function() {
   // On mousemove or mouseup.
   function updateIfActive(event) {
     var segmentId = _this._getSegmentIndex(event);
+    // this highlights the segment
     _this._updateHighlight(segmentId);
     if (mousestate.down) {
       var label = _this.currentLabel;
       if (mousestate.button == 2)
         _this.currentLabel = 0;
+
+      // this changes the color of the segment
       _this._updateAnnotation(segmentId, true);
       _this.currentLabel = label;
     }
@@ -459,7 +467,12 @@ SegmentAnnotator.prototype._initializeHighlightLayer = function() {
   });
   // Mousedown.
   this.layers.highlight.canvas.addEventListener('mousedown', function(event) {
+
+    // indicates that we clicked on the canvas
     mousestate.down = true;
+    //var label = segmentAnnotator.currentLabel;
+    //segmentAnnotator.setCurrentLabel(label ^ 1)
+
     mousestate.button = event.button;
   });
   // Mouseup.

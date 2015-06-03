@@ -7,7 +7,7 @@ function StartupLabelMe() {
   // Check browser:
   GetBrowserInfo();
   if(IsNetscape() || (IsMicrosoft() && (bversion>=4.5)) || IsSafari() || IsChrome()) {
-    // Write "start up" messages:
+    // Write "start up" messageskey: "value", 
     WriteLogMsg('*start_loading');
     console.log('LabelMe: starting up...');
     
@@ -495,7 +495,7 @@ function setUpRegionSelection(){
 
 
     segmentAnnotator =  new SLICSegmentAnnotator(main_media.file_info.GetImagePath(), {
-        regionSize: 70,
+        regionSize: 40,
         container: document.getElementById('regionDiv'),
         // annotation: 'annotation.png' // optional existing annotation data.
         labels: [{name: 'background', color: [255, 255, 255]},'object'],
