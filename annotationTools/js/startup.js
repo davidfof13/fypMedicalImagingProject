@@ -554,7 +554,9 @@ function showInstructionsModal(name) {
         just means that you have to mark one or more specific areas in the image, that are of interest to us. In this case, \
         we\'re interested in locating small objects such as brain tumours and we want you to annotate these objects \
         <span style="color: red;"> as accurately as possible </span>. The example below shows what we\'re looking for: \
-         \(Insert Images here\ and give example of correct labelling)</p>';
+        </p>';
+
+        html_str +='<p> \(Insert Images here\ and give example of correct labelling\) </p>';
 
         html_str += '<p>Don\'t worry about getting your labels wrong. Any annotation that you make provides additional information \
         that will contribute to the team\'s research.  You will be given ' + MTimCounter + ' images to label and you will have three \
@@ -576,9 +578,6 @@ function showInstructionsModal(name) {
         instantly. After drawing an object with boxes or scribbles , you have the choice of deleting, saving (accept) or \
         continue editing the object. For the \'Regions\' command, you can click on a region to select it and click on it \
         again to unselect it. </p>';
-
-        //html_str += '<p>The subcommands (original, unbounded, boundary, color mask) allow you to visualize the image using different effects \
-        //making it sometimes easier to label.</p>';
 
         html_str += '<div class="modal-footer"> \
         <button type="button" class="btn btn-primary" onmousedown="showInstructionsModal2();">Next</button> \
@@ -604,6 +603,21 @@ function showInstructionsModal2() {
   html_str += '<h4 class="modal-title">Instructions</h4>';
   html_str += '</div>';
   html_str += '<div class="modal-body">';
+
+  html_str += '<h4>Scribble tool</h4>';
+
+  html_str += '<p> Use the <span style="color: red;">foreground</span> command to circle the object of interest and \
+  use the <span style="color: red;">background </span> command to indicate the areas that we should ignore. \
+  For example: </p> (Insert Images here) ';
+
+
+  html_str += '<h4>Regions tool</h4>';
+
+
+  html_str += '<p> The subcommands <span style="color: red;">original, unbounded, boundary</span> and <span style="color: red;"> \
+  color mask</span> allow you to visualize the image using different effects making it sometimes easier to label the image. The \
+  <span style="color: red;">resolution</span> command allows you to change the size of the regions. You can adjust its value to \
+  have smaller or larger regions to label more accurately. For example: </p> (Insert Images here)';
 
   html_str += '<h4>Submitting results</h4>';
 
