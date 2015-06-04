@@ -520,8 +520,9 @@ function SetPolygonDrawingMode(bounding){
 }
 
 
-/** MTurk mode: changes the user login form of the modal entity to an instruction page */
-function changeModalContent(name) {
+/** MTurk mode: changes the user login form of the modal entity and 
+shows the first instruction page */
+function showInstructionsModal(name) {
 
         
         var html_str = '<div class="modal-dialog">';
@@ -543,8 +544,8 @@ function changeModalContent(name) {
 
         html_str += '<p>Don\'t worry about getting your labels wrong. Any annotation that you make provides additional information \
         that will contribute to the team\'s research.  You will be given ' + MTimCounter + ' images to label and you will have three \
-        labelling commands at your disposal: you can draw rectangular boxes, scribbles or you can select \
-        one or many regions that contain the object.</p>';
+        labelling commands at your disposal: you can draw <span style="color: red;" >rectangular boxes , scribbles</span> or you can \
+        select one or many <span style="color: red;" >regions</span> that contain the object.</p>';
 
         html_str += '<p>You can use any of them, and combine any, it\'s completely up to you. Sometimes you may need to use \
         all of them as it will give us more information about the location and the shape of the object. At other times, \
@@ -565,17 +566,8 @@ function changeModalContent(name) {
         //html_str += '<p>The subcommands (original, unbounded, boundary, color mask) allow you to visualize the image using different effects \
         //making it sometimes easier to label.</p>';
 
-        html_str += '<h4>Submitting result</h4>';
-
-        html_str += '<p>As previously mentionned, you have '+ MTimCounter + ' images to label. When you\'re finished with \
-        one, click on the \'Next Image\' button on the right hand side to proceed to the next image. The \
-        submit button will be enabled when you\'ve labelled all images and you can click on it to submit your \
-        results. That\'s it!</p>';
-
-        html_str += '<p>Press the Start button below to begin the task</p><p></p>';
-
         html_str += '<div class="modal-footer"> \
-        <button type="button" class="btn btn-primary" data-dismiss="modal">Start</button> \
+        <button type="button" class="btn btn-primary" onmousedown="showInstructionsModal2();">Next</button> \
         </div>';
 
         html_str +='</div>';
@@ -586,6 +578,41 @@ function changeModalContent(name) {
         document.getElementById("myModal").innerHTML = html_str;
  }
 
+
+/** MTurk mode: shows the second instruction page
+of the instruction modal */
+function showInstructionsModal2() {
+
+  var html_str = '<div class="modal-dialog">';
+  
+  html_str += '<div class="modal-content">';
+  html_str += '<div class="modal-header">';
+  html_str += '<h4 class="modal-title">Instructions</h4>';
+  html_str += '</div>';
+  html_str += '<div class="modal-body">';
+
+  html_str += '<h4>Submitting results</h4>';
+
+  html_str += '<p>As previously mentionned, you have '+ MTimCounter + ' images to label. When you\'re finished with \
+  one, click on the \'Next Image\' button on the right hand side to proceed to the next image. The \
+  submit button will be enabled when you\'ve labelled all images and you can click on it to submit your \
+  results. That\'s it!</p>';
+
+  html_str += '<p>Press the Start button below to begin the task</p><p></p>';
+
+  html_str += '<div class="modal-footer"> \
+  <button type="button" class="btn" onmousedown="showInstructionsModal(username);">Back</button> \
+  <button type="button" class="btn btn-primary" data-dismiss="modal">Start</button> \
+  </div>';
+
+  html_str +='</div>';
+  html_str += '</div>';
+  html_str += '</div>';
+
+document.getElementById("myModal").innerHTML = html_str;
+
+       
+}
 /* For MTurk mode: show the confirmation message folling the click to the submit button window */
 function showSubmitModal() {
 

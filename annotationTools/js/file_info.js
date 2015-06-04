@@ -347,13 +347,13 @@ function file_info() {
 
 
                             username = login_name;
-                            changeModalContent(login_name);
+                            showInstructionsModal(login_name);
                             return false;
                             
                             });
                         
                         } else{
-                            changeModalContent(username);
+                            showInstructionsModal(username);
                         }
                         // Note: on the second image of the collection,  the username should already
                         // be set so no need to do it again
