@@ -321,6 +321,17 @@ function file_info() {
                             // get list of usernames of all objects of the current image
                             var names = $(LM_xml).children("annotation").children("object").find("username");
 
+                             // ensure that names are valid first
+                            if(login_name.length == 0){
+                                    alert("More characters needed!");  
+                                    return false; 
+                            } else if(!(/\S/.test(login_name))){
+                                    alert("No valid characters entered. Please try again");  
+                                    return false;
+                            } else if(login_name[0] == ' '){
+                                    alert("Name can't start with space!");  
+                                    return false; 
+                            }
                             // go through the list of names
                             for(var i = 0; i < names.length; i++) {
                                 if(login_name == names[i].innerHTML){
@@ -328,11 +339,13 @@ function file_info() {
                                     return false;
 
                                 }  else if(login_name == "anonymous"){
-                                  alert("This name isn't allowed. Please enter a different one");  
-                                  return false; 
-                                }
+                                    alert("This name isn't allowed. Please enter a different one");  
+                                    return false; 
+                                } 
                             }
                         
+
+
                             username = login_name;
                             changeModalContent(login_name);
                             return false;

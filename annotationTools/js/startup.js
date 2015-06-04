@@ -530,25 +530,25 @@ function changeModalContent(name) {
         html_str += '<h4 class="modal-title">Instructions</h4>';
         html_str += '</div>';
         html_str += '<div class="modal-body">';
-        html_str += '<p>Welcome <strong>' + name + '</strong>. Please follow the instructions below:</p>';
+        html_str += '<p>Welcome <strong>' + name + '</strong>. \
+         <span style="color: red;">PLEASE READ THE INSTRUCTIONS BELOW!</span>:</p>';
   
 
         html_str += '<h4>Aim</h4>';
-        html_str +='<p>The purpose of this exercise is to label objects in medical images. Labelling \
-        just means that you have to mark specific areas of the image that are of interest to us. In this case, \
-        we\'re interested in locating small objects such as brain tumours and we want you to annotate the part of \
-        the image that you feel correspond the most to these features while avoiding the irrelevant parts as much \
-        as possible. The example below shows what we\'re looking for: \(Insert Images here\)</p>';
+        html_str +='<p>The purpose of this exercise is to <span style="color: red;">label </span> objects in medical images. Labelling \
+        just means that you have to mark one or more specific areas in the image, that are of interest to us. In this case, \
+        we\'re interested in locating small objects such as brain tumours and we want you to annotate these objects \
+        <span style="color: red;"> as accurately as possible </span>. The example below shows what we\'re looking for: \
+         \(Insert Images here\ and give example of correct labelling)</p>';
 
         html_str += '<p>Don\'t worry about getting your labels wrong. Any annotation that you make provides additional information \
-        that will contribute to our research.  You will be given a set of two images to label and you \
-        have three labelling options at your disposal: drawing rectangular boxes, drawing scribbles, or selecting \
-        a set of regions that mostly comprise the object.</p>';
+        that will contribute to the team\'s research.  You will be given ' + MTimCounter + ' images to label and you will have three \
+        labelling commands at your disposal: you can draw rectangular boxes, scribbles or you can select \
+        one or many regions that contain the object.</p>';
 
         html_str += '<p>You can use any of them, and combine any, it\'s completely up to you. Sometimes you may need to use \
-        all of them as it will give us more accurate information about the location and the shape of the object. At other times, \
-        one may only suffice</p>';
-
+        all of them as it will give us more information about the location and the shape of the object. At other times, \
+        one may only be necessary</p>';
 
         html_str += '<h4>Drawing</h4>';
 
@@ -557,21 +557,22 @@ function changeModalContent(name) {
 
         html_str += '<h4>Editing</h4>';
 
-        html_str += '<p> Each labelling command will have their own editing commands. For some of them (\'Box\' and \'Scribble\'), editing is done \
-        on the spot. When you draw an object , you will be immediatly asked if you want to delete , edit or save (accept) the object. </p>';
+        html_str += '<p> Each labelling command will have their own editing commands. For all of them, editing is done \
+        instantly. After drawing an object with boxes or scribbles , you have the choice of deleting, saving (accept) or \
+        continue editing the object. For the \'Regions\' command, you can click on a region to select it and click on it \
+        again to unselect it. </p>';
 
-        html_str += '<p> For the \'Regions\' command, you can click on a region to select it and click on it again to unselect it. \
-        The \'Effects\' panel allows you to visualize the image using different effects making it sometimes easier to label.</p>';
+        //html_str += '<p>The subcommands (original, unbounded, boundary, color mask) allow you to visualize the image using different effects \
+        //making it sometimes easier to label.</p>';
 
         html_str += '<h4>Submitting result</h4>';
 
-        html_str += '<p>As previously mentionned, you have two images to label. When you\'re finished with \
+        html_str += '<p>As previously mentionned, you have '+ MTimCounter + ' images to label. When you\'re finished with \
         one, click on the \'Next Image\' button on the right hand side to proceed to the next image. The \
         submit button will be enabled when you\'ve labelled all images and you can click on it to submit your \
         results. That\'s it!</p>';
 
         html_str += '<p>Press the Start button below to begin the task</p><p></p>';
-
 
         html_str += '<div class="modal-footer"> \
         <button type="button" class="btn btn-primary" data-dismiss="modal">Start</button> \
@@ -603,16 +604,13 @@ function showSubmitModal() {
 
         html_str += '<input type="hidden" name="collection" value="slices"/>';
         html_str +=  '<input type="hidden" name="mode" value="mt"/>';
-        //html_str += '<div class="form-group">';
-        //html_str += '<div class="col-xs-5 col-xs-offset-3">';
+
         html_str += '<input type="hidden" id="assignmentId" name="assignmentId"/>';
         html_str += '<input type="hidden" id="number_objects" name="number_objects" value="" />';
         html_str += '<input type="hidden" id="object_name" name="object_name" value="" />';
         html_str += '<input type="hidden" id="LMurl" name="LMurl" value="" />';
         html_str += '<p> Thanks for participating <strong>' + username + '</strong>!</p>';
         html_str += '<button type="submit" class="btn btn-primary">Done</button>';
-        //html_str += '</div>';
-       // html_str += '</div>';
         html_str += '</form>';
 
        // html_str += '<button type="button" class="btn btn-primary" data-dismiss="modal">Start</button>';
