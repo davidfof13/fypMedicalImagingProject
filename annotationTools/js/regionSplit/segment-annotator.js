@@ -25,6 +25,7 @@ SegmentAnnotator = function(segmentation, options) {
   this.currentLabel = null;
   this.boundaryEnabled = false;
   this.colorMaskEnabled = false;
+  this.clicks = 0; // monitors the number of clicks on the region
 
   // Initialize internal variables.
   this._initializeContainer(options.container);
@@ -470,6 +471,13 @@ SegmentAnnotator.prototype._initializeHighlightLayer = function() {
   // Mousedown.
   this.layers.highlight.canvas.addEventListener('mousedown', function(event) {
 
+    segmentAnnotator.clicks++;
+
+    // want to monitor if user has clicked at least once on the canvas
+    // to allow him to go to the next image
+    if(segmentAnnotator.clicks == 1)
+      global_count++;
+    
     // indicates that we clicked on the canvas
     mousestate.down = true;
 

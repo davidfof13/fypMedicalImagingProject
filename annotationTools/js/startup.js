@@ -237,8 +237,22 @@ function FinishStartup() {
   if (main_media.GetFileInfo().GetMode() != "mt")
     $('#nextImage').attr("onclick","javascript:ShowNextImage()");
 
-  else
-    $('#arrowCont').attr("onclick","drawing_mode = 2; if (segmentAnnotator != null) main_handler.SubmitQuery(); javascript:ShowNextImage()");
+  else{
+   
+    $('#arrowCont').click(function(){
+
+      if(global_count == 0){
+
+        alert("You need to provide at least one label for this image.");
+        return;
+      }
+
+      drawing_mode = 2; 
+      if (segmentAnnotator != null) main_handler.SubmitQuery(); 
+        ShowNextImage();
+    });
+
+  }
 
 
 
@@ -593,7 +607,7 @@ function showInstructionsModal2() {
 
   html_str += '<h4>Submitting results</h4>';
 
-  html_str += '<p>As previously mentionned, you have '+ MTimCounter + ' images to label. When you\'re finished with \
+  html_str += '<p>As previously mentioned, you have '+ MTimCounter + ' images to label. When you\'re finished with \
   one, click on the \'Next Image\' button on the right hand side to proceed to the next image. The \
   submit button will be enabled when you\'ve labelled all images and you can click on it to submit your \
   results. That\'s it!</p>';
