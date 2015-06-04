@@ -296,6 +296,10 @@ function file_info() {
                     // remove next image arrow on the last image
                     if ((MTimCounter) == 0 ){
                         $("#arrowCont").remove();
+                        $('#mt_submit').click(function(){
+                            if (segmentAnnotator != null) main_handler.SubmitQuery();
+                        });
+                    }
                     
                     if (!noModal){
 

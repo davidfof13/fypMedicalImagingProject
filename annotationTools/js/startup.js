@@ -585,6 +585,54 @@ function changeModalContent(name) {
         document.getElementById("myModal").innerHTML = html_str;
  }
 
+/* For MTurk mode: show the confirmation message folling the click to the submit button window */
+function showSubmitModal() {
+
+
+   var  html_str = '<div class="modal-dialog modal-sm">';
+        html_str += '<div class="modal-content">';
+        html_str += '<div class="modal-header">';
+        html_str += '<h4 class="modal-title">Confirmation</h4>';
+        html_str += '</div>';
+        html_str += '<div class="modal-body">';
+        //html_str += '<p> Thanks for participating ' + username + '!</p>';
+
+
+        html_str += '<form id="mtLoginForm" action="/tool.html" method="get">';
+
+
+        html_str += '<input type="hidden" name="collection" value="slices"/>';
+        html_str +=  '<input type="hidden" name="mode" value="mt"/>';
+        //html_str += '<div class="form-group">';
+        //html_str += '<div class="col-xs-5 col-xs-offset-3">';
+        html_str += '<input type="hidden" id="assignmentId" name="assignmentId"/>';
+        html_str += '<input type="hidden" id="number_objects" name="number_objects" value="" />';
+        html_str += '<input type="hidden" id="object_name" name="object_name" value="" />';
+        html_str += '<input type="hidden" id="LMurl" name="LMurl" value="" />';
+        html_str += '<p> Thanks for participating <strong>' + username + '</strong>!</p>';
+        html_str += '<button type="submit" class="btn btn-primary">Done</button>';
+        //html_str += '</div>';
+       // html_str += '</div>';
+        html_str += '</form>';
+
+       // html_str += '<button type="button" class="btn btn-primary" data-dismiss="modal">Start</button>';
+        html_str +='</div>';
+        html_str += '</div>';
+        html_str += '</div>';
+
+        /* Make sure we save the SLIC segmentation data */
+         if (segmentAnnotator != null) {
+          drawing_mode = 2
+          main_handler.SubmitQuery();
+        }
+        document.getElementById("myModal").innerHTML = html_str;
+        document.getElementById("myModal").setAttribute("aria-labelledby", "mySmallModalLabel");
+        document.getElementById("myModal").setAttribute("aria-hidden", "true");
+
+        $("#myModal").addClass("bs-example-modal-sm");
+        $('#myModal').modal({backdrop: 'static', keyboard: false});
+        $('#myModal').modal('show');
+}
 
 /** Closes the modal window after user reads instructions */
 /*function beginMTtask(){

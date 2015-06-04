@@ -317,8 +317,6 @@ function handler() {
             html_str += '</slicsegm>';
             html_str += '</object>';
             $(LM_xml).children("annotation").append($(html_str));
-
-            
       }
 
 
@@ -368,9 +366,9 @@ function handler() {
       var m = main_media.GetFileInfo().GetMode();
       if(m=='mt') {
 
-        document.getElementById('object_name').value=new_name;
-        document.getElementById('number_objects').value=global_count;
-        document.getElementById('LMurl').value = LMbaseurl + '?collection=LabelMe&mode=i&folder=' + main_media.GetFileInfo().GetDirName() + '&image=' + main_media.GetFileInfo().GetImName();
+       // document.getElementById('object_name').value=new_name;
+       // document.getElementById('number_objects').value=global_count;
+       // document.getElementById('LMurl').value = LMbaseurl + '?collection=LabelMe&mode=i&folder=' + main_media.GetFileInfo().GetDirName() + '&image=' + main_media.GetFileInfo().GetImName();
         if(global_count >= mt_N && (MTimCounter == 0)) document.getElementById('mt_submit').disabled=false;
 
       }

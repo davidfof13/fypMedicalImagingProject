@@ -26,7 +26,6 @@
                         </div>
               </div>
             </form>
-            
           </div>
         </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
@@ -91,32 +90,26 @@
                 <div id="arrowMsg"> Next Image </div>
             </div>
 
-
-              <strong id="feedBackTxt" style="float:left; margin-bottom: 20px; "> Do you wish to provide any feedback on this task? (Optional) 
-              </strong>
-
+            <strong id="feedBackTxt" style="float:left; margin-bottom: 20px; "> Do you wish to provide any feedback on this task? (Optional) 
+            </strong>
 
             <p></p>
             <p></p>
             <p></p>
 
-            <form method="post">
+            <div>
               <div id="mtComments" class="form-group" style="margin-top: 40px;">
                 <textarea id="hit-feedback" class="form-control" rows="5" cols="35" name="textform">Please enter your message here
                 </textarea>
               </div>
+
               <div style="margin-top: 23px;">
-
-                  <input type="hidden" id="assignmentId" name="assignmentId"/>
-
-                  <input type="hidden" id="number_objects" name="number_objects" value="" />
-                  <input type="hidden" id="object_name" name="object_name" value="" />
-                  <input type="hidden" id="LMurl" name="LMurl" value="" />
+                  <!--
                   <input type="hidden" id="mt_comments" name="mt_comments" value="" />
-                  <button type="submit" name="Submit" id="mt_submit" class="btn btn-primary" disabled="true" onmousedown="javascript:document.getElementById(\'mt_comments\').value=document.getElementById(\'hit-feedback\').textContent;">Submit task</button>
+                  <button type="submit" name="Submit" id="mt_submit" class="btn btn-primary" disabled="true" onmousedown="javascript:document.getElementById(\'mt_comments\').value=document.getElementById(\'hit-feedback\').textContent;">Submit task</button>-->
+                  <button type="button" name="Submit" id="mt_submit" class="btn btn-primary" onmousedown="showSubmitModal();" disabled="true">Submit task</button>
               </div>
-            </form>
-  
+            </div>
           </div> 
         </div>  
       </div> 

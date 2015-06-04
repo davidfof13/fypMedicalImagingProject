@@ -7,7 +7,7 @@ if (!$username){
 }
 
 $TOOLHOME = "/Users/David/Documents/Imperial/4thYear/fyp/fypMedicalImagingProject/";
-$URLHOME = "http://Davids-MacBook-Pro-3.local//Users/David/Documents/Imperial/4thYear/fyp/fypMedicalImagingProject/";
+$URLHOME = "http://Davids-MBP-2//Users/David/Documents/Imperial/4thYear/fyp/fypMedicalImagingProject/";
 
 if (!$public==true) {
    $HOMEIMAGES = $TOOLHOME."Images/users/$username/";
