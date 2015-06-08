@@ -566,15 +566,31 @@ function showInstructionsModal(name) {
   
 
         html_str += '<h4>Aim</h4>';
-        html_str +='<p>The purpose of this exercise is to <span style="color: red;">label </span> objects in medical images. Labelling \
+        html_str +='<p style="margin-bottom:10px;">The purpose of this exercise is to <span style="color: red;">label </span> objects in medical images. Labelling \
         just means that you have to mark one or more specific areas in the image, that are of interest to us. In this case, \
-        we\'re interested in locating anatomic features such as head, body, brain, arms, etc. and we want you to annotate these objects \
+        we\'re interested in locating anatomic features such as head, body, brain and arms. We would like you to annotate these objects \
         <span style="color: red;"> as accurately as possible </span>. The example below shows what we\'re looking for: \
         </p>';
 
-        html_str +='<p> \(Insert Images here\ and give example of correct labelling\) </p>';
+        html_str += '<figure class="mtInstr" style="margin-left:8%;">';
+        html_str += '<img src="Images/mtInstructions/bad.jpg" alt="bad"/>';
+        html_str += '<figcaption style="color:red;">bad</figcaption>';
+        html_str += '</figure>';
 
-        html_str += '<p>Don\'t worry about getting your labels wrong. Any annotation that you make provides additional information \
+        html_str += '<figure class="mtInstr">';
+        html_str += '<img src="Images/mtInstructions/decent.jpeg" alt="decent"/>'; 
+        html_str += '<figcaption style="color:blue;"> very good</figcaption>';
+        html_str += '</figure>';
+
+        html_str += '<figure class="mtInstr">';
+        html_str += '<img src="Images/mtInstructions/excellent.jpeg" alt="excellent"/>'; 
+        html_str += '<figcaption style="color:rgb(71, 249, 71);"> excellent</figcaption>'; 
+        html_str += '</figure>';
+
+        html_str += '<p style="clear: both;"></p>';
+
+
+        html_str += '<p style="margin-top: 20px;">Don\'t worry about getting your labels wrong. Any annotation that you make provides additional information \
         that will contribute to the team\'s research.  You will be given ' + MTimCounter + ' images to label and you will have three \
         labelling commands at your disposal: you can draw <span style="color: red;" >rectangular boxes , scribbles</span> or you can \
         select one or many <span style="color: red;" >regions</span> that contain the object.</p>';
