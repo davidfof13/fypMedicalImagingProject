@@ -287,7 +287,7 @@ function file_info() {
                 // Set the height of hit-image to 70% that of the jumbotron
                 $('#hit-image').height(Math.round(0.7*h));
 
-                
+
                 $('.hit-menu').css('margin-right', Math.round(0.039*w) + 'px');
                 $('#hit-image').css('margin-right', Math.round(0.045*w) + 'px');
 
@@ -296,7 +296,7 @@ function file_info() {
 
                     // After loading the MTurk interface
                     // remove next image arrow on the last image
-                    if ((MTimCounter) == 0 ){
+                    if(MTimCounter == 0){
                         $("#arrowCont").remove();
                         $('#mt_submit').click(function(){
                             if (segmentAnnotator != null) main_handler.SubmitQuery();

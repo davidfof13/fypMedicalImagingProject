@@ -69,21 +69,10 @@ function image(id) {
         if(width_ratio<height_ratio) this.im_ratio = width_ratio;
         else this.im_ratio = height_ratio;
         this.browser_im_ratio = this.im_ratio;
-        
-        // don't care about the ratio force width
-        // to fit that of hit-image container
-        //if(main_media.GetFileInfo().GetMode() == "mt")
-         //   this.width_curr = avail_width;
 
-        //else
-            this.width_curr = Math.round(this.im_ratio*this.width_orig);
-
-        
+        this.width_curr = Math.round(this.im_ratio*this.width_orig);
         this.height_curr = Math.round(this.im_ratio*this.height_orig);
 
-        
-        
-        //this.height_curr = avail_height;
         
         // set dimensions
         this.SetDimensions();

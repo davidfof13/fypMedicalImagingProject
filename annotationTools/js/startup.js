@@ -307,6 +307,45 @@ function FinishStartup() {
          document.getElementById("feedBackTxt").remove();
     }
 
+    var contentHtml = '<div>';
+    contentHtml += '<p style="font-size: 150%;">No one has labelled this image. There\'s probably nothing relevant to annotate \
+                     in it. Do you want to skip it?</p>';
+    contentHtml += '</div>';
+
+    contentHtml += '<div style="display:inline-flex;">';
+    contentHtml += '<button class="btn btn-danger cancel" style="margin-right:4px;">Cancel</button>';
+
+    if(MTimCounter == 0)  contentHtml += '<button class="btn btn-success save">Done</button>';
+    else contentHtml += '<button class="btn btn-primary save">Skip</button>';
+    contentHtml += '</div>';
+
+    $('#main_media').popover({
+      title: 'annotation',
+      placement: 'right',
+      container: 'body',
+      html: true,
+      content : contentHtml,
+      trigger: 'manual'
+    }).on('shown.bs.popover', function () {
+
+        var $popup = $(this);
+        $('.popover').find('button.cancel').click(function (e) {
+          $popup.popover('hide');
+        });
+
+        $('.popover').find('button.save').click(function (e) {
+          $popup.popover('hide');
+        });
+    });
+
+    if (LMnumberOfObjects(LM_xml) == 0){
+      $('#main_media').popover('show');
+    }
+
+    /*.on('show.bs.popover', function(){
+
+});*/
+
   }
   
 
@@ -545,13 +584,13 @@ function showInstructionsModal(name) {
         html_str += '</div>';
         html_str += '<div class="modal-body">';
         html_str += '<p>Welcome <strong>' + name + '</strong>. \
-         <span style="color: red;">PLEASE READ THE INSTRUCTIONS BELOW!</span>:</p>';
+         <span style="color: red;">PLEASE READ THE INSTRUCTIONS BELOW.</span></p>';
   
 
         html_str += '<h4>Aim</h4>';
         html_str +='<p>The purpose of this exercise is to <span style="color: red;">label </span> objects in medical images. Labelling \
         just means that you have to mark one or more specific areas in the image, that are of interest to us. In this case, \
-        we\'re interested in locating small objects such as brain tumours and we want you to annotate these objects \
+        we\'re interested in locating anatomic features such as head, body, brain, arms, etc. and we want you to annotate these objects \
         <span style="color: red;"> as accurately as possible </span>. The example below shows what we\'re looking for: \
         </p>';
 
@@ -692,3 +731,5 @@ function showSubmitModal() {
 
 
 }*/
+
+

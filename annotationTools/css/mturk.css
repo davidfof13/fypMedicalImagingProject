@@ -102,14 +102,14 @@
     font-size: 200%;
 }
 
-.arrow {
+.myArrow {
   position: relative;
   /*float: left;*/
   float:left;
 }
 
 /* arrow body */
-.arrow:before {
+.myArrow:before {
     content:'×';
     display:inline-block;
     position: absolute;
@@ -123,7 +123,7 @@
 }
 
 /*arrow tip*/
-.arrow:after {
+.myArrow:after {
     content:'';
     display:inline-block;
     position: absolute;
@@ -142,14 +142,14 @@ http://stackoverflow.com/questions/27492191/how-to-make-a-fancy-arrow-using-css
 #arrowCont {
 
   cursor: pointer; cursor: hand;
-  float: left; margin-bottom: 70px;
+  float: left; margin-bottom: 80px;
 }
 
-#arrowCont:hover .arrow, #arrowCont:hover #arrowMsg{
+#arrowCont:hover .myArrow, #arrowCont:hover #arrowMsg{
   color: red;
 }
 
-#arrowCont:hover .arrow::after {
+#arrowCont:hover .myArrow::after {
   border-color: transparent transparent transparent red; 
 }
 
