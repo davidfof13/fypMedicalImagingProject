@@ -317,6 +317,9 @@ function FinishStartup() {
 
     // add pop over
     main_handler.MTaddPopover();
+
+    // hide annotations by default
+    main_handler.MTshowORhideAnnotations();
     
 
   }

@@ -537,6 +537,9 @@ function handler() {
         });
     };
 
+    /* Creates popover that queries the user to skip the next image
+     or continue working on the current image
+     */
     this.MTaddPopover = function(){
       var contentHtml = '<div>';
       contentHtml += '<p style="font-size: 150%;">No one has labelled this image. There\'s probably nothing relevant to annotate \
@@ -573,6 +576,23 @@ function handler() {
         $('#main_media').popover('show');
       }
     };
+
+    /* toggles visibility property of annotations
+    */
+    this.MTshowORhideAnnotations = function(){
+      var anno = $("#myCanvas_bg").children();
+
+      for(var i =0; i < anno.length; i++){
+
+        if(anno[i].style.visibility != "hidden")
+          anno[i].style.visibility = "hidden";
+
+        else
+          anno[i].style.visibility = "visible";
+      }
+    }
+
+
 
     
 }
