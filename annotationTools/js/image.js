@@ -70,8 +70,20 @@ function image(id) {
         else this.im_ratio = height_ratio;
         this.browser_im_ratio = this.im_ratio;
         
-        this.width_curr = Math.round(this.im_ratio*this.width_orig);
+        // don't care about the ratio force width
+        // to fit that of hit-image container
+        //if(main_media.GetFileInfo().GetMode() == "mt")
+         //   this.width_curr = avail_width;
+
+        //else
+            this.width_curr = Math.round(this.im_ratio*this.width_orig);
+
+        
         this.height_curr = Math.round(this.im_ratio*this.height_orig);
+
+        
+        
+        //this.height_curr = avail_height;
         
         // set dimensions
         this.SetDimensions();
@@ -114,7 +126,6 @@ function image(id) {
     // Courtesy of http://stackoverflow.com/questions/3971841/how-to-resize-images-proportionally-keeping-the-aspect-ratio
     this.ResizeImage = function(){
     
-
         var maxWidth = $('#hit-image').width(); // Max width for the image
         var maxHeight = $('#hit-image').height();   // Max height for the image
         var ratio = 0;  // Used for aspect ratio
@@ -247,12 +258,12 @@ function image(id) {
         // Scale and scroll the image so that the center stays in the center of the visible area
         this.ScaleFrame(amt);
         
-    // Remove polygon from draw canvas:
-    var anno = null;
-    if(draw_anno) {
-      draw_anno.DeletePolygon();
-      anno = draw_anno;
-      draw_anno = null;
+        // Remove polygon from draw canvas:
+        var anno = null;
+        if(draw_anno) {
+            draw_anno.DeletePolygon();
+            anno = draw_anno;
+            draw_anno = null;    
         }
 
         // set the size of the image (this.im is the image object)

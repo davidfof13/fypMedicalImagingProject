@@ -147,7 +147,6 @@ http://stackoverflow.com/questions/27492191/how-to-make-a-fancy-arrow-using-css
 
 #arrowCont:hover .arrow, #arrowCont:hover #arrowMsg{
   color: red;
-
 }
 
 #arrowCont:hover .arrow::after {
@@ -167,7 +166,7 @@ http://stackoverflow.com/questions/27492191/how-to-make-a-fancy-arrow-using-css
 #hit-image {
       
   width: 55%; 
-  height: 600px; 
+  height: 500px; 
   float: left;
   margin-right: 53px; 
       
@@ -183,6 +182,6 @@ http://stackoverflow.com/questions/27492191/how-to-make-a-fancy-arrow-using-css
 #hit-rmenu {
   float:left; 
   width:20%; 
-  min-width: 200px; 
+  /*min-width: 200px; */
   min-height:  258px;
 }

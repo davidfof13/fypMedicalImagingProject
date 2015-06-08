@@ -276,7 +276,8 @@ function file_info() {
                 $('#mt_submit_form').append(request.responseText);
                 
                 if(global_count >= mt_N) document.getElementById('mt_submit').disabled=false;
-    
+                
+
 
                 // Set dimension of elements in MTUrk interface
                 var h = $('.jumbotron').innerHeight();
@@ -286,6 +287,7 @@ function file_info() {
                 // Set the height of hit-image to 70% that of the jumbotron
                 $('#hit-image').height(Math.round(0.7*h));
 
+                
                 $('.hit-menu').css('margin-right', Math.round(0.039*w) + 'px');
                 $('#hit-image').css('margin-right', Math.round(0.045*w) + 'px');
 
