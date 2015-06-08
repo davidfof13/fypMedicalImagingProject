@@ -537,5 +537,42 @@ function handler() {
         });
     };
 
+    this.MTaddPopover = function(){
+      var contentHtml = '<div>';
+      contentHtml += '<p style="font-size: 150%;">No one has labelled this image. There\'s probably nothing relevant to annotate \
+                     in it. Do you want to skip it?</p>';
+      contentHtml += '</div>';
+
+      contentHtml += '<div style="display:inline-flex;">';
+      contentHtml += '<button class="btn btn-danger cancel" style="margin-right:4px;">Cancel</button>';
+
+      if(MTimCounter == 0)  contentHtml += '<button class="btn btn-success save" onmousedown="showSubmitModal();">Done</button>';
+      else contentHtml += '<button class="btn btn-primary save" onmousedown="javascript:MTNextImage();">Skip</button>';
+      contentHtml += '</div>';
+
+      $('#main_media').popover({
+        title: 'annotation',
+        placement: 'right',
+        container: 'body',
+        html: true,
+        content : contentHtml,
+        trigger: 'manual'
+      }).on('shown.bs.popover', function () {
+
+        var $popup = $(this);
+        $('.popover').find('button.cancel').click(function (e) {
+          $popup.popover('hide');
+        });
+
+        $('.popover').find('button.save').click(function (e) {
+          $popup.popover('hide');
+        });
+      });
+
+      if (LMnumberOfObjects(LM_xml) == 0){
+        $('#main_media').popover('show');
+      }
+    };
+
     
 }

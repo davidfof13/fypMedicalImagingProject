@@ -221,6 +221,18 @@ function LoadTemplateSuccess(xml) {
   FinishStartup();
 }
 
+
+/*Goes to the next image if user clicks on arrow or skip
+button.
+@skip indicate whether user clicked on 'skip' or 'next image'
+*/
+function MTNextImage(){
+
+  drawing_mode = 2; 
+  if (segmentAnnotator != null) main_handler.SubmitQuery(); 
+      ShowNextImage(); 
+}
+
 /** Finish the startup process: */
 function FinishStartup() {
   // Load the annotation list on the right side of the page:
@@ -236,24 +248,19 @@ function FinishStartup() {
   if (main_media.GetFileInfo().GetMode() != "mt")
     $('#nextImage').attr("onclick","javascript:ShowNextImage()");
 
-  else{
-   
-    $('#arrowCont').click(function(){
-
-      if(global_count == 0){
-
-        alert("You need to provide at least one label for this image.");
+  else {
+    $('#arrowCont').click(function(){ 
+        if(global_count == 0){
+          alert("You need to provide at least one label for this image.");
         return;
-      }
+        }
 
-      drawing_mode = 2; 
-      if (segmentAnnotator != null) main_handler.SubmitQuery(); 
-        ShowNextImage();
+        drawing_mode = 2; 
+        if (segmentAnnotator != null) main_handler.SubmitQuery(); 
+          ShowNextImage(); 
     });
-
   }
-
-
+  
 
   $('#zoomin').attr("onclick","javascript:main_media.Zoom(1.15)");
   $('#zoomout').attr("onclick","javascript:main_media.Zoom(1.0/1.15)");
@@ -307,49 +314,17 @@ function FinishStartup() {
          document.getElementById("feedBackTxt").remove();
     }
 
-    var contentHtml = '<div>';
-    contentHtml += '<p style="font-size: 150%;">No one has labelled this image. There\'s probably nothing relevant to annotate \
-                     in it. Do you want to skip it?</p>';
-    contentHtml += '</div>';
 
-    contentHtml += '<div style="display:inline-flex;">';
-    contentHtml += '<button class="btn btn-danger cancel" style="margin-right:4px;">Cancel</button>';
-
-    if(MTimCounter == 0)  contentHtml += '<button class="btn btn-success save">Done</button>';
-    else contentHtml += '<button class="btn btn-primary save">Skip</button>';
-    contentHtml += '</div>';
-
-    $('#main_media').popover({
-      title: 'annotation',
-      placement: 'right',
-      container: 'body',
-      html: true,
-      content : contentHtml,
-      trigger: 'manual'
-    }).on('shown.bs.popover', function () {
-
-        var $popup = $(this);
-        $('.popover').find('button.cancel').click(function (e) {
-          $popup.popover('hide');
-        });
-
-        $('.popover').find('button.save').click(function (e) {
-          $popup.popover('hide');
-        });
-    });
-
-    if (LMnumberOfObjects(LM_xml) == 0){
-      $('#main_media').popover('show');
-    }
-
-    /*.on('show.bs.popover', function(){
-
-});*/
+    // add pop over
+    main_handler.MTaddPopover();
+    
 
   }
   
 
 }
+
+
 
 // re-positions the image canvas for the MTurk
 // worker page
