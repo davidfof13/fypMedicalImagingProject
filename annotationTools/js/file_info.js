@@ -272,6 +272,8 @@ function file_info() {
                 request.open('GET', 'annotationTools/html/mTurkUI.html', false);
                 request.send();
 
+
+
                 // append html code
                 $('#mt_submit_form').append(request.responseText);
                 
@@ -290,7 +292,6 @@ function file_info() {
 
                 $('.hit-menu').css('margin-right', Math.round(0.039*w) + 'px');
                 $('#hit-image').css('margin-right', Math.round(0.045*w) + 'px');
-
 
                 $(document).ready(function(){
 
@@ -350,6 +351,8 @@ function file_info() {
 
                             username = login_name;
                             showInstructionsModal(login_name);
+
+                            document.getElementById("mtWelcome").innerHTML = '<span class="label label-success">welcome ' + username +  '</span>';
                             return false;
                             
                             });
@@ -360,9 +363,11 @@ function file_info() {
                         // Note: on the second image of the collection,  the username should already
                         // be set so no need to do it again
                     }
+
+
  
                 });
-
+                document.getElementById("mtWelcome").innerHTML = '<span class="label label-success">welcome ' + username +  '</span>';
 
             }
         }

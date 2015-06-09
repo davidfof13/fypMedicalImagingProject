@@ -320,9 +320,12 @@ function FinishStartup() {
 
     // hide annotations by default
     main_handler.MTshowORhideAnnotations();
+
+    if($("#myCanvas_bg").children().length == 0) $("#submitTask").remove();
     
 
   }
+  if($("#myCanvas_bg").children().length == 0) $("#submitTask").remove();
   
 
 }
