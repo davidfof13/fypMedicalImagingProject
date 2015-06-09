@@ -546,7 +546,7 @@ function handler() {
 
       contentHtml = '<div>';
 
-      if( id == "#main_media"){
+      if(id == "#main_media"){
         title = "annotation";
         contentHtml += '<p style="font-size: 150%;">No one has labelled this image. There\'s probably nothing relevant to annotate \
                      in it. Do you want to skip it?</p>';
@@ -562,15 +562,17 @@ function handler() {
 
 
         title = "region size";
-        contentHtml += '<form style="margin-bottom:30px;"> ';
-        contentHtml += '<input type="range" id="rangeInput" name="amountRange" min="0" max="20" value="0" \
-          style="float:left; margin-right:10%; width:80%;" oninput="this.form.amount.value=this.value" />';
+        contentHtml += '<form id="regionsRange" style="margin-bottom:30px;"> ';
+        contentHtml += '<input type="range" id="rangeInput" name="amountRange" min="' + MIN_REGION_SIZE + '" max="' + MAX_REGION_SIZE;
+        contentHtml +=  '" value="' + MIN_REGION_SIZE  +'" style="float:left; margin-right:10%; width:80%;" \
+        oninput="this.form.amount.value=this.value" />';
     
-        contentHtml += '<output name="amount" for="rangeInput" style="padding-top:12px;">0</output>';
+        contentHtml += '<output name="amount" for="rangeInput" style="padding-top:12px;">' + MIN_REGION_SIZE + '</output>';
         contentHtml += '</form>';
 
+
         contentHtml += '<button class="btn btn-danger cancel" style="margin-left:5%; margin-right:4px;">Cancel</button>';
-        contentHtml += '<button class="btn btn-success save" onmousedown="showSubmitModal();">Done</button>';
+        contentHtml += '<button class="btn btn-success save" onmousedown="updateRegionSize();">Done</button>';
       }
       contentHtml += '</div>';
 
@@ -584,19 +586,15 @@ function handler() {
       }).on('shown.bs.popover', function () {
 
         var $popup = $(this);
-        $('.popover').find('button.cancel').click(function (e) {
-          $popup.popover('hide');
-        });
+        $('.popover').find('button.cancel').click(function (e) {$popup.popover('hide');});
 
-        $('.popover').find('button.save').click(function (e) {
-          $popup.popover('hide');
-        });
+          if( $(this).attr("id") == "main_media"){
+            $('.popover').find('button.save').click(function (e) { $popup.popover('hide');});
+          }
       });
 
-      if ( (LMnumberOfObjects(LM_xml) == 0) &&  id=='#main_media'){
-        $(id).popover('show');
-      } else{
-        $(id).popover('show');
+      if (  ((LMnumberOfObjects(LM_xml) == 0)  && id=="#main_media")  || id != "#main_media"){
+          $(id).popover('show');
       }
     };
 

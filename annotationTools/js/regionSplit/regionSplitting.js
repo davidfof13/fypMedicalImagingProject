@@ -90,3 +90,20 @@
           segmentAnnotator.colorMaskEnabled = !segmentAnnotator.colorMaskEnabled;
       }
 
+      function updateRegionSize(){
+
+          /* region size */
+          var val = parseInt(document.getElementById('regionsRange').amount.value);
+
+          segmentAnnotator = null;
+          segmentAnnotator =  new SLICSegmentAnnotator(main_media.file_info.GetImagePath(), {
+                regionSize: val,
+                container: document.getElementById('regionDiv'),
+                // annotation: 'annotation.png' // optional existing annotation data.
+                labels: [{name: 'background', color: [255, 255, 255]},'object'],
+                onload: function() {initializeLegend(this);}
+          });
+
+          $('#regionsResolution').popover('hide');
+
+      }

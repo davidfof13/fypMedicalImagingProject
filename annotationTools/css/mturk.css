@@ -6,7 +6,6 @@
 /* Menu */
 .menu-ul>li>a:not(#segmA) {
   background-color: #4D3D3C;
-
 }
 
 /*on user click */
@@ -18,7 +17,6 @@
 .menu-ul>li>a:hover:not(#segmA){
   background-color: #773E3A;
   color: #FFFFFF;
-
 }
 
 
