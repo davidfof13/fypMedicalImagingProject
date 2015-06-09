@@ -305,7 +305,6 @@ function FinishStartup() {
     // if the mTurk div element has been activated then move the image
     if (document.getElementById('mt_submit_form').style.visibility == 'visible'){
         $(".image_canvas").css({position: 'relative'});  
-
     }
 
      // For firefox
@@ -314,15 +313,14 @@ function FinishStartup() {
          document.getElementById("feedBackTxt").remove();
     }
 
-
     // add pop over
-    main_handler.MTaddPopover();
+    main_handler.MTaddPopover("#main_media");
+
+    $('#regionsResolution').attr("onclick","javascript:main_handler.MTaddPopover(\"#regionsResolution\");");
 
     // hide annotations by default
     main_handler.MTshowORhideAnnotations();
-
     if($("#myCanvas_bg").children().length == 0) $("#submitTask").remove();
-    
 
   }
   if($("#myCanvas_bg").children().length == 0) $("#submitTask").remove();

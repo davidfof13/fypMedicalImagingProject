@@ -540,21 +540,42 @@ function handler() {
     /* Creates popover that queries the user to skip the next image
      or continue working on the current image
      */
-    this.MTaddPopover = function(){
-      var contentHtml = '<div>';
-      contentHtml += '<p style="font-size: 150%;">No one has labelled this image. There\'s probably nothing relevant to annotate \
+    this.MTaddPopover = function(id){
+      var contentHtml;
+      var title;
+
+      contentHtml = '<div>';
+
+      if( id == "#main_media"){
+        title = "annotation";
+        contentHtml += '<p style="font-size: 150%;">No one has labelled this image. There\'s probably nothing relevant to annotate \
                      in it. Do you want to skip it?</p>';
+        contentHtml += '</div>';
+
+        contentHtml += '<div style="display:inline-flex;">';
+        contentHtml += '<button class="btn btn-danger cancel" style="margin-right:4px;">Cancel</button>';
+
+        if(MTimCounter == 0)  contentHtml += '<button class="btn btn-success save" onmousedown="showSubmitModal();">Done</button>';
+        else contentHtml += '<button class="btn btn-primary save" onmousedown="javascript:MTNextImage();">Skip</button>';
+
+      } else if(id == "#regionsResolution"){
+
+
+        title = "region size";
+        contentHtml += '<form style="margin-bottom:30px;"> ';
+        contentHtml += '<input type="range" id="rangeInput" name="amountRange" min="0" max="20" value="0" \
+          style="float:left; margin-right:10%; width:80%;" oninput="this.form.amount.value=this.value" />';
+    
+        contentHtml += '<output name="amount" for="rangeInput" style="padding-top:12px;">0</output>';
+        contentHtml += '</form>';
+
+        contentHtml += '<button class="btn btn-danger cancel" style="margin-left:5%; margin-right:4px;">Cancel</button>';
+        contentHtml += '<button class="btn btn-success save" onmousedown="showSubmitModal();">Done</button>';
+      }
       contentHtml += '</div>';
 
-      contentHtml += '<div style="display:inline-flex;">';
-      contentHtml += '<button class="btn btn-danger cancel" style="margin-right:4px;">Cancel</button>';
-
-      if(MTimCounter == 0)  contentHtml += '<button class="btn btn-success save" onmousedown="showSubmitModal();">Done</button>';
-      else contentHtml += '<button class="btn btn-primary save" onmousedown="javascript:MTNextImage();">Skip</button>';
-      contentHtml += '</div>';
-
-      $('#main_media').popover({
-        title: 'annotation',
+      $(id).popover({
+        title: title,
         placement: 'right',
         container: 'body',
         html: true,
@@ -572,8 +593,10 @@ function handler() {
         });
       });
 
-      if (LMnumberOfObjects(LM_xml) == 0){
-        $('#main_media').popover('show');
+      if ( (LMnumberOfObjects(LM_xml) == 0) &&  id=='#main_media'){
+        $(id).popover('show');
+      } else{
+        $(id).popover('show');
       }
     };
 

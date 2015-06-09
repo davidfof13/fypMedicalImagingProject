@@ -46,7 +46,6 @@
        */
       function originalView(){
 
-
         if(segmentAnnotator.colorMaskEnabled)
           colorMaskView();
 
@@ -56,6 +55,8 @@
       }
 
       function boundaryView(){
+
+        if(segmentAnnotator == null) return;
 
         // make sure to disable any other views first
         if(segmentAnnotator.colorMaskEnabled)
@@ -73,11 +74,11 @@
 
       function colorMaskView(){
 
+        if(segmentAnnotator == null) return;
 
         // make sure to disable any other views first
         if(segmentAnnotator.boundaryEnabled)
           boundaryView();
-
 
         if(segmentAnnotator.colorMaskEnabled)
           segmentAnnotator.setImageAlpha(255);
@@ -88,3 +89,4 @@
         
           segmentAnnotator.colorMaskEnabled = !segmentAnnotator.colorMaskEnabled;
       }
+

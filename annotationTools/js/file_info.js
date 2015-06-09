@@ -292,6 +292,7 @@ function file_info() {
 
                 $('.hit-menu').css('margin-right', Math.round(0.039*w) + 'px');
                 $('#hit-image').css('margin-right', Math.round(0.045*w) + 'px');
+                
 
                 $(document).ready(function(){
 
@@ -346,9 +347,7 @@ function file_info() {
                                     return false; 
                                 } 
                             }
-                        
-
-
+    
                             username = login_name;
                             showInstructionsModal(login_name);
 
