@@ -112,7 +112,7 @@ function LoadAnnotationSuccess(xml) {
     // Attach valid annotations to the main_canvas:
     for(var pp = 0; pp < LMnumberOfObjects(LM_xml); pp++) {
       var isDeleted = LMgetObjectField(LM_xml, pp, 'deleted');
-      if(((view_Existing&&!isDeleted)||(isDeleted&&view_Deleted)) && ($(LM_xml).children("annotation").children("object").children("slicsegm").length == 0)) {
+      if(((view_Existing&&!isDeleted)||(isDeleted&&view_Deleted)) && ($(LM_xml).children("annotation").children("object").eq(pp).children("slicsegm").length == 0)) {
 
         // Attach to main_canvas:
        	main_canvas.AttachAnnotation(new annotation(pp));
