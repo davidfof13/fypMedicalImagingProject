@@ -14,7 +14,7 @@ if nargin > 2
     Nx = subimages(2);
     Ny = subimages(1);
 else
-    Nx = 6; Ny = 5; % will show 6x5 images per figure
+    Nx = 1; Ny = 3; % will show 6x5 images per figure
 end
 Dx = 1/Nx; Dy = 1/Ny; 
 

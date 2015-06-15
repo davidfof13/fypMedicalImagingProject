@@ -215,7 +215,8 @@ for f = 1:Nfolders
         if isfield(v.annotation, 'object')
             %keyboard
             Nobjects = length(v.annotation.object);
-            [x,y,foo,t,key] = LMobjectpolygon(v.annotation);
+            
+            [x,y,foo,t,key, slic] = LMobjectpolygon(v.annotation);
             
 
             % remove some fields
@@ -261,7 +262,7 @@ for f = 1:Nfolders
                     pol.t = uint16(t{m});
                     pol.key = uint8(key{m});
                     v.annotation.object(m).polygon = pol;
-                else
+                elseif (~isfield(v.annotation.object, 'slicsegm'))
                     v.annotation.object(m).deleted = '1';
                 end
             end
@@ -311,7 +312,7 @@ for f = 1:Nfolders
             XML = [XML xml];
         end
 
-        if mod(i,10)==1 && Narg<4
+        if mod(i,10)==1 && Narg<4 && ~isfield(v.annotation.object, 'slicsegm')
             plotbar(Hfig,f,Nfolders,i,N);
         end
     end
@@ -343,7 +344,10 @@ D = addviewpoint(D);
 disp(sprintf('LabelMe Database summary:\n Total of %d annotated images.', length(D)))
 %disp('-----------------')
 % 
-close(Hfig)
+
+if ~isempty(x) && ~isempty(y)
+    close(Hfig)
+end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 function fig = plotbar(fig,nf,Nf,ni,Ni)
