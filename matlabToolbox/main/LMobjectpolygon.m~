@@ -37,7 +37,7 @@ if isfield(annotation, 'object')
                 y{n} = [ymin ymin ymax ymax];
                 key{n} = 1;
                 polygons = 1;
-            elseif (isfield(object, 'polygon') && ~isempty(object.polygon))
+            elseif isfield(object, 'polygon' && ~isempty(object.polygon))
                 [x{n},y{n},foo,key{n}] = getLMpolygon(object.polygon);
                 polygons = 1;
                 

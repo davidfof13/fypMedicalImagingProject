@@ -264,15 +264,12 @@ for f = 1:Nfolders
                     pol.key = uint8(key{m});
                     v.annotation.object(m).polygon = pol;
                     
-                % decode json string of slic segmentation
-                elseif isfield(v.annotation.object, 'slicsegm')
+                elseif (isfield(v.annotation.object, 'slicsegm')
                     slic_str = json.load(v.annotation.object(m).slicsegm.data);
                     png_data = base64decode(strrep(slic_str.annotation, 'data:image/png;base64', ''));
                     segmentation_map = imdecode(png_data, 'png');
-                    v.annotation.object(m).slicsegm = segmentation_map;
                     
-                %elseif (~isfield(v.annotation.object, 'slicsegm'))
-                else
+                elseif (~isfield(v.annotation.object, 'slicsegm'))
                     v.annotation.object(m).deleted = '1';
                 end
             end
