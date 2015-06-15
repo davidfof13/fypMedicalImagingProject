@@ -41,7 +41,6 @@ function handler() {
       }
       
       if (use_attributes) {
-
 	      // occlusion field
 	      if (document.getElementById('occluded')) new_occluded = RemoveSpecialChars(document.getElementById('occluded').value);
 	      else new_occluded = RemoveSpecialChars(adjust_occluded);
@@ -49,7 +48,6 @@ function handler() {
 	      // attributes field
 	      if(document.getElementById('attributes')) new_attributes = RemoveSpecialChars(document.getElementById('attributes').value);
 	      else new_attributes = RemoveSpecialChars(adjust_attributes);
-
       }
       
       StopEditEvent();
@@ -440,7 +438,9 @@ function handler() {
             // user needs to click preview button befor moving to next task
             if(this.id != "scribbleDropdown" && $('#segmA').hasClass('active'))
                     return;
-            
+
+            if(this.id == "regionDropdown" && segmentAnnotator == null)
+              return; 
 
             if(this.id == "segmA")
                 return;
@@ -502,6 +502,12 @@ function handler() {
                     return;
 
           var parent = $("#" + this.id).parent();
+
+          // cancel sliding if the tool hasn't been initialized
+          if(this.id == "regionDropdown" && segmentAnnotator == null)
+              return;
+
+
           parent.find(".hit-submenu").slideToggle();
 
 

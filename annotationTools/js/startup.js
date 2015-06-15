@@ -411,7 +411,6 @@ function SetDrawingMode(mode){
       return;
     }
 
-
     if(lmode != "mt"){
         document.getElementById("segmDiv").setAttribute('style', 'border-color: #000');
         document.getElementById("polygonDiv").setAttribute('style', 'border-color: #f00');
@@ -468,6 +467,11 @@ function SetDrawingMode(mode){
       } else if( $('#segmA').hasClass('active') ){
         alert("You need to preview your scribbles first (click Preview on the left) and decide if you want to save, continue editing them or delete them.");
         return;
+      }
+
+      if($(LM_xml).children("annotation").children("object").children("slicsegm").length > 0){
+         alert("An annotation of this type already exist for this image");
+         return;
       }
 
      
