@@ -5,3 +5,6 @@ annotationTools/perl/globalvariables.pl
 annotationTools/scribble/image.jpg
 annotationTools/scribble/mask.png
 annotationTools/scribble/scribble.png
+
+!/matlabToolbox/matlab-json/*
+
