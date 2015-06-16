@@ -3,6 +3,8 @@ function out= LMdownloadScribbles(varargin)
 
 Narguments = length(varargin);
 
+out = [];
+
 if strcmp(varargin{Narguments}, 'flat')
     flat = 1;
     Narguments = Narguments - 1;
@@ -17,6 +19,11 @@ end
 
 HOMEIMAGES = varargin{1};
 folderlist = urldir(HOMEIMAGES, 'DIR');
+
+if isempty(folderlist)
+    return;
+end
+
 folderlist = {folderlist(:).name};
 
 if strcmp(folderlist{1}(1),'/'); % remove root folder
@@ -37,7 +44,7 @@ end
 
 Nfolders = length(folderlist);
 
-out = [];
+
 
 % create folders:
 if flat == 0
