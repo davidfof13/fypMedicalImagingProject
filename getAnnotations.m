@@ -7,10 +7,13 @@
 % Name of the server hosting the LabelMe annotation tool
 server = 'http://54.72.79.131';
 
-cd('matlabToolbox');
+%cd('matlabToolbox');
 
 % add current folder and its subfolders to search path
-addpath(genpath('.'));
+addpath(genpath('matlabToolbox'));
+
+
+addpath(genpath('matlabJson'));
 
 %HOMEANNOTATIONS = 'http://fypmed.com/Annotations';
 %HOMEIMAGES = 'http://fypmed.com/Images';
