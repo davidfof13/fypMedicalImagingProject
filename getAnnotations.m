@@ -12,7 +12,6 @@ server = 'http://54.72.79.131';
 % add current folder and its subfolders to search path
 addpath(genpath('matlabToolbox'));
 
-
 addpath(genpath('matlabJson'));
 
 %HOMEANNOTATIONS = 'http://fypmed.com/Annotations';
@@ -50,7 +49,6 @@ poly = size(A(1).annotation.object, 2);
 
 %LMdbshowscenes(D, HOMEIMAGES);  visualize annotations for all images
 % boundingbox = LMobjectboundingbox(D(1).annotation, 1);
-
 
 rect = [];
 scribbles = [];

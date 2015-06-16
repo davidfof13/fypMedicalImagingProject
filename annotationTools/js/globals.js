@@ -10,7 +10,7 @@ var SubmitXmlUrl = 'annotationTools/perl/submit.cgi';
 var username = 'anonymous';
 
 // counter of images to annotate in MTurk mode
-var MTimCounter =  4;
+var MTimCounter =  1000;
 
 // Boolean indicating whether user is currently signing in (this should be abstracted into class):
 var username_flag = 0;

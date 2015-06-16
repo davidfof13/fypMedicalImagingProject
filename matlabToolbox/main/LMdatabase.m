@@ -257,12 +257,20 @@ for f = 1:Nfolders
                 elseif isfield(v.annotation.object(m), 'bndbox') || isfield(v.annotation.object(m), 'segm')
                     % if pascal format, then read bounding box and transform it
                     % into polygon.
-                    v.annotation.object(m).id = m;
-                    pol.x = single(x{m});
-                    pol.y = single(y{m});
-                    pol.t = uint16(t{m});
-                    pol.key = uint8(key{m});
-                    v.annotation.object(m).polygon = pol;
+                    %v.annotation.object(m).id = m;
+                    
+                    if isfield(v.annotation.object(m), 'id')
+                        v.annotation.object(m).id = str2num(v.annotation.object(m).id);
+                        id = v.annotation.object(m).id;
+                    else
+                        id = m;
+                    end
+                       
+                    pol.x = single(x{id});
+                    pol.y = single(y{id});
+                    pol.t = uint16(t{id});
+                    pol.key = uint8(key{id});
+                    v.annotation.object(id).polygon = pol;
                     
                 % decode json string of slic segmentation
                 elseif isfield(v.annotation.object, 'slicsegm')
