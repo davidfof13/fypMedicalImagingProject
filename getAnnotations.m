@@ -82,6 +82,8 @@ for i=1:n,
                 x = scribbles{k}.data;
                 scribbles{k}.data = x(:,:,1);
                 
+                scribbles{k}.data = imresize(scribbles{k}.data, 512/size(scribbles{k}.data,1));
+                
                 scribbles{k}.filename = anno.filename;
                 scribbles{k}.fileinfo = anno.scenedescription;
                 k = k + 1;
@@ -110,6 +112,9 @@ for i=1:n,
                  % convert to 2D
                 x = slic{p}.data;
                 slic{p}.data = x(:,:,1);
+                
+                % resize
+                slic{p}.data = imresize(slic{p}.data , 512/size(slic{p}.data,1) );
                 
                 slic{p}.filename = anno.filename;
                 slic{p}.fileinfo = anno.scenedescription;

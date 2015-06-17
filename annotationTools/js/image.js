@@ -66,7 +66,7 @@ function image(id) {
         var width_ratio = avail_width/this.width_orig;
         var height_ratio = avail_height/this.height_orig;
         
-        if(main_media.GetFileInfo().GetMode() != "mt"){
+        //if(main_media.GetFileInfo().GetMode() != "mt"){
             if(width_ratio<height_ratio) this.im_ratio = width_ratio;
             else this.im_ratio = height_ratio;
             this.browser_im_ratio = this.im_ratio;
@@ -74,10 +74,10 @@ function image(id) {
 
             this.width_curr = Math.round(this.im_ratio*this.width_orig);
             this.height_curr = Math.round(this.im_ratio*this.height_orig);
-        }  else{
-            this.width_curr = this.width_orig;
-            this.height_curr = this.height_orig;
-        }
+       // }  else{
+         //   this.width_curr = this.width_orig;
+          //  this.height_curr = this.height_orig;
+       // }
 
         
         // set dimensions
