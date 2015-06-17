@@ -26,7 +26,7 @@ var use_parts = 1; // if this is 0 disapears the message from the bubble
 //}
 
 var MAX_REGION_SIZE = 70;
-var MIN_REGION_SIZE = 30;
+var MIN_REGION_SIZE = 15;
 
 // Indicates if we should show the instruction window in mechanical turk mode
 var noModal = false; 

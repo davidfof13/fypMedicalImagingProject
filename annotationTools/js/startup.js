@@ -322,6 +322,8 @@ function FinishStartup() {
     main_handler.MTshowORhideAnnotations();
     if($("#myCanvas_bg").children().length == 0) $("#submitTask").remove();
 
+     // disable scaling
+   main_media.im_ratio = 1;
   }
   if($("#myCanvas_bg").children().length == 0) $("#submitTask").remove();
   

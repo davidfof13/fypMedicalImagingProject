@@ -70,9 +70,10 @@ function image(id) {
         else this.im_ratio = height_ratio;
         this.browser_im_ratio = this.im_ratio;
 
-        this.width_curr = Math.round(this.im_ratio*this.width_orig);
-        this.height_curr = Math.round(this.im_ratio*this.height_orig);
-
+        //this.width_curr = Math.round(this.im_ratio*this.width_orig);
+        //this.height_curr = Math.round(this.im_ratio*this.height_orig);
+	this.width_curr = this.width_orig;
+	this.height_curr = this.height_orig;
         
         // set dimensions
         this.SetDimensions();
