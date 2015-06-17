@@ -273,8 +273,10 @@ for f = 1:Nfolders
                     v.annotation.object(id).polygon = pol;
                     
                 % decode json string of slic segmentation
-                elseif isfield(v.annotation.object, 'slicsegm')
+                elseif isfield(v.annotation.object(m), 'slicsegm')
                     slic_str = json.load(v.annotation.object(m).slicsegm.data);
+                   
+                   % slic_str = json.load(slic{m});
                     png_data = base64decode(strrep(slic_str.annotation, 'data:image/png;base64', ''));
                     segmentation_map = imdecode(png_data, 'png');
                     v.annotation.object(m).slicsegm = segmentation_map;

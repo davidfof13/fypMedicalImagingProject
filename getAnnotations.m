@@ -72,6 +72,11 @@ for i=1:n,
             % it's a segmentation
             if isfield(object, 'segm') && ~isempty(object.segm)
                 scribbles{k}.data = S{k};
+                
+                % convert to 2D
+                x = scribbles{k}.data;
+                scribbles{k}.data = x(:,:,1);
+                
                 scribbles{k}.filename = anno.filename;
                 scribbles{k}.fileinfo = anno.scenedescription;
                 k = k + 1;
@@ -86,8 +91,21 @@ for i=1:n,
                 r = r + 1;
             end
         elseif isfield(object, 'slicsegm') && ~isempty(object.slicsegm)
-        
+                    
                 slic{p}.data = object.slicsegm;
+                            
+                if (isstruct(slic{p}.data))
+                    slic_str = json.load(slic{p}.data.data);
+                  
+                    png_data = base64decode(strrep(slic_str.annotation, 'data:image/png;base64', ''));
+                    segmentation_map = imdecode(png_data, 'png');
+                    slic{p}.data = segmentation_map;
+                end
+                
+                 % convert to 2D
+                x = slic{p}.data;
+                slic{p}.data = x(:,:,1);
+                
                 slic{p}.filename = anno.filename;
                 slic{p}.fileinfo = anno.scenedescription;
                 p = p + 1;
@@ -96,4 +114,7 @@ for i=1:n,
     end
     
 end
+
+% save to .mat
+save('annotations.mat', 'rect', 'scribbles', 'slic');
     
