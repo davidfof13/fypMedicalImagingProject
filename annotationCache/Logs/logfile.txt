@@ -10959,3 +10959,30 @@
 16-Jun-2015 16:27:31 127.0.0.1 *start_loading
 16-Jun-2015 16:27:31 127.0.0.1 *Browser_Information Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.124 Safari/537.36
 16-Jun-2015 16:27:31 127.0.0.1 *done_loading_Images/4Dslices/1108/1108_014.jpg
+17-Jun-2015 10:18:17 127.0.0.1 *Browser_Information Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.124 Safari/537.36
+17-Jun-2015 10:18:17 127.0.0.1 *start_loading
+17-Jun-2015 10:18:18 127.0.0.1 *Browser_Information Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.124 Safari/537.36
+17-Jun-2015 10:18:18 127.0.0.1 *start_loading
+17-Jun-2015 10:18:18 127.0.0.1 *done_loading_Images/4Dslices/1014/1014_000.jpg
+17-Jun-2015 11:07:51 127.0.0.1 *start_loading
+17-Jun-2015 11:07:51 127.0.0.1 *Browser_Information Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.124 Safari/537.36
+17-Jun-2015 11:07:51 127.0.0.1 *done_loading_Images/4Dslices/1014/1014_000.jpg
+17-Jun-2015 11:12:03 127.0.0.1 *Browser_Information Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.124 Safari/537.36
+17-Jun-2015 11:12:03 127.0.0.1 *start_loading
+17-Jun-2015 11:12:03 127.0.0.1 *Browser_Information Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.124 Safari/537.36
+17-Jun-2015 11:12:03 127.0.0.1 *start_loading
+17-Jun-2015 11:12:04 127.0.0.1 *done_loading_Images/4Dslices/1014/1014_000.jpg
+17-Jun-2015 11:12:28 127.0.0.1 *Browser_Information Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.124 Safari/537.36
+17-Jun-2015 11:12:28 127.0.0.1 *start_loading
+17-Jun-2015 11:12:29 127.0.0.1 *done_loading_Images/4Dslices/1014/1014_000.jpg
+17-Jun-2015 11:12:43 127.0.0.1 *What_is_this_object_query
+17-Jun-2015 11:14:25 4Dslices/1014 1014_000 0 1 127.0.0.1  anno_0 2 david cpts_not_modified 0 0
+17-Jun-2015 11:14:26 127.0.0.1 *Browser_Information Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.124 Safari/537.36
+17-Jun-2015 11:14:26 127.0.0.1 *start_loading
+17-Jun-2015 11:14:26 127.0.0.1 *done_loading_Images/4Dslices/1014/1014_001.jpg
+17-Jun-2015 12:12:58 127.0.0.1 *start_loading
+17-Jun-2015 12:12:58 127.0.0.1 *Browser_Information Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.124 Safari/537.36
+17-Jun-2015 12:12:58 127.0.0.1 *done_loading_Images/4Dslices/1014/1014_001.jpg
+17-Jun-2015 12:47:37 127.0.0.1 *start_loading
+17-Jun-2015 12:47:37 127.0.0.1 *Browser_Information Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.124 Safari/537.36
+17-Jun-2015 12:47:37 127.0.0.1 *done_loading_Images/4Dslices/1108/1108_004.jpg
