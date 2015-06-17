@@ -6,6 +6,7 @@
 
 % Name of the server hosting the LabelMe annotation tool
 server = 'http://54.72.79.131';
+%server = 'http://fypmed.com';
 
 %cd('matlabToolbox');
 
@@ -58,15 +59,19 @@ r = 1;
 k = 1;
 p = 1;
 
+tot = 0;
 for i=1:n,
     
     % get current annotation file
     anno = A(i).annotation;
     objects = anno.object;
     
+    tot = tot + length(objects);
+    
     for j=1:length(objects)
         object = objects(j);
         
+
         if isfield(object, 'polygon') && ~isempty(object.polygon)
             
             % it's a segmentation
@@ -76,6 +81,8 @@ for i=1:n,
                 % convert to 2D
                 x = scribbles{k}.data;
                 scribbles{k}.data = x(:,:,1);
+                
+                scribbles{k}.data = imresize(scribbles{k}.data, 512/size(scribbles{k}.data,1));
                 
                 scribbles{k}.filename = anno.filename;
                 scribbles{k}.fileinfo = anno.scenedescription;
@@ -105,6 +112,9 @@ for i=1:n,
                  % convert to 2D
                 x = slic{p}.data;
                 slic{p}.data = x(:,:,1);
+                
+                % resize
+                slic{p}.data = imresize(slic{p}.data , 512/size(slic{p}.data,1) );
                 
                 slic{p}.filename = anno.filename;
                 slic{p}.fileinfo = anno.scenedescription;
