@@ -68,8 +68,6 @@ function handler() {
       // Insert attributes (and create field if it is not there):
       LMsetObjectField(LM_xml, obj_ndx, "attributes", new_attributes);
         
-
-      
       LMsetObjectField(LM_xml, obj_ndx, "occluded", new_occluded);
 
       
@@ -484,7 +482,17 @@ function handler() {
         $('.hit-submenu>li>a:not(#segmA)').click(function(){
          
 
+         var preview = $("#segmA").hasClass('active');
+
          $('.hit-submenu').find(".active").removeClass('active');
+
+         if (preview) {
+            $("#segmA").addClass('active');
+            $("#segmbutton").addClass('active');
+         }
+
+  
+
          this.className += ' active';
 
          // also set it to the li encompassing it
@@ -497,8 +505,8 @@ function handler() {
         // Dropdown menus slide action
         $('.dropdown>a').click(function(){
           
-          // user needs to click preview button befor moving to next task
-            if($('#segmA').hasClass('active'))
+          // user needs to click preview button before moving to next task
+          if($('#segmA').hasClass('active') && this.id != "scribbleDropdown")
                     return;
 
           var parent = $("#" + this.id).parent();

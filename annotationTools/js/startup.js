@@ -529,7 +529,7 @@ function setUpRegionSelection(){
 
 
     segmentAnnotator =  new SLICSegmentAnnotator(main_media.file_info.GetImagePath(), {
-        regionSize: 40,
+        regionSize: 30,
         container: document.getElementById('regionDiv'),
         // annotation: 'annotation.png' // optional existing annotation data.
         labels: [{name: 'background', color: [255, 255, 255]},'object'],
@@ -573,22 +573,22 @@ function showInstructionsModal(name) {
         html_str += '<h4>Aim</h4>';
         html_str +='<p style="margin-bottom:10px;">The purpose of this exercise is to <span style="color: red;">label </span> objects in medical images. Labelling \
         just means that you have to mark one or more specific areas in the image, that are of interest to us. In this case, \
-        we\'re interested in locating anatomic features such as head, body, brain and arms. We would like you to annotate these objects \
+        we\'re interested in locating anatomic features of a foetus such its as head, brain, arms or entire setBoundaryAlpha. We would like you to annotate these objects \
         <span style="color: red;"> as accurately as possible </span>. The example below shows what we\'re looking for: \
         </p>';
 
         html_str += '<figure class="mtInstr" style="margin-left:8%;">';
-        html_str += '<img src="Images/mtInstructions/bad.jpg" alt="bad"/>';
+        html_str += '<img src="Images/mtInstructions/bad.png" alt="bad"/>';
         html_str += '<figcaption style="color:red;">bad</figcaption>';
         html_str += '</figure>';
 
         html_str += '<figure class="mtInstr">';
-        html_str += '<img src="Images/mtInstructions/decent.jpeg" alt="decent"/>'; 
+        html_str += '<img src="Images/mtInstructions/decent.png" alt="decent"/>'; 
         html_str += '<figcaption style="color:blue;"> very good</figcaption>';
         html_str += '</figure>';
 
         html_str += '<figure class="mtInstr">';
-        html_str += '<img src="Images/mtInstructions/excellent.jpeg" alt="excellent"/>'; 
+        html_str += '<img src="Images/mtInstructions/excellent.png" alt="excellent"/>'; 
         html_str += '<figcaption style="color:rgb(71, 249, 71);"> excellent</figcaption>'; 
         html_str += '</figure>';
 
@@ -645,16 +645,36 @@ function showInstructionsModal2() {
 
   html_str += '<p> Use the <span style="color: red;">foreground</span> command to circle the object of interest and \
   use the <span style="color: red;">background </span> command to indicate the areas that we should ignore. \
-  For example: </p> (Insert Images here) ';
+  For example: </p>';
+  // SCRIBBLE
+
+  html_str += '<figure class="scInstr" style="margin-left:25%;">';
+  html_str += '<img src="Images/mtInstructions/MRIscribbleExample.png" alt="scribbleExample"/>';
+  //html_str += '<figcaption style="color:red;">bad</figcaption>';
+  html_str += '</figure>';
+
+  html_str += '<p style="clear: both;"></p>';
 
 
   html_str += '<h4>Regions tool</h4>';
-
+  // REGIONS
 
   html_str += '<p> The subcommands <span style="color: red;">original, unbounded, boundary</span> and <span style="color: red;"> \
   color mask</span> allow you to visualize the image using different effects making it sometimes easier to label the image. The \
   <span style="color: red;">resolution</span> command allows you to change the size of the regions. You can adjust its value to \
-  have smaller or larger regions to label more accurately. For example: </p> (Insert Images here)';
+  have smaller or larger regions to label more accurately. For example: </p>';
+
+  html_str += '<figure class="mtInstr" style="margin-left:25%;">';
+  html_str += '<img src="Images/mtInstructions/verySmallScribble.png" alt="small"/>';
+  html_str += '<figcaption style="color:red;">small scribbles</figcaption>';
+  html_str += '</figure>';
+
+  html_str += '<figure class="mtInstr">';
+  html_str += '<img src="Images/mtInstructions/veryBigScribble.png" alt="big"/>'; 
+  html_str += '<figcaption style="color:red;"> big scribble</figcaption>';
+  html_str += '</figure>';
+
+  html_str += '<p style="clear: both;"></p>';
 
   html_str += '<h4>Submitting results</h4>';
 
