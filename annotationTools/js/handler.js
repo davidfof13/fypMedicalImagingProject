@@ -459,6 +459,9 @@ function handler() {
                 $("#segmA").addClass('active');
                 $("#segmbutton").addClass('active');
               }
+            }  else if(this.id == "regionDropdown" ){
+                $("#regButton").addClass('active');
+                $("#regionsResolution").addClass('active');
             }
 
             // if we click on any other button except the drop down menu,
@@ -626,8 +629,6 @@ function handler() {
           anno[i].style.visibility = "visible";
       }
     }
-
-
 
     
 }

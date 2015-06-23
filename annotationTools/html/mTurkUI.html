@@ -37,11 +37,12 @@
           <div>
             <div style="float:left; width:80%;">
               <h1 class="page-header" style="border-bottom: 3px solid #000000; display: inline-block;"> Where is the baby? </h1>
-              <p> Find and annotate the foetus in the MRI image below. Use the commands on the left menu to select the region(s) that contain the object </p>
+              <p> Find and annotate the baby in the MRI image below. Use the commands on the left menu to select the region that contain the  
+              object </p>
               <p></p>
             </div>
 
-            <div id="mtWelcome" style="float:left; width: 15%;margin-top:13%; margin-left:2%;font-size:22px;"> <span class="label label-success">welcome friend</span></div>
+            <div id="mtWelcome" style="float:left; width: 15%;margin-top:13%; margin-left:2%;font-size:22px;"><span class="label label-success">welcome friend</span></div>
             <br style="clear: left;"/>
           </div>
           
@@ -73,10 +74,10 @@
                     <a id="regionDropdown" onclick="SetDrawingMode(2)" class="li-base" href="#/" > Regions <span class="caret-right"></span></a>
                     <ul class="nav  nav-stacked hit-submenu" style="font-size: 95%;" role="menu">
 
-                      <li ><a id="regionOriginal" class="li-base" onclick="originalView();" href="#/">  > original</a></li>
+                      <li id="regButton" ><a id="regionOriginal" class="li-base" onclick="originalView();" href="#/">  > original</a></li>
                       <li ><a class="li-base" onclick="boundaryView();" href="#/">  > unbounded</a></li>
                       <li ><a class="li-base" onclick="colorMaskView();" href="#/"> > color mask</a></li>
-                      <li><a href="#" id="regionsResolution" class="li-base" > > change resolution </a></li>
+                      <li class="active"><a href="#" id="regionsResolution" class="li-base active" > > change resolution </a></li>
                     </ul>
                   </li>
                 </ul>

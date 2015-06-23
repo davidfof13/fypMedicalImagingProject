@@ -16,8 +16,14 @@ function str = dump(value, varargin)
 %
 % The function takes following options.
 %
+<<<<<<< HEAD
 %   'ColMajor'  Represent matrix in column-major order. Default false.
 %   'Indent'    Pretty-print the output string with indentation. Default [].
+=======
+%   'ColMajor'    Represent matrix in column-major order. Default false.
+%   'indent'      Pretty-print the output string with indentation.  Default
+%                 []
+>>>>>>> 0705045... Add indent to doc string and catch unknown options.
 %
 % EXAMPLE
 %
@@ -37,7 +43,11 @@ function str = dump(value, varargin)
 %
 %   [[1,4],[2,5],[3,6]]
 %
+<<<<<<< HEAD
 %   >> str = json.dump([1,2,3;4,5,6], 'Indent', 2)
+=======
+%   >> str = json.dump([1,2,3;4,5,6], 'indent', 2)
+>>>>>>> 0705045... Add indent to doc string and catch unknown options.
 %     str =
 % 
 %     [
@@ -71,7 +81,37 @@ function str = dump(value, varargin)
   if isempty(options.Indent)
     str = char(obj.toString());
   else
+<<<<<<< HEAD
     str = char(obj.toString(options.Indent));
+=======
+      str = char(obj.toString(options.indent));
+  end
+end
+
+function add_java_path_
+%ADD_JAVA_CLASS_
+  jar_file = fullfile(fileparts(mfilename('fullpath')), 'java', 'json.jar');
+  if ~any(strcmp(jar_file, javaclasspath))
+    javaaddpath(jar_file);
+  end
+end
+
+function options = get_options_(varargin)
+%GET_OPTIONS_
+  options = struct(...
+    'ColMajor', false,...
+    'indent', [] ...
+    );
+  for i = 1:2:numel(varargin)
+    switch varargin{i}
+      case 'ColMajor'
+        options.ColMajor = logical(varargin{i+1});
+      case 'indent'
+        options.indent = varargin{i+1};
+      otherwise
+        error('Unknown option to json.dump')
+    end
+>>>>>>> 0705045... Add indent to doc string and catch unknown options.
   end
 end
 

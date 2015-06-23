@@ -4,7 +4,7 @@
 }
 
 /* Menu */
-.menu-ul>li>a:not(#segmA) {
+.menu-ul>li>a:not(#segmA), .menu-ul>li>a:not(#regionsResolution) {
   background-color: #4D3D3C;
 }
 
@@ -18,7 +18,6 @@
   background-color: #773E3A;
   color: #FFFFFF;
 }
-
 
 /*dropdown menu right arrow*/
 .caret-right{
@@ -62,11 +61,11 @@
 }
 
 /*For the segmentation button */
-#segmA, #segmA div {
+#segmA, #segmA div, #regionsResolution, #regionsResolution div {
   background-color: #3D6609;
 }
 
-#segmA:hover {
+#segmA:hover, #regionsResolution:hover{
 
     background-color: #3D6609;
     color: #FFFFFF;
@@ -76,7 +75,16 @@
   background-color: #66A615;
 }
 
+#regionsResolution.active, #regionsResolution.active div{
+  background-color: #66A615;
+}
+
 #segmA.active:hover, #segmA.active:hover div{
+  background-color: #77C01C;
+  color: #FFFFFF;
+}
+
+#regionsResolution.active:hover, #regionsResolution.active:hover div{
   background-color: #77C01C;
   color: #FFFFFF;
 }
